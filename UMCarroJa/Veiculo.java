@@ -1,4 +1,4 @@
-
+java.util.*;
 /**
  * Escreva a descrição da classe Veiculo aqui.
  * 
@@ -7,27 +7,8 @@
  */
 public class Veiculo
 {
-    // variáveis de instância - substitua o exemplo abaixo pelo seu próprio
-    private int x;
-
-    /**
-     * COnstrutor para objetos da classe Veiculo
-     */
-    public Veiculo()
-    {
-        // inicializa variáveis de instância
-        x = 0;
-    }
-
-    /**
-     * Exemplo de método - substitua este comentário pelo seu próprio
-     * 
-     * @param  y   exemplo de um parâmetro de método
-     * @return     a soma de x com y 
-     */
-    public int sampleMethod(int y)
-    {
-        // ponha seu código aqui
-        return x + y;
-    }
+    private double velocidadeMediaKM;
+    private double precoKM;
+    private double consumoKM;
+    private double 
 }
