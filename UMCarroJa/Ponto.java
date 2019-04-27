@@ -160,9 +160,7 @@ public class Ponto {
    */
   public String toString() {
       StringBuilder sb = new StringBuilder();
-      sb.append("PONTO:");
-      sb.append("\tCoordenada em X: " + this.x + ";\n");
-      sb.append("\tCoordenada em Y: " + this.y + ";\n");
+      sb.append("(" + this.x + ";" + this.y + ")");
       return sb.toString();
   }
   

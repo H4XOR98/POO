@@ -4,52 +4,31 @@ import java.util.*;
 public class Veiculo{
     
     private String info;
-    private String tipo;
+    private boolean disponivel;
     private Ponto localizacao;
     private double classificacao;
-    private double preco;
-    private double velocidadeMedia;
-    private double consumo;
-    private double autonomia;
-    private ArrayList <String> historico;
     
     // Construtores
     
     public Veiculo(){
         this.info = " ";
-        this.tipo = " ";
+        this.disponivel = false;
         this.localizacao = new Ponto();
         this.classificacao = 0;
-        this.preco = 0;
-        this.velocidadeMedia = 0;
-        this.consumo = 0;
-        this.autonomia = 0;
-        this.historico = new ArrayList<String>();
     }
     
     public Veiculo (Veiculo v){
         this.info = v.getInfo();
-        this.tipo = v.getTipo();
+        this.disponivel = v.getDisponivel();
         this.localizacao = v.getLocalizacao();
         this.classificacao = v.getClassificacao();
-        this.preco = v.getPreco();
-        this.velocidadeMedia = v.getVelocidadeMedia();
-        this.consumo = v.getConsumo();
-        this.autonomia = v.getAutonomia();
-        this.historico = v.getHistorico();
     }
     
-    public Veiculo (String info, String tipo, Ponto localizacao, double classificacao, double preco, double velocidadeMedia, 
-                     double consumo, double autonomia, ArrayList<String> historico){
+    public Veiculo (String info, boolean disponivel, Ponto localizacao, double classificacao){
         this.info = info;
-        this.tipo = tipo;
+        this.disponivel = disponivel;
         this.localizacao = localizacao;
         this.classificacao = classificacao;
-        this.preco = preco;
-        this.velocidadeMedia = velocidadeMedia;
-        this.consumo = consumo;
-        this.autonomia = autonomia;
-        this.historico = historico;
     }
     
     // Gets
@@ -58,8 +37,8 @@ public class Veiculo{
         return this.info;
     }
     
-    public String getTipo(){
-        return this.tipo;
+    public boolean getDisponivel(){
+        return this.disponivel;
     }
     
     public Ponto getLocalizacao(){
@@ -69,35 +48,15 @@ public class Veiculo{
     public double getClassificacao(){
         return this.classificacao;
     }
-    
-    public double getPreco(){
-        return this.preco;
-    }
-    
-    public double getVelocidadeMedia(){
-        return this.velocidadeMedia;
-    }
-    
-    public double getConsumo(){
-        return this.consumo;
-    }
-    
-    public double getAutonomia(){
-        return this.autonomia;
-    }
-    
-    public ArrayList<String> getHistorico(){
-        return this.historico;
-    }
-        
+           
     // Sets
     
     public void setInfo (String newInfo){
         this.info = newInfo;
     }
     
-    public void setTipo (String newTipo){
-        this.tipo = newTipo;
+    public void setDisponivel (boolean newDisponivel){
+        this.disponivel = newDisponivel;
     }
     
     public void setLocalizacao (Ponto newLocalizacao){
@@ -106,26 +65,6 @@ public class Veiculo{
     
     public void setClassificacao (double newClassificacao){
         this.classificacao = newClassificacao;
-    }
-    
-    public void setPreco (double newPreco){
-        this.preco = newPreco;
-    }
-    
-    public void setVelocidadeMedia (double newVelocidadeMedia){
-        this.velocidadeMedia = newVelocidadeMedia;
-    }
-    
-    public void setConsumo (double newConsumo){
-        this.consumo = newConsumo;
-    }
-    
-    public void setAutonomia (double newAutonomia){
-        this.autonomia = newAutonomia;
-    }
-    
-    public void setHistorico (ArrayList<String> newHistorico){
-        this.historico = newHistorico;
     }
     
     // Clone
@@ -144,26 +83,19 @@ public class Veiculo{
           return false;
           
         Veiculo v = (Veiculo) o;
-        return (this.info.equals(v.getInfo()) && this.tipo.equals(v.getTipo()) && this.localizacao.equals(v.getLocalizacao()) &&
-                this.classificacao == v.getClassificacao() && this.preco == v.getPreco() && this.velocidadeMedia == v.getVelocidadeMedia() &&
-                this.consumo == v.getConsumo() && this.autonomia == v.getAutonomia() && this.historico.equals(v.getHistorico()));
+        return (this.info.equals(v.getInfo()) && this.disponivel == v.getDisponivel() && this.localizacao.equals(v.getLocalizacao()) &&
+                this.classificacao == v.getClassificacao());
     }
     
     // toString
     
     public String toString(){
-        return "Info: " + this.info + "\n" +
-               "Tipo:"  + this.tipo + "\n" +
-               "Localizacao:" + this.localizacao + "\n";
+        StringBuilder sb = new StringBuilder();
+        sb.append("Info: " + this.info);
+        sb.append("Disponível: " + this.disponivel);
+        sb.append("Localização: " + this.localizacao.toString());
+        sb.append("Classificação: " + this.classificacao);
+        return sb.toString();
     }
-    
-    
-    
-    
-    
-    
-   
-    
-    
     
 }
