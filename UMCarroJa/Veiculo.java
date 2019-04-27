@@ -89,10 +89,10 @@ public abstract class Veiculo{
     
     public String toString(){
         StringBuilder sb = new StringBuilder();
-        sb.append("Info: " + this.info);
-        sb.append("Disponível: " + this.disponivel);
-        sb.append("Localização: " + this.localizacao.toString());
-        sb.append("Classificação: " + this.classificacao);
+        sb.append("Info: " + this.info + "\n");
+        sb.append("Disponível: " + this.disponivel + "\n");
+        sb.append(this.localizacao.toString() + "\n");
+        sb.append("Classificação: " + this.classificacao + "\n");
         return sb.toString();
     }
     
