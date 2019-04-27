@@ -5,4 +5,5 @@ public class Gasolina extends Veiculo{
     private double consumo;
     private double autonomia;
     private double preco;
+    
 }

@@ -1,7 +1,7 @@
 
 import java.util.*;
 
-public class Veiculo{
+public abstract class Veiculo{
     
     private String info;
     private boolean disponivel;
@@ -69,9 +69,7 @@ public class Veiculo{
     
     // Clone
     
-    public Veiculo clone(){
-        return new Veiculo(this);
-    }
+    public abstract Veiculo clone();
         
     // Equals
     
