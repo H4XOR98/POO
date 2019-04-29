@@ -89,10 +89,11 @@ public class Eletrico extends Veiculo{
     
     public String toString(){
         StringBuilder sb = new StringBuilder();
-        sb.append("Velocidade Média: " + this.velocidadeMedia + " Km/h\n");
-        sb.append("Consumo: " + this.consumo + " W/Km\n");
-        sb.append("Autonomia: " + this.autonomia + " %\n");
-        sb.append("Preco: " + this.preco + " €/Km\n");
+        sb.append(super.toString());
+        sb.append("Velocidade Média: " + this.velocidadeMedia + " Km/h;\n");
+        sb.append("Consumo: " + this.consumo + " W/Km;\n");
+        sb.append("Autonomia: " + this.autonomia + " %;\n");
+        sb.append("Preco: " + this.preco + " €/Km;\n");
         return sb.toString();
     }
     

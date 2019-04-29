@@ -65,7 +65,6 @@ public class Proprietario extends Utilizador
     }
     
     
-    
     public String toString(){
         StringBuilder sb = new StringBuilder();
         sb.append(super.toString());

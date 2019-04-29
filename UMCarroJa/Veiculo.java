@@ -2,7 +2,6 @@
 import java.util.*;
 
 public abstract class Veiculo{
-    
     private String info;
     private boolean disponivel;
     private Ponto localizacao;
