@@ -10,7 +10,6 @@ public class Proprietario extends Utilizador
 {
     //variaveis de instancia
     private double classificacao;
-    //private Collection<Veiculo> veiculos;//Não fazer o clone é partilhado com o gestor de veiculos
     
     
     /**
