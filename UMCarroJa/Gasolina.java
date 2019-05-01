@@ -1,4 +1,6 @@
 
+import java.util.*;
+
 public class Gasolina extends Veiculo{
     
     private double velocidadeMedia;
@@ -9,6 +11,7 @@ public class Gasolina extends Veiculo{
     // Construtores
     
     public Gasolina(){
+        super();
         this.velocidadeMedia = 0;
         this.consumo = 0;
         this.autonomia = 0;
@@ -16,13 +19,17 @@ public class Gasolina extends Veiculo{
     }
     
     public Gasolina (Gasolina g){
+        super(g);
         this.velocidadeMedia = g.getVelocidadeMedia();
         this.consumo = g.getConsumo();
         this.autonomia = g.getAutonomia();
         this.preco = g.getPreco();
     }
     
-    public Gasolina (double velocidadeMedia, double consumo, double autonomia, double preco){
+    public Gasolina (TipoVeiculo tipoVeiculo, int nifProprietario, String matricula, boolean disponivel, Ponto localizacao,
+                     double classificacao, Collection<Integer> classificacoes, double velocidadeMedia, double consumo, double autonomia, 
+                     double preco){
+        super(tipoVeiculo, nifProprietario, matricula, disponivel, localizacao, classificacao, classificacoes);
         this.velocidadeMedia = velocidadeMedia;
         this.consumo = consumo;
         this.autonomia = autonomia;

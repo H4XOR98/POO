@@ -1,4 +1,6 @@
 
+import java.util.*;
+
 public class Hibrido extends Veiculo{
     
     private double velocidadeMedia;
@@ -12,6 +14,7 @@ public class Hibrido extends Veiculo{
     // Construtores
     
     public Hibrido(){
+        super();
         this.velocidadeMedia = 0;
         this.consumoG = 0;
         this.consumoE = 0;
@@ -22,6 +25,7 @@ public class Hibrido extends Veiculo{
     }
     
     public Hibrido (Hibrido h){
+        super(h);
         this.velocidadeMedia = h.getVelocidadeMedia();
         this.consumoG = h.getConsumoG();
         this.consumoE = h.getConsumoE();
@@ -31,7 +35,10 @@ public class Hibrido extends Veiculo{
         this.precoE = h.getPrecoE();
     }
     
-    public Hibrido (double velocidadeMedia, double consumoG, double consumoE, double autonomiaG, double autonomiaE, double precoG, double precoE){
+    public Hibrido (TipoVeiculo tipoVeiculo,int nifProprietario, String matricula, boolean disponivel, Ponto localizacao, 
+                    double classificacao, Collection<Integer> classificacoes, double velocidadeMedia, double consumoG, 
+                    double consumoE, double autonomiaG, double autonomiaE, double precoG, double precoE){
+        super(tipoVeiculo, nifProprietario, matricula, disponivel, localizacao, classificacao, classificacoes);
         this.velocidadeMedia = velocidadeMedia;
         this.consumoG = consumoG;
         this.consumoE = consumoE;

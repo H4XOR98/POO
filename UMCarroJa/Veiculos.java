@@ -1,27 +1,27 @@
+
 import java.util.*;
-/**
- * Escreva a descrição da classe Veiculos aqui.
- * 
- * @author (seu nome) 
- * @version (número de versão ou data)
- */
-public class Veiculos
-{
-    /*
+
+public class Veiculos{
+    
+    // Variáveis de Instância
+    
     private Collection<Veiculo> veiculos;
+    
+    // Construtores
     
     public Veiculos(){
         this.veiculos = new HashSet<>();
-    }
-    
-    public Veiculos(Collection<Veiculo> veiculos){
-        setVeiculos(veiculos);
     }
     
     public Veiculos(Veiculos veiculos){
         this.veiculos = veiculos.getVeiculos();
     }
     
+    public Veiculos(Collection<Veiculo> veiculos){
+        setVeiculos(veiculos);
+    }
+    
+    // Gets
     
     public Collection<Veiculo> getVeiculos(){
         Collection<Veiculo> aux = new HashSet<>();
@@ -29,31 +29,20 @@ public class Veiculos
         return aux;
     }
     
+    // Sets
+    
     public void setVeiculos(Collection<Veiculo> veiculos){
         this.veiculos = new HashSet<>();
         veiculos.forEach((v -> this.veiculos.add(v.clone())));
     }
     
+    // Clone
     
-    public void addVeiculo(Veiculo v){
-        this.veiculos.add(v.clone());
+    public Veiculos clone(){
+        return new Veiculos(this);
     }
     
-    public void removeVeiculo(Veiculo v){
-        this.veiculos.remove(v);
-    }
-    
-    public void libertaVeiculos(){
-        this.veiculos.clear();
-    }
-    
-    public String toString(){
-        StringBuilder sb = new StringBuilder();
-        for(Veiculo v : this.veiculos){
-            sb.append(v.toString());
-        }
-        return sb.toString();
-    }
+    // Equals
     
     public boolean equals(Object o){
         if(o == this){
@@ -66,8 +55,32 @@ public class Veiculos
         return this.veiculos.equals(v.getVeiculos());
     }
     
-    public Veiculos clone(){
-        return new Veiculos(this);
+    // toString
+    
+    public String toString(){
+        StringBuilder sb = new StringBuilder();
+        for(Veiculo v : this.veiculos){
+            sb.append(v.toString());
+        }
+        return sb.toString();
     }
-    */
+    
+    // Adiciona um veículo
+    
+    public void addVeiculo(Veiculo v){
+        this.veiculos.add(v.clone());
+    }
+    
+    // Remove um veículo
+    
+    public void removeVeiculo(Veiculo v){
+        this.veiculos.remove(v);
+    }
+    
+    // Liberta os Veículos
+    
+    public void libertaVeiculos(){
+        this.veiculos.clear();
+    }
+    
 }
