@@ -25,7 +25,7 @@ public class Proprietario extends Utilizador
     public Proprietario(){
         super();
         this.classificacao = 0;
-        this.classificacoes = new HashSet();
+        this.classificacoes = new HashSet<>();
     }
     
     /**
@@ -37,7 +37,7 @@ public class Proprietario extends Utilizador
                         double classificacao, Collection<Integer> classificacoes){
         super(email, password, nome, nif, morada, dataNascimento);
         this.classificacao = classificacao;
-        this.classificacoes = classificacoes;
+        setClassificacoes(classificacoes);
     }
     
     

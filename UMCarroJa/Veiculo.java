@@ -2,6 +2,7 @@
 import java.util.*;
 
 public abstract class Veiculo{
+    
     private TipoVeiculo tipoVeiculo;
     private int nifProprietario;
     private String matricula;
