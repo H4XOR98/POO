@@ -83,9 +83,9 @@ public class Cliente extends Utilizador
             return false;
         }
 
-        Cliente c = (Cliente)o;
+        Cliente cliente = (Cliente)o;
 
-        return super.equals(c) && this.localizacao == c.getLocalizacao() && this.destreza == c.getDestreza() && this.classificacoes.equals(c.getClassificacoes());
+        return super.equals(cliente) && this.localizacao == cliente.getLocalizacao() && this.destreza == cliente.getDestreza() && this.classificacoes.equals(cliente.getClassificacoes());
     }
 
 
