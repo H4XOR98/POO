@@ -10,7 +10,8 @@ public class Cliente extends Utilizador
 {
     //variaveis de instancia
     private Ponto localizacao;
-    
+    private double destreza;
+    private Collection<Integer> avaliacoes;
     /**
      * Construtores da classe Ponto.
      * Declaracao dos construtores por omissao (vazio),
