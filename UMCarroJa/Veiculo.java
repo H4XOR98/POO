@@ -3,6 +3,8 @@ import java.util.*;
 
 public abstract class Veiculo{
     
+    // Variáveis de Instância
+    
     private TipoVeiculo tipoVeiculo;
     private int nifProprietario;
     private String matricula;
@@ -23,7 +25,8 @@ public abstract class Veiculo{
         this.classificacoes = new HashSet<>();
     }
     
-    public Veiculo (TipoVeiculo tipoVeiculo,int nifProprietario, String matricula, boolean disponivel, Ponto localizacao, double classificacao, Collection<Integer> classificacoes){
+    public Veiculo (TipoVeiculo tipoVeiculo,int nifProprietario, String matricula, boolean disponivel, Ponto localizacao, 
+                    double classificacao, Collection<Integer> classificacoes){
         this.tipoVeiculo = tipoVeiculo;
         this.nifProprietario = nifProprietario;
         this.matricula = matricula;
@@ -44,6 +47,7 @@ public abstract class Veiculo{
     }
     
     // Gets
+    
     public TipoVeiculo getTipoVeiculo(){
         return this.tipoVeiculo;
     }
@@ -76,8 +80,8 @@ public abstract class Veiculo{
         return aux;
     }
     
-
     // Sets
+    
     public void setTipoVeiculo(TipoVeiculo newTipoVeiculo){
         this.tipoVeiculo = newTipoVeiculo;
     }
@@ -123,19 +127,23 @@ public abstract class Veiculo{
             return false;
         }
         Veiculo v = (Veiculo) o;
-        return (this.matricula.equals(v.getMatricula()) && this.disponivel == v.getDisponivel() && this.localizacao.equals(v.getLocalizacao()) &&
-                this.classificacao == v.getClassificacao());
+        return (this.tipoVeiculo.equals(v.getTipoVeiculo()) && this.nifProprietario == v.getNifProprietario() &&
+                this.matricula.equals(v.getMatricula()) && this.disponivel == v.getDisponivel() && 
+                this.localizacao.equals(v.getLocalizacao()) && this.classificacao == v.getClassificacao() &&
+                this.classificacoes.equals(v.getClassificacoes()));
     }
     
     // toString
 
-
     public String toString(){
         StringBuilder sb = new StringBuilder();
+        sb.append("Tipo Veículo: " + this.tipoVeiculo + "\n");
+        sb.append("NIF Proprietário: " + this.nifProprietario + "\n");
         sb.append("Matricula: " + this.matricula + "\n");
         sb.append("Disponível: " + this.disponivel + "\n");
         sb.append(this.localizacao.toString() + "\n");
         sb.append("Classificação: " + this.classificacao + "\n");
         return sb.toString();
     }
+    
 }
