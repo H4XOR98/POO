@@ -25,7 +25,7 @@ public class Cliente extends Utilizador
         super();
         this.localizacao = new Ponto();
         this.destreza = 100;
-        this.avalicoes = new HashSet<>();
+        this.classificacoes = new HashSet<>();
     }
 
 
@@ -36,11 +36,11 @@ public class Cliente extends Utilizador
         setClassificacoes(classificacoes);
     }
     
-    public Cliente(Cliente c){
-        super(c);
-        this.localizacao = c.getLocalizacao();
-        this.destreza = c.getDestreza();
-        this.avaliacoes = cliente.getAvaliacoes();
+    public Cliente(Cliente cliente){
+        super(cliente);
+        this.localizacao = cliente.getLocalizacao();
+        this.destreza = cliente.getDestreza();
+        this.classificacoes = cliente.getClassificacoes();
     }
     
     
@@ -57,7 +57,7 @@ public class Cliente extends Utilizador
         for(int i : this.classificacoes){
             aux.add(i);
         }
-        return i;
+        return aux;
     }
 
     public void setLocalizacao(Ponto localizacao){
@@ -71,7 +71,7 @@ public class Cliente extends Utilizador
     public void setClassificacoes(Collection<Integer> classificacoes) {
         this.classificacoes = new HashSet<>();
         for(int i : this.classificacoes){
-            aux.add(i);
+            this.classificacoes.add(i);
         }
     }
 
