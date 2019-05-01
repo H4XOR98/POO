@@ -70,7 +70,7 @@ public class Cliente extends Utilizador
 
     public void setClassificacoes(Collection<Integer> classificacoes) {
         this.classificacoes = new HashSet<>();
-        for(int i : this.classificacoes){
+        for(int i : classificacoes){
             this.classificacoes.add(i);
         }
     }
