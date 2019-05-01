@@ -10,6 +10,7 @@ public class Proprietario extends Utilizador
 {
     //variaveis de instancia
     private double classificacao;
+    private Collection <Integer> classificacoes;
     
     
     /**
@@ -24,6 +25,7 @@ public class Proprietario extends Utilizador
     public Proprietario(){
         super();
         this.classificacao = 0;
+        this.classificacoes = new HashSet();
     }
     
     /**
@@ -31,42 +33,48 @@ public class Proprietario extends Utilizador
      * Aceita como parametros o email, o nome, a password,
      * a morada e a data de nascimento de um Proprietario.
      */
-    public Proprietario(String email, String password, String nome, int nif, String morada, LocalDate dataNascimento, double classificacao, Collection<Veiculo> veiculos){
+    public Proprietario(String email, String password, String nome, int nif, String morada, LocalDate dataNascimento, 
+                        double classificacao, Collection<Integer> classificacoes){
         super(email, password, nome, nif, morada, dataNascimento);
         this.classificacao = classificacao;
+        this.classificacoes = classificacoes;
     }
     
     
     public Proprietario(Proprietario proprietario){
         super(proprietario);
         this.classificacao = proprietario.getClassificacao();
-        this.veiculos = proprietario.getVeiculos();
+        this.classificacoes = proprietario.getClassificacoes();
     }
 
+    // Gets
     
     public double getClassificacao(){
         return this.classificacao;
     }
     
-    public void getClassificacao(double classificacao){
-        this.classificacao = classificacao;
-    }
-    
-    public Collection<Veiculo> getVeiculos(){
-        Collection<Veiculo> aux = new HashSet<>();
-        for(Veiculo v : this.veiculos){
-            aux.add(v.clone());
+    public Collection<Integer> getClassificacoes(){
+        Collection<Integer> aux = new HashSet<Integer>();
+        for (Integer i : this.classificacoes){
+            aux.add(i);
         }
         return aux;
     }
     
+    // Sets
     
-    public void setVeiculos(Collection<Veiculo> veiculos){
-        this.veiculos = new HashSet<>();
-        for(Veiculo v : veiculos){
-            this.veiculos.add(v.clone());
+    public void setClassificacao (double classificacao){
+        this.classificacao = classificacao;
+    }
+    
+    public void setClassificacoes (Collection<Integer> newClassificacoes){
+        this.classificacoes = new HashSet<Integer>();
+        for(Integer i : newClassificacoes){
+            this.classificacoes.add(i);
         }
     }
+    
+    // Equals
     
     public boolean equals(Object o){
         if(o == this){
@@ -78,23 +86,22 @@ public class Proprietario extends Utilizador
         
         Proprietario p = (Proprietario)o;
         
-        return super.equals(p) && this.classificacao == p.getClassificacao() && this.veiculos.equals(p.getVeiculos());
+        return super.equals(p) && this.classificacao == p.getClassificacao() && this.classificacoes.equals(p.getClassificacoes());
     }
     
+    // toString
     
     public String toString(){
         StringBuilder sb = new StringBuilder();
         sb.append(super.toString());
         sb.append("Classificacao:   " + this.classificacao + ";\n");
-        sb.append("Veiculos: \n");
-        for(Veiculo v : this.veiculos){
-            sb.append(v.toString());
-        }
         return sb.toString();
     }
     
+    // Clone
     
     public Proprietario clone(){
         return new Proprietario(this);
     }
+    
 }
