@@ -7,5 +7,5 @@
  */
 public enum TipoVeiculo
 {
-    Carro, Trotinete
+    Carro
 }

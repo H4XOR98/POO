@@ -121,4 +121,8 @@ public class Hibrido extends Veiculo{
         return sb.toString();
     }
     
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> d6a2163c640847dcc55bc4276da4c0dbb40bb0a4
