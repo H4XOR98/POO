@@ -11,6 +11,7 @@ public class Proprietario extends Utilizador
     //variaveis de instancia
     private double classificacao;
     private Collection <Integer> classificacoes;
+    private Veiculos meusVeiculos;
     
     
     /**
@@ -103,5 +104,10 @@ public class Proprietario extends Utilizador
     public Proprietario clone(){
         return new Proprietario(this);
     }
+    
+    
+        
+    
+    
     
 }

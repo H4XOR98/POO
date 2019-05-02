@@ -12,4 +12,8 @@ public class Aluguer{
     private LocalDateTime DataInicio;
     private LocalDateTime DataFim;
     
+    // Construtores
+    
+    
+    
 }

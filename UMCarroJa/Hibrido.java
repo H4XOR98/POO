@@ -3,63 +3,49 @@ import java.util.*;
 
 public class Hibrido extends Veiculo{
     
+    // Variáveis de Instância
+    
     private double velocidadeMedia;
-    private double consumoG;
-    private double consumoE;
     private double autonomiaG;
     private double autonomiaE;
-    private double precoG;
-    private double precoE;
+    private double consumoG;
+    private double consumoE;
     
     // Construtores
     
     public Hibrido(){
         super();
         this.velocidadeMedia = 0;
-        this.consumoG = 0;
-        this.consumoE = 0;
         this.autonomiaG = 0;
         this.autonomiaE = 0;
-        this.precoG = 0;
-        this.precoE = 0;
+        this.consumoG = 0;
+        this.consumoE = 0;
     }
     
     public Hibrido (Hibrido h){
         super(h);
         this.velocidadeMedia = h.getVelocidadeMedia();
-        this.consumoG = h.getConsumoG();
-        this.consumoE = h.getConsumoE();
         this.autonomiaG = h.getAutonomiaG();
         this.autonomiaE = h.getAutonomiaE();
-        this.precoG = h.getPrecoG();
-        this.precoE = h.getPrecoE();
+        this.consumoG = h.getConsumoG();
+        this.consumoE = h.getConsumoE();
     }
     
-    public Hibrido (TipoVeiculo tipoVeiculo,int nifProprietario, String matricula, boolean disponivel, Ponto localizacao, 
-                    double classificacao, Collection<Integer> classificacoes, double velocidadeMedia, double consumoG, 
-                    double consumoE, double autonomiaG, double autonomiaE, double precoG, double precoE){
-        super(tipoVeiculo, nifProprietario, matricula, disponivel, localizacao, classificacao, classificacoes);
+    public Hibrido (TipoVeiculo tipoVeiculo,int nifProprietario, String matricula, boolean disponivel, Ponto localizacao, double preco,
+                    double classificacao, Collection<Integer> classificacoes, double velocidadeMedia, double autonomiaG, double autonomiaE,
+                    double consumoG, double consumoE){
+        super(tipoVeiculo, nifProprietario, matricula, disponivel, localizacao, preco, classificacao, classificacoes);
         this.velocidadeMedia = velocidadeMedia;
-        this.consumoG = consumoG;
-        this.consumoE = consumoE;
         this.autonomiaG = autonomiaG;
         this.autonomiaE = autonomiaE;
-        this.precoG = precoG;
-        this.precoE = precoE;
+        this.consumoG = consumoG;
+        this.consumoE = consumoE;
     }
     
     // Gets
     
     public double getVelocidadeMedia(){
         return this.velocidadeMedia;
-    }
-    
-    public double getConsumoG(){
-        return this.consumoG;
-    }
-    
-    public double getConsumoE(){
-        return this.consumoE;
     }
     
     public double getAutonomiaG(){
@@ -70,26 +56,18 @@ public class Hibrido extends Veiculo{
         return this.autonomiaE;
     }
     
-    public double getPrecoG(){
-        return this.precoG;
+    public double getConsumoG(){
+        return this.consumoG;
     }
     
-    public double getPrecoE(){
-        return this.precoE;
+    public double getConsumoE(){
+        return this.consumoE;
     }
-    
+          
     // Sets
     
     public void setVelocidadeMedia (double newVelocidadeMedia){
         this.velocidadeMedia = newVelocidadeMedia;
-    }
-    
-    public void setConsumoG (double newConsumoG){
-        this.consumoG = newConsumoG;
-    }
-    
-    public void setConsumoE (double newConsumoE){
-        this.consumoE = newConsumoE;
     }
     
     public void setAutonomiaG (double newAutonomiaG){
@@ -100,12 +78,12 @@ public class Hibrido extends Veiculo{
         this.autonomiaE = newAutonomiaE;
     }
     
-    public void setPrecoG (double newPrecoG){
-        this.precoG = newPrecoG;
+    public void setConsumoG (double newConsumoG){
+        this.consumoG = newConsumoG;
     }
     
-    public void setPrecoE (double newPrecoE){
-        this.precoE = newPrecoE;
+    public void setConsumoE (double newConsumoE){
+        this.consumoE = newConsumoE;
     }
     
     // Clone
@@ -124,9 +102,8 @@ public class Hibrido extends Veiculo{
           return false;
           
         Hibrido h = (Hibrido) o;
-        return (super.equals(h) && this.velocidadeMedia == h.getVelocidadeMedia() && this.consumoG == h.getConsumoG() &&
-                this.consumoE == h.getConsumoE() && this.autonomiaG == h.getAutonomiaG() && this.autonomiaE == h.getAutonomiaE() &&
-                this.precoG == h.getPrecoG() && this.precoE == h.getPrecoE());
+        return super.equals(h) && this.velocidadeMedia == h.getVelocidadeMedia() && this.autonomiaG == h.getAutonomiaG() && 
+               this.autonomiaE == h.getAutonomiaE() && this.consumoG == h.getConsumoG() && this.consumoE == h.getConsumoE();
     }
     
     // toString
@@ -136,15 +113,12 @@ public class Hibrido extends Veiculo{
         sb.append(super.toString());
         sb.append("Velocidade Média: " + this.velocidadeMedia + " Km/h\n");
         sb.append("Gasolina\n");
-        sb.append("  Consumo: " + this.consumoG + " L/Km\n");
         sb.append("  Autonomia: " + this.autonomiaG + " %\n");
-        sb.append("  Preco: " + this.precoG + " €/Km\n");
+        sb.append("  Consumo: " + this.consumoG + " %/Km\n");
         sb.append("Eletricidade\n");
-        sb.append("  Consumo: " + this.consumoE + " W/Km\n");
         sb.append("  Autonomia: " + this.autonomiaE + " %\n");
-        sb.append("  Preco: " + this.precoE + " €/Km\n");
+        sb.append("  Consumo: " + this.consumoE + " W/Km\n");
         return sb.toString();
     }
     
 }
-

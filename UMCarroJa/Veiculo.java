@@ -10,6 +10,7 @@ public abstract class Veiculo{
     private String matricula;
     private boolean disponivel;
     private Ponto localizacao;
+    private double preco;
     private double classificacao;
     private Collection<Integer> classificacoes;
     
@@ -21,19 +22,9 @@ public abstract class Veiculo{
         this.matricula = " ";
         this.disponivel = false;
         this.localizacao = new Ponto();
+        this.preco = 0;
         this.classificacao = 0;
         this.classificacoes = new HashSet<>();
-    }
-    
-    public Veiculo (TipoVeiculo tipoVeiculo,int nifProprietario, String matricula, boolean disponivel, Ponto localizacao, 
-                    double classificacao, Collection<Integer> classificacoes){
-        this.tipoVeiculo = tipoVeiculo;
-        this.nifProprietario = nifProprietario;
-        this.matricula = matricula;
-        this.disponivel = disponivel;
-        this.localizacao = localizacao;
-        this.classificacao = classificacao;
-        setClassificacoes(classificacoes);
     }
     
     public Veiculo (Veiculo veiculo){
@@ -42,8 +33,21 @@ public abstract class Veiculo{
         this.matricula = veiculo.getMatricula();
         this.disponivel = veiculo.getDisponivel();
         this.localizacao = veiculo.getLocalizacao();
+        this.preco = veiculo.getPreco();
         this.classificacao = veiculo.getClassificacao();
         this.classificacoes = veiculo.getClassificacoes();
+    }
+    
+    public Veiculo (TipoVeiculo tipoVeiculo,int nifProprietario, String matricula, boolean disponivel, Ponto localizacao, double preco,
+                    double classificacao, Collection<Integer> classificacoes){
+        this.tipoVeiculo = tipoVeiculo;
+        this.nifProprietario = nifProprietario;
+        this.matricula = matricula;
+        this.disponivel = disponivel;
+        setLocalizacao(localizacao);
+        this.preco = preco;
+        this.classificacao = classificacao;
+        setClassificacoes(classificacoes);
     }
     
     // Gets
@@ -66,6 +70,10 @@ public abstract class Veiculo{
     
     public Ponto getLocalizacao(){
         return this.localizacao;
+    }
+    
+    public double getPreco(){
+        return this.preco;
     }
     
     public double getClassificacao(){
@@ -99,7 +107,11 @@ public abstract class Veiculo{
     }
     
     public void setLocalizacao (Ponto newLocalizacao){
-        this.localizacao = newLocalizacao;
+        this.localizacao = newLocalizacao.clone();
+    }
+    
+    public void setPreco (double newPreco){
+        this.preco = newPreco;
     }
     
     public void setClassificacao (double newClassificacao){
@@ -129,7 +141,7 @@ public abstract class Veiculo{
         Veiculo v = (Veiculo) o;
         return (this.tipoVeiculo.equals(v.getTipoVeiculo()) && this.nifProprietario == v.getNifProprietario() &&
                 this.matricula.equals(v.getMatricula()) && this.disponivel == v.getDisponivel() && 
-                this.localizacao.equals(v.getLocalizacao()) && this.classificacao == v.getClassificacao() &&
+                this.localizacao.equals(v.getLocalizacao()) && this.preco == v.getPreco() && this.classificacao == v.getClassificacao() &&
                 this.classificacoes.equals(v.getClassificacoes()));
     }
     
@@ -142,6 +154,7 @@ public abstract class Veiculo{
         sb.append("Matricula: " + this.matricula + "\n");
         sb.append("Disponível: " + this.disponivel + "\n");
         sb.append(this.localizacao.toString() + "\n");
+        sb.append("Preco: " + this.getPreco() + "€/Km\n"); 
         sb.append("Classificação: " + this.classificacao + "\n");
         return sb.toString();
     }
