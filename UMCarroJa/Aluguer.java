@@ -11,6 +11,25 @@ public class Aluguer
     private Ponto destino;
     private Cliente cliente;
     private Veiculo veiculo;
-    private LocalDateTime DataInicio;
-    private LocalDateTime DataFim;
+    private LocalDateTime dataInicio;
+    private LocalDateTime dataFim;
+    
+    
+    public Aluguer(){
+        this.estado = null;
+        this.destino = new Ponto();
+        this.cliente = new Cliente();
+        this.veiculo = null;
+        this.dataInicio = LocalDateTime.now();
+        this.dataFim = LocalDateTime.now();
+    }
+    
+    public Aluguer(EstadoAluguer estado,Ponto destino,Cliente cliente,Veiculo veiculo){
+        this.estado = null;
+        this.destino = new Ponto();
+        this.cliente = new Cliente();
+        this.veiculo = null;
+        this.dataInicio = LocalDateTime.now();
+        this.dataFim = LocalDateTime.now();
+    }
 }
