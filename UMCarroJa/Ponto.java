@@ -1,4 +1,5 @@
 import java.lang.StringBuilder;
+import java.util.Comparator;
 /**
  * Classe que implementa um Ponto num plano2D.
  * As coordenadas do Ponto sao inteiras.
@@ -7,6 +8,12 @@ public class Ponto {
   //variaveis de instancia
   private int x;
   private int y;
+  
+  
+  Comparator<Ponto> comparaPontos = (a,b) -> {if(a.distancia(b) == 0) return 0;
+                                              if(a.distancia(b) > 0) return 1;
+                                              else return -1;
+                                             };
   
   /**
    * Construtores da classe Ponto.

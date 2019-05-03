@@ -18,6 +18,14 @@ public class Eletrico extends Veiculo{
         this.consumo = 0;
     }
     
+    public Eletrico (TipoVeiculo tipoVeiculo, int nifProprietario, String matricula, boolean disponivel, Ponto localizacao, double preco,
+                     double numTotalKms, double classificacao, Collection<Integer> classificacoes, double velocidadeMedia, double autonomia, double consumo){
+        super(tipoVeiculo, nifProprietario, matricula, disponivel, localizacao, preco, numTotalKms, classificacao, classificacoes);
+        this.velocidadeMedia = velocidadeMedia;
+        this.autonomia = autonomia;
+        this.consumo = consumo;
+    }
+    
     public Eletrico (Eletrico e){
         super(e);
         this.velocidadeMedia = e.getVelocidadeMedia();
@@ -25,13 +33,6 @@ public class Eletrico extends Veiculo{
         this.consumo = e.getConsumo();
     }
     
-    public Eletrico (TipoVeiculo tipoVeiculo, int nifProprietario, String matricula, boolean disponivel, Ponto localizacao, double preco,
-                     double classificacao, Collection<Integer> classificacoes, double velocidadeMedia, double autonomia, double consumo){
-        super(tipoVeiculo, nifProprietario, matricula, disponivel, localizacao, preco, classificacao, classificacoes);
-        this.velocidadeMedia = velocidadeMedia;
-        this.autonomia = autonomia;
-        this.consumo = consumo;
-    }
     
     // Gets
     
@@ -92,4 +93,12 @@ public class Eletrico extends Veiculo{
         return sb.toString();
     }
     
+    public void abastecerVeiculo(){
+        this.autonomia = 100.0;
+    }
+    
+    
+    public double quantidadeCombustivel(){
+        return this.autonomia;
+    }
 }

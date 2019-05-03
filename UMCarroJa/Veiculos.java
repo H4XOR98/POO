@@ -7,6 +7,10 @@ public class Veiculos{
     
     private Collection<Veiculo> veiculos;
     
+    //Comparator<Veiculo> comparadorPreco = (a,b) -> (a.getPreco().compareTo(b.getPreco()));
+    
+    //Comparator<Veiculo> comparadorMatriculas = (a,b) -> (a.getMatricula().compareTo(b.getMatricula()));
+    
     // Construtores
     
     public Veiculos(){

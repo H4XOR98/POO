@@ -5,9 +5,8 @@ import java.util.*;
  * @author (seu nome) 
  * @version (número de versão ou data)
  */
-public class GestorAluguer
+public class GestorAlugueres
 {
     private Collection<Aluguer> alugueresEspera;
-    private Collection<Aluguer> alugueresCurso;
-    private Collection<Aluguer> alugueresTerminados;
+    
 }

@@ -6,55 +6,37 @@ import java.util.*;
  * @version (número de versão ou data)
  */
 public class GestorUtilizadores {
-    private Collection<Cliente> clientes;
-    private Collection<Proprietario> proprietarios;
+    private Collection<Utilizador> utilizadores;
 
 
     public GestorUtilizadores() {
-        this.clientes = new HashSet<>();
-        this.proprietarios = new HashSet<>();
+        this.utilizadores = new HashSet<>();
     }
 
 
-    public GestorUtilizadores(Collection<Cliente> clientes, Collection<Proprietario> proprietarios) {
-        setClientes(clientes);
-        setProprietarios(proprietarios);
+    public GestorUtilizadores(Collection<Utilizador> utilizadores) {
+        setUtilizadores(utilizadores);
     }
 
     public GestorUtilizadores(GestorUtilizadores gUtilizadores) {
-        gUtilizadores.getClientes();
-        gUtilizadores.getProprietarios();
+        gUtilizadores.getUtilizadores();
     }
 
-    public Collection<Cliente> getClientes() {
-        Collection<Cliente> aux = new HashSet<>();
-        for (Cliente cliente : this.clientes) {
-            aux.add(cliente.clone());
+    public Collection<Utilizador> getUtilizadores() {
+        Collection<Utilizador> aux = new HashSet<>();
+        for (Utilizador u : this.utilizadores) {
+            aux.add(u.clone());
         }
         return aux;
     }
 
-    public Collection<Proprietario> getProprietarios() {
-        Collection<Proprietario> aux = new HashSet<>();
-        for (Proprietario proprietario : this.proprietarios) {
-            aux.add(proprietario.clone());
-        }
-        return aux;
-    }
-
-    public void setClientes(Collection<Cliente> clientes) {
-        this.clientes = new HashSet<>();
-        for (Cliente cliente : clientes) {
-            this.clientes.add(cliente.clone());
+    public void setUtilizadores(Collection<Utilizador> utilizadores) {
+        this.utilizadores = new HashSet<>();
+        for (Utilizador u : utilizadores) {
+            this.utilizadores.add(u.clone());
         }
     }
 
-    public void setProprietarios(Collection<Proprietario> proprietarios) {
-        this.proprietarios = new HashSet<>();
-        for (Proprietario proprietario : proprietarios)  {
-            this.proprietarios.add(proprietario.clone());
-        }
-    }
 
     public boolean equals(Object o){
         if(o == this){
@@ -65,19 +47,15 @@ public class GestorUtilizadores {
         }
         GestorUtilizadores gUtilizadores = (GestorUtilizadores)o;
         
-        return this.clientes.equals(gUtilizadores.getClientes()) && this.proprietarios.equals(gUtilizadores.getProprietarios());
+        return this.utilizadores.equals(gUtilizadores.getUtilizadores()); 
     }
     
     
     public String toString(){
         StringBuilder sb = new StringBuilder();
-        sb.append("--------------Clientes--------------\n");
-        for(Cliente cliente: this.clientes){
-            sb.append(cliente.toString());
-        }
-        sb.append("--------------Proprietarios--------------\n");
-        for(Proprietario proprietario: this.proprietarios){
-            sb.append(proprietario.toString());
+        sb.append("--------------Utilizadores--------------\n");
+        for(Utilizador u: this.utilizadores){
+            sb.append(u.toString());
         }
         return sb.toString();
     }

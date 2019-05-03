@@ -105,9 +105,4 @@ public class Proprietario extends Utilizador
         return new Proprietario(this);
     }
     
-    
-        
-    
-    
-    
 }

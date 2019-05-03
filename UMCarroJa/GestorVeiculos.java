@@ -7,6 +7,7 @@ public class GestorVeiculos{
     
     private Map<Integer,Veiculos> gestor;
     
+    
     // Construtores
     
     public GestorVeiculos(){

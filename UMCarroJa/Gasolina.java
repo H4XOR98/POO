@@ -26,8 +26,8 @@ public class Gasolina extends Veiculo{
     }
     
     public Gasolina (TipoVeiculo tipoVeiculo, int nifProprietario, String matricula, boolean disponivel, Ponto localizacao, double preco,
-                     double classificacao, Collection<Integer> classificacoes, double velocidadeMedia, double autonomia, double consumo){
-        super(tipoVeiculo, nifProprietario, matricula, disponivel, localizacao, preco, classificacao, classificacoes);
+                     double numTotalKms, double classificacao, Collection<Integer> classificacoes, double velocidadeMedia, double autonomia, double consumo){
+        super(tipoVeiculo, nifProprietario, matricula, disponivel, localizacao, preco, numTotalKms,classificacao, classificacoes);
         this.velocidadeMedia = velocidadeMedia;
         this.autonomia = autonomia;
         this.consumo = consumo;
@@ -92,4 +92,12 @@ public class Gasolina extends Veiculo{
         return sb.toString();
     }
     
+    
+    public void abastecerVeiculo(){
+        this.autonomia = 100.0;
+    }
+    
+    public double quantidadeCombustivel(){
+        return this.autonomia;
+    }
 }

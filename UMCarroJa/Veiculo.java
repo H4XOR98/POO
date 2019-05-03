@@ -12,6 +12,7 @@ public abstract class Veiculo{
     private Ponto localizacao;
     private double preco;
     private double classificacao;
+    private double numTotalKms;
     private Collection<Integer> classificacoes;
     
     // Construtores
@@ -24,6 +25,7 @@ public abstract class Veiculo{
         this.localizacao = new Ponto();
         this.preco = 0;
         this.classificacao = 0;
+        this.numTotalKms = 0;
         this.classificacoes = new HashSet<>();
     }
     
@@ -34,11 +36,13 @@ public abstract class Veiculo{
         this.disponivel = veiculo.getDisponivel();
         this.localizacao = veiculo.getLocalizacao();
         this.preco = veiculo.getPreco();
+        this.numTotalKms = veiculo.getNumTotalKms();
         this.classificacao = veiculo.getClassificacao();
         this.classificacoes = veiculo.getClassificacoes();
     }
     
-    public Veiculo (TipoVeiculo tipoVeiculo,int nifProprietario, String matricula, boolean disponivel, Ponto localizacao, double preco,
+    public Veiculo (TipoVeiculo tipoVeiculo,int nifProprietario, String matricula, 
+                    boolean disponivel, Ponto localizacao, double preco, double numTotalKms,
                     double classificacao, Collection<Integer> classificacoes){
         this.tipoVeiculo = tipoVeiculo;
         this.nifProprietario = nifProprietario;
@@ -46,6 +50,7 @@ public abstract class Veiculo{
         this.disponivel = disponivel;
         setLocalizacao(localizacao);
         this.preco = preco;
+        this.numTotalKms = numTotalKms;
         this.classificacao = classificacao;
         setClassificacoes(classificacoes);
     }
@@ -74,6 +79,10 @@ public abstract class Veiculo{
     
     public double getPreco(){
         return this.preco;
+    }
+    
+    public double getNumTotalKms(){
+        return this.numTotalKms;
     }
     
     public double getClassificacao(){
@@ -118,6 +127,10 @@ public abstract class Veiculo{
         this.classificacao = newClassificacao;
     }
 
+    public void setNumTotalKms (double newnumTotalKms){
+        this.numTotalKms = newnumTotalKms;
+    }
+    
     public void setClassificacoes(Collection<Integer> classificacoes){
         this.classificacoes = new HashSet<>();
         for(Integer i : classificacoes){
@@ -141,7 +154,8 @@ public abstract class Veiculo{
         Veiculo v = (Veiculo) o;
         return (this.tipoVeiculo.equals(v.getTipoVeiculo()) && this.nifProprietario == v.getNifProprietario() &&
                 this.matricula.equals(v.getMatricula()) && this.disponivel == v.getDisponivel() && 
-                this.localizacao.equals(v.getLocalizacao()) && this.preco == v.getPreco() && this.classificacao == v.getClassificacao() &&
+                this.localizacao.equals(v.getLocalizacao()) && this.preco == v.getPreco() &&
+                this.numTotalKms == v.getNumTotalKms() && this.classificacao == v.getClassificacao() &&
                 this.classificacoes.equals(v.getClassificacoes()));
     }
     
@@ -155,8 +169,22 @@ public abstract class Veiculo{
         sb.append("Disponível: " + this.disponivel + "\n");
         sb.append(this.localizacao.toString() + "\n");
         sb.append("Preco: " + this.getPreco() + "€/Km\n"); 
+        sb.append("Numero Total de Kms " + this.numTotalKms + "\n");
         sb.append("Classificação: " + this.classificacao + "\n");
         return sb.toString();
     }
     
+    
+    //Metodos
+    public void disponibilizaVeiculo(){
+        setDisponivel(true);
+    }
+    
+    public abstract void abastecerVeiculo();
+    
+    public abstract double quantidadeCombustivel();
+    
+    public void alteraPrecoKm(double preco){
+        setPreco(preco);
+    }
 }

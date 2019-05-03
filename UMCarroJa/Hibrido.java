@@ -2,7 +2,7 @@
 import java.util.*;
 
 public class Hibrido extends Veiculo{
-    
+
     // Variáveis de Instância
     
     private double velocidadeMedia;
@@ -10,7 +10,7 @@ public class Hibrido extends Veiculo{
     private double autonomiaE;
     private double consumoG;
     private double consumoE;
-    
+  
     // Construtores
     
     public Hibrido(){
@@ -32,9 +32,9 @@ public class Hibrido extends Veiculo{
     }
     
     public Hibrido (TipoVeiculo tipoVeiculo,int nifProprietario, String matricula, boolean disponivel, Ponto localizacao, double preco,
-                    double classificacao, Collection<Integer> classificacoes, double velocidadeMedia, double autonomiaG, double autonomiaE,
+                    double numTotalKms,double classificacao, Collection<Integer> classificacoes, double velocidadeMedia, double autonomiaG, double autonomiaE,
                     double consumoG, double consumoE){
-        super(tipoVeiculo, nifProprietario, matricula, disponivel, localizacao, preco, classificacao, classificacoes);
+        super(tipoVeiculo, nifProprietario, matricula, disponivel, localizacao, preco,numTotalKms, classificacao, classificacoes);
         this.velocidadeMedia = velocidadeMedia;
         this.autonomiaG = autonomiaG;
         this.autonomiaE = autonomiaE;
@@ -55,7 +55,7 @@ public class Hibrido extends Veiculo{
     public double getAutonomiaE(){
         return this.autonomiaE;
     }
-    
+
     public double getConsumoG(){
         return this.consumoG;
     }
@@ -113,16 +113,21 @@ public class Hibrido extends Veiculo{
         sb.append(super.toString());
         sb.append("Velocidade Média: " + this.velocidadeMedia + " Km/h\n");
         sb.append("Gasolina\n");
-        sb.append("  Autonomia: " + this.autonomiaG + " %\n");
-        sb.append("  Consumo: " + this.consumoG + " %/Km\n");
+        sb.append("\tAutonomia: " + this.autonomiaG + " %\n");
+        sb.append("\tConsumo: " + this.consumoG + " %/Km\n");
         sb.append("Eletricidade\n");
-        sb.append("  Autonomia: " + this.autonomiaE + " %\n");
-        sb.append("  Consumo: " + this.consumoE + " W/Km\n");
+        sb.append("\tAutonomia: " + this.autonomiaE + " %\n");
+        sb.append("\tConsumo: " + this.consumoE + " W/Km\n");
         return sb.toString();
     }
     
-<<<<<<< HEAD
+    
+    public void abastecerVeiculo(){
+        this.autonomiaG = 100.0;
+        this.autonomiaE = 100.0;
+    }
+    
+    public double quantidadeCombustivel(){
+        return ((this.autonomiaE+autonomiaG) * 100) / 200;
+    }
 }
-=======
-}
->>>>>>> d6a2163c640847dcc55bc4276da4c0dbb40bb0a4
