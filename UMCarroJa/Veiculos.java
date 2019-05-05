@@ -29,7 +29,9 @@ public class Veiculos{
     
     public Collection<Veiculo> getVeiculos(){
         Collection<Veiculo> aux = new HashSet<>();
-        this.veiculos.forEach((v -> aux.add(v.clone())));
+        for(Veiculo v : this.veiculos){
+            aux.add(v.clone());
+        }
         return aux;
     }
     
@@ -37,7 +39,9 @@ public class Veiculos{
     
     public void setVeiculos(Collection<Veiculo> veiculos){
         this.veiculos = new HashSet<>();
-        veiculos.forEach((v -> this.veiculos.add(v.clone())));
+        for(Veiculo v : veiculos){
+            this.veiculos.add(v.clone());
+        }
     }
     
     // Clone

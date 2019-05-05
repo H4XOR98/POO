@@ -128,6 +128,6 @@ public class Hibrido extends Veiculo{
     }
     
     public double quantidadeCombustivel(){
-        return ((this.autonomiaE+autonomiaG) * 100) / 200;
+        return (this.autonomiaE+this.autonomiaG) / 2;
     }
 }

@@ -21,6 +21,7 @@ public class Notificacao {
         this.assunto = "n/a";
         this.conteudo = "n/a";
         this.lida = false;
+        id++;
     }
 
 
@@ -30,6 +31,7 @@ public class Notificacao {
         this.assunto = assunto;
         this.conteudo = conteudo;
         this.lida = lida;
+        id++;
     }
 
 
@@ -88,10 +90,6 @@ public class Notificacao {
     public static int getId() {
         return id;
     }
-
-    public static void setId(int id) {
-        Notificacao.id = id;
-    }
     
     
     
@@ -113,7 +111,7 @@ public class Notificacao {
     public String toString(){
         StringBuilder sb = new StringBuilder();
         sb.append("-----------------NOTIFICACAO-----------------\n");
-        sb.append("ID: " + this.id + ";\n");
+        sb.append("ID: " + id + ";\n");
         sb.append("Remetente: " + this.remetente + ";\n");
         sb.append("Destinatario: " + this.destinatario + ";\n");
         sb.append("Assunto: " + this.assunto + ";\n");

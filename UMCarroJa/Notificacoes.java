@@ -69,21 +69,21 @@ public class Notificacoes
         return new Notificacoes(this);
     }
     
-    // Adiciona um veículo
+    // Adiciona uma notificacao
     
     public void addNotificacao(Notificacao n){
         this.notificacoes.add(n.clone());
     }
     
-    // Remove um veículo
+    // Remove uma notificacao
     
     public void removeNotificacao(Notificacao n){
         this.notificacoes.remove(n);
     }
     
-    // Liberta os Veículos
+    // Liberta as Notificacoes
     
-    public void libertaVeiculos(){
+    public void libertaNotificacoes(){
         this.notificacoes.clear();
     }
     

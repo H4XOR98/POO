@@ -11,6 +11,8 @@ public class Aluguer{
     private double numKms;
     private LocalDateTime dataInicio;
     private LocalDateTime dataFim;
+    private double precoViagem;
+    private Metereologia meteo;
 
 
     public Aluguer() {
@@ -21,6 +23,7 @@ public class Aluguer{
         this.numKms = 0;
         this.dataInicio = LocalDateTime.now();
         this.dataFim = LocalDateTime.now();
+        this.precoViagem = 0;
     }
 
 
@@ -107,5 +110,38 @@ public class Aluguer{
         this.dataFim = dataFim;
     }
 
-
+    
+    public String toString(){
+        StringBuilder sb = new StringBuilder();
+        sb.append("............ALUGUER............\n");
+        sb.append("Estado: " + this.estado +";\n");
+        sb.append("Destino: \n\t" + this.destino.toString());
+        sb.append(this.cliente.toString());
+        sb.append(this.veiculo.toString());
+        sb.append("Numero de Kms: " + this.numKms + ";\n");
+        sb.append("Data:\n");
+        sb.append("\tInicio " + this.dataInicio.toString() + ";\n");
+        sb.append("\tFim " + this.dataFim.toString() + ";\n");
+        return sb.toString();
+    }
+    
+    
+    public boolean equals(Object o){
+        if(o == this){
+            return true;
+        }
+        if((o == null) || (o.getClass() != this.getClass())){
+            return false;
+        }
+        Aluguer a = (Aluguer)o;
+        
+        return (this.estado.equals(a.getEstado()) && this.destino.equals(a.getDestino()) && this.cliente.equals(a.getCliente()) && 
+                this.veiculo.equals(a.getVeiculo()) && this.numKms == a.getNumKms() && this.dataInicio.equals(a.getDataInicio()) &&
+                this.dataFim.equals(a.getDataFim()));
+    }
+    
+    
+    public Aluguer clone(){
+        return new Aluguer(this);
+    }   
 }

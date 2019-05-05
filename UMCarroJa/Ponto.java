@@ -167,7 +167,7 @@ public class Ponto {
    */
   public String toString() {
       StringBuilder sb = new StringBuilder();
-      sb.append("Localização: " + "(" + this.x + ";" + this.y + ")");
+      sb.append("Localização: " + "(" + this.x + ";" + this.y + ")\n");
       return sb.toString();
   }
   
