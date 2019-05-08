@@ -8,6 +8,13 @@ public class GestorVeiculos{
     private Map<Integer,Veiculos> gestor;
     
     
+    Comparator<Veiculo> comparaPrecos = (a,b) -> {if(a.getPreco() == b.getPreco()) return 0;
+                                                  if(a.getPreco() > b.getPreco()) return 1;
+                                                  else return -1;
+                                                 };
+               
+                                                 
+                                                 
     // Construtores
     
     public GestorVeiculos(){
@@ -69,20 +76,16 @@ public class GestorVeiculos{
     
     // Adiciona um veículo
     
-    public void addVeiculo (Veiculo v){
-        Veiculos aux = new Veiculos();
-        aux = this.gestor.get(v.getNifProprietario());
+    public void insereVeiculo (Veiculo v){
+        Veiculos aux = this.gestor.get(v.getNifProprietario());
         aux.addVeiculo(v);
-        this.gestor.put(v.getNifProprietario(),aux.clone());
     }
     
     // remove um veículo
     
     public void removeVeiculo (Veiculo v){
-        Veiculos aux = new Veiculos();
-        aux = this.gestor.get(v.getNifProprietario());
+        Veiculos aux = this.gestor.get(v.getNifProprietario());
         aux.removeVeiculo(v);
-        this.gestor.put(v.getNifProprietario(),aux.clone());
     }
     
     // Liberta o Gestor de Veículos
@@ -90,5 +93,7 @@ public class GestorVeiculos{
     public void libertaGestor(){
         this.gestor.clear();
     }
+    
+    
     
 }

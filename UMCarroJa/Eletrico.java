@@ -94,7 +94,7 @@ public class Eletrico extends Veiculo{
     }
     
     public void abastecerVeiculo(){
-        this.autonomia = 100.0;
+        setAutonomia(100.0);
     }
     
     

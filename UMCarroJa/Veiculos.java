@@ -7,9 +7,6 @@ public class Veiculos{
     
     private Collection<Veiculo> veiculos;
     
-    //Comparator<Veiculo> comparadorPreco = (a,b) -> (a.getPreco().compareTo(b.getPreco()));
-    
-    //Comparator<Veiculo> comparadorMatriculas = (a,b) -> (a.getMatricula().compareTo(b.getMatricula()));
     
     // Construtores
     
@@ -76,13 +73,17 @@ public class Veiculos{
     // Adiciona um veículo
     
     public void addVeiculo(Veiculo v){
-        this.veiculos.add(v.clone());
+        if(!this.veiculos.contains(v)){
+            this.veiculos.add(v.clone());
+        }
     }
     
     // Remove um veículo
     
     public void removeVeiculo(Veiculo v){
-        this.veiculos.remove(v);
+        if(this.veiculos.contains(v)){
+            this.veiculos.remove(v);
+        }
     }
     
     // Liberta os Veículos

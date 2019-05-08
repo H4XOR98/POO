@@ -12,7 +12,8 @@ public class Aluguer{
     private LocalDateTime dataInicio;
     private LocalDateTime dataFim;
     private double precoViagem;
-    private Metereologia meteo;
+    private EstadoMetereologia meteo;
+    private EstadoTrafego trafego;
 
 
     public Aluguer() {
@@ -24,10 +25,12 @@ public class Aluguer{
         this.dataInicio = LocalDateTime.now();
         this.dataFim = LocalDateTime.now();
         this.precoViagem = 0;
+        this.meteo = EstadoMetereologia.getRandom();
+        this.trafego = EstadoTrafego.getRandom();
     }
 
 
-    public Aluguer(EstadoAluguer estado, Ponto destino, Cliente cliente, Veiculo veiculo, double numKms, LocalDateTime dataInicio, LocalDateTime dataFim) {
+    public Aluguer(EstadoAluguer estado, Ponto destino, Cliente cliente, Veiculo veiculo, double numKms, LocalDateTime dataInicio, LocalDateTime dataFim, double precoViagem) {
         this.estado = estado;
         this.destino = destino;
         this.cliente = cliente;
@@ -35,6 +38,7 @@ public class Aluguer{
         this.numKms = numKms;
         this.dataInicio = dataInicio;
         this.dataFim = dataFim;
+        this.precoViagem = precoViagem;
     }
 
     public Aluguer(Aluguer aluguer){
@@ -45,6 +49,7 @@ public class Aluguer{
         this.numKms = aluguer.getNumKms();
         this.dataInicio = aluguer.getDataInicio();
         this.dataFim = aluguer.getDataFim();
+        this.precoViagem = aluguer.getPrecoViagem();
     }
 
 
@@ -78,6 +83,10 @@ public class Aluguer{
     public LocalDateTime getDataFim() {
         return this.dataFim;
     }
+    
+    public double getPrecoViagem() {
+        return this.precoViagem;
+    }
 
     //setters
 
@@ -110,6 +119,9 @@ public class Aluguer{
         this.dataFim = dataFim;
     }
 
+    public void setPrecoViagem(double precoViagem) {
+        this.precoViagem = precoViagem;
+    }
     
     public String toString(){
         StringBuilder sb = new StringBuilder();

@@ -64,4 +64,23 @@ public class GestorUtilizadores {
     public GestorUtilizadores clone(){
         return new GestorUtilizadores(this);
     }
+    
+    //-------------
+    
+    public void insereUtilizador(Utilizador u){
+        if(!this.utilizadores.contains(u)){
+            this.utilizadores.add(u);
+        }
+    }
+    
+    
+    public void removeUtilizador(Utilizador u){
+        if(this.utilizadores.contains(u)){
+            this.utilizadores.remove(u);
+        }
+    }
+    
+    public void libertaUtilizadores(){
+        this.utilizadores.clear();
+    }
 }

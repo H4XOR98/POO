@@ -94,10 +94,11 @@ public class Gasolina extends Veiculo{
     
     
     public void abastecerVeiculo(){
-        this.autonomia = 100.0;
+        setAutonomia(100.0);
     }
     
     public double quantidadeCombustivel(){
         return this.autonomia;
     }
+    
 }

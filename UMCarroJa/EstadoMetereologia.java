@@ -7,28 +7,19 @@
  */
 public enum EstadoMetereologia
 {
-    NEVE(0,1.8,"Neve"), CHUVA(1,1.3,"Chuva"), NEVOEIRO(2,1.4,"Nevoeiro"), VENTO(3,1.2,"Vento"), NUBLADO(4,1.1,"Nublado"), SOL(5,1.0,"Sol");
+    Neve(1.8), Chuva(1.3), Nevoeiro(1.4), Vento(1.2), Nublado(1.1), Sol(1.0);
     
-    private int id;
     private double percentagem;
-    private String estado;
     
-    private EstadoMetereologia(int id,double percentagem,String estado) {
-        this.id = id;
+    private EstadoMetereologia(double percentagem) {
         this.percentagem = percentagem;
-        this.estado = estado;
-    }
-    
-    public int getId(){
-        return this.id;
     }
     
     public double getPercentagem(){
         return this.percentagem;
     }
     
-    public String getEstado(){
-        return this.estado;
+    public static EstadoMetereologia getRandom() {
+        return values()[(int) (Math.random() * values().length)];
     }
 }
-

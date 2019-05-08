@@ -73,18 +73,55 @@ public class GestorAlugueres
     // Adiciona um veículo
     
     public void addAluguer(Aluguer a){
-        this.alugueres.add(a.clone());
+        if(!this.alugueres.contains(a)){
+            this.alugueres.add(a.clone());
+        }
     }
     
     // Remove um veículo
     
     public void removeAluguer(Aluguer a){
-        this.alugueres.remove(a);
+        if(this.alugueres.contains(a)){
+            this.alugueres.remove(a);
+        }
     }
     
     // Liberta os Veículos
     
     public void libertaGestorAlugueres(){
         this.alugueres.clear();
+    }
+    
+    
+    public Collection<Aluguer> historicoCliente(Cliente cliente){
+        Collection<Aluguer> aux = new HashSet<>();
+        for(Aluguer a : this.alugueres){
+            if(a.getCliente().equals(cliente)){
+                aux.add(a);//não necessita de clone, pois é uma "visao"
+            }
+        }
+        return aux;
+    }
+    
+    
+    public Collection<Aluguer> historicoVeiculo(Veiculo veiculo){
+        Collection<Aluguer> aux = new HashSet<>();
+        for(Aluguer a : this.alugueres){
+            if(a.getVeiculo().equals(veiculo)){
+                aux.add(a);//não necessita de clone, pois é uma "visao"
+            }
+        }
+        return aux;
+    }
+    
+    
+    public double totalFaturadoProprietario(int nif){
+        double totalFaturado = 0;
+        for(Aluguer a : this.alugueres){
+            if(a.getVeiculo().getNifProprietario() == nif){
+                totalFaturado += a.getPrecoViagem();
+            }
+        }
+        return totalFaturado;
     }
 }

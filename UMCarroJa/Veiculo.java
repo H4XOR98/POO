@@ -187,4 +187,5 @@ public abstract class Veiculo{
     public void alteraPrecoKm(double preco){
         setPreco(preco);
     }
+    
 }
