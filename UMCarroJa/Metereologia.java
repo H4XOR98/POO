@@ -5,13 +5,13 @@
  * @author (your name here)
  * @version (version number or date here)
  */
-public enum EstadoMetereologia
+public enum Metereologia
 {
     Neve(1.8), Chuva(1.3), Nevoeiro(1.4), Vento(1.2), Nublado(1.1), Sol(1.0);
     
     private double percentagem;
     
-    private EstadoMetereologia(double percentagem) {
+    private Metereologia(double percentagem) {
         this.percentagem = percentagem;
     }
     
@@ -19,7 +19,7 @@ public enum EstadoMetereologia
         return this.percentagem;
     }
     
-    public static EstadoMetereologia getRandom() {
+    public static Metereologia getRandom() {
         return values()[(int) (Math.random() * values().length)];
     }
 }

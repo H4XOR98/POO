@@ -13,7 +13,6 @@ public abstract class Utilizador
     private String nome;
     private int nif;
     private String morada;
-    private LocalDate dataNascimento;
     
     
     public Utilizador(){
@@ -22,17 +21,15 @@ public abstract class Utilizador
         this.nome = "n/a";
         this.nif = 0;
         this.morada = "n/a";
-        this.dataNascimento = LocalDate.now();
     }
     
     
-    public Utilizador(String email, String password, String nome, int nif, String morada, LocalDate dataNascimento){
+    public Utilizador(String email, String password, String nome, int nif, String morada){
         this.email = email;
         this.password = password;
         this.nome = nome;
         this.nif = nif;
         this.morada = morada;
-        this.dataNascimento = dataNascimento;
     }
     
     public Utilizador(Utilizador utiliza){
@@ -41,7 +38,6 @@ public abstract class Utilizador
         this.nome = utiliza.getNome();
         this.nif = utiliza.getNif();
         this.morada = utiliza.getMorada();
-        this.dataNascimento = utiliza.getDataNascimento();
     }
 
 
@@ -93,13 +89,6 @@ public abstract class Utilizador
         return this.morada;
     }
 
-    /**
-     * Devolve a data de nascimento.
-     * @return dataNascimento.
-     */
-    public LocalDate getDataNascimento() {
-        return this.dataNascimento;
-    }
 
     /**
      * Atualiza o email.
@@ -146,14 +135,6 @@ public abstract class Utilizador
         this.morada = morada;
     }
 
-    /**
-     * Atualiza a data de nascimento.
-     *
-     * @param nova dataNascimento.
-     */
-    public void setDataNascimento(LocalDate dataNascimento) {
-        this.dataNascimento = dataNascimento;
-    }
     
     public boolean equals(Object o){
         if(o == this){
@@ -166,7 +147,7 @@ public abstract class Utilizador
         Utilizador u = (Utilizador)o;
         
         return this.email.equals(u.getEmail()) && this.password.equals(u.getPassword()) && this.nome.equals(u.getNome()) 
-                && this.nif == u.getNif() && this.morada.equals(u.getMorada()) && this.dataNascimento.equals(u.getDataNascimento());
+                && this.nif == u.getNif() && this.morada.equals(u.getMorada());
     }
     
     
@@ -178,7 +159,6 @@ public abstract class Utilizador
         sb.append("Nome:            " + this.nome + ";\n");
         sb.append("NIF:             " + this.nif + ";\n");
         sb.append("Morada:          " + this.morada+ ";\n");
-        sb.append("Data Nascimento: " + this.dataNascimento + ";\n");
         return sb.toString();
     }
     

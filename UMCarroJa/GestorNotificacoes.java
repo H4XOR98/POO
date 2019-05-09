@@ -43,11 +43,41 @@ public class GestorNotificacoes
         return this.caixaNotificacoes.get(nif).quantosElementos();
     }
     
-    public Notificacoes gestorUtilizador(int nif){
+    public Notificacoes todasNotificacoes(int nif){
         return this.caixaNotificacoes.get(nif);
     }
     
-    public void apagaNotificacoes(int nif){
+    public void apagaTodasNotificacoes(int nif){
         this.caixaNotificacoes.remove(this.caixaNotificacoes.get(nif));
+    }
+    
+    public void enviaNotificacao(Notificacao n){
+        int dest = n.getDestinatario();
+        this.caixaNotificacoes.get(dest).addNotificacao(n);
+    }
+    
+    
+    
+    public String toString(){
+        StringBuilder sb = new StringBuilder();
+        sb.append("----------------- GESTOR NOTIFICACOES -----------------\n");
+        this.caixaNotificacoes.forEach((k,v) -> sb.append("Nif: " + k + "\n" + v.toString()));
+        return sb.toString();
+    }
+    
+    public boolean equals(Object o){
+        if(o == this){
+            return true;
+        }
+        if((o == null) || (o.getClass() != this.getClass())){
+            return false;
+        }
+        GestorNotificacoes gestorNotificacoes = (GestorNotificacoes)o;
+        
+        return this.caixaNotificacoes.equals(gestorNotificacoes.getCaixaNotificacoes());
+    }
+    
+    public GestorNotificacoes clone(){
+        return new GestorNotificacoes(this);
     }
 }

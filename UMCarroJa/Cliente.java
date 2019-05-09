@@ -11,7 +11,7 @@ public class Cliente extends Utilizador
     //variaveis de instancia
     private Ponto localizacao;
     private double destreza;
-    private Collection<Integer> classificacoes;
+    private Collection<Double> classificacoes;
     /**
      * Construtores da classe Ponto.
      * Declaracao dos construtores por omissao (vazio),
@@ -25,12 +25,12 @@ public class Cliente extends Utilizador
         super();
         this.localizacao = new Ponto();
         this.destreza = 100;
-        this.classificacoes = new HashSet<>();
+        this.classificacoes = new ArrayList<>();
     }
 
 
-    public Cliente(String email, String password, String nome, int nif, String morada, LocalDate dataNascimento, Ponto localizacao, double destreza, Collection<Integer> classificacoes){
-        super(email, password, nome, nif, morada, dataNascimento);
+    public Cliente(String email, String password, String nome, int nif, String morada, Ponto localizacao, double destreza, ArrayList<Double> classificacoes){
+        super(email, password, nome, nif, morada);
         setLocalizacao(localizacao);
         this.destreza = destreza;
         setClassificacoes(classificacoes);
@@ -52,9 +52,9 @@ public class Cliente extends Utilizador
         return this.destreza;
     }
 
-    public Collection<Integer> getClassificacoes() {
-        Collection<Integer>  aux = new HashSet<>();
-        for(int i : this.classificacoes){
+    public Collection<Double> getClassificacoes() {
+        Collection<Double> aux = new ArrayList<>();
+        for(double i : this.classificacoes){
             aux.add(i);
         }
         return aux;
@@ -68,9 +68,9 @@ public class Cliente extends Utilizador
         this.destreza = destreza;
     }
 
-    public void setClassificacoes(Collection<Integer> classificacoes) {
-        this.classificacoes = new HashSet<>();
-        for(int i : classificacoes){
+    public void setClassificacoes(Collection<Double> classificacoes) {
+        this.classificacoes = new ArrayList<>();
+        for(double i : classificacoes){
             this.classificacoes.add(i);
         }
     }
@@ -103,6 +103,20 @@ public class Cliente extends Utilizador
         return new Cliente(this);
     }
     
-
+    //-------------
+    public void novaAvaliacao(double avaliacao) throws AvaliacaoInvalidaException{
+        if(avaliacao < 0 || avaliacao > 100){
+            throw new AvaliacaoInvalidaException(avaliacao);
+        }
+        if(this.classificacoes.isEmpty()){
+            this.classificacoes.add(this.destreza);
+        }
+        this.destreza = 0;
+        this.classificacoes.add(avaliacao);
+        for(double n : this.classificacoes){
+            this.destreza += n;
+        }
+        this.destreza = this.destreza / this.classificacoes.size();
+    }
     
 }

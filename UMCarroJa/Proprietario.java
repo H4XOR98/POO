@@ -10,8 +10,7 @@ public class Proprietario extends Utilizador
 {
     //variaveis de instancia
     private double classificacao;
-    private Collection <Integer> classificacoes;
-    private Veiculos meusVeiculos;
+    private Collection <Double> classificacoes;
     
     
     /**
@@ -26,7 +25,7 @@ public class Proprietario extends Utilizador
     public Proprietario(){
         super();
         this.classificacao = 0;
-        this.classificacoes = new HashSet<>();
+        this.classificacoes = new ArrayList<>();
     }
     
     /**
@@ -35,8 +34,8 @@ public class Proprietario extends Utilizador
      * a morada e a data de nascimento de um Proprietario.
      */
     public Proprietario(String email, String password, String nome, int nif, String morada, LocalDate dataNascimento, 
-                        double classificacao, Collection<Integer> classificacoes){
-        super(email, password, nome, nif, morada, dataNascimento);
+                        double classificacao, Collection<Double> classificacoes){
+        super(email, password, nome, nif, morada);
         this.classificacao = classificacao;
         setClassificacoes(classificacoes);
     }
@@ -54,9 +53,9 @@ public class Proprietario extends Utilizador
         return this.classificacao;
     }
     
-    public Collection<Integer> getClassificacoes(){
-        Collection<Integer> aux = new HashSet<Integer>();
-        for (Integer i : this.classificacoes){
+    public Collection<Double> getClassificacoes(){
+        Collection<Double> aux = new ArrayList<Double>();
+        for (double i : this.classificacoes){
             aux.add(i);
         }
         return aux;
@@ -68,9 +67,9 @@ public class Proprietario extends Utilizador
         this.classificacao = classificacao;
     }
     
-    public void setClassificacoes (Collection<Integer> newClassificacoes){
-        this.classificacoes = new HashSet<Integer>();
-        for(Integer i : newClassificacoes){
+    public void setClassificacoes (Collection<Double> newClassificacoes){
+        this.classificacoes = new ArrayList<Double>();
+        for(double i : newClassificacoes){
             this.classificacoes.add(i);
         }
     }
@@ -108,5 +107,24 @@ public class Proprietario extends Utilizador
     
     //-----------------------------------------------------
     
+    public void novaAvaliacao(double avaliacao) throws AvaliacaoInvalidaException{
+        if(avaliacao < 0 || avaliacao > 100){
+            throw new AvaliacaoInvalidaException(avaliacao);
+        }
+        if(this.classificacoes.isEmpty()){
+            this.classificacoes.add(this.classificacao);
+        }
+        this.classificacao = 0;
+        this.classificacoes.add(avaliacao);
+        for(double n : this.classificacoes){
+            this.classificacao += n;
+        }
+        this.classificacao /=  this.classificacoes.size();
+    }
     
+    public void confirmaAluguer(Aluguer a){
+        if(a.getEstado().equals(EstadoAluguer.Espera)){
+            a.setEstado(EstadoAluguer.Alugado);
+        }
+    }
 }

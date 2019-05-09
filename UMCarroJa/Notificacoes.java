@@ -70,19 +70,16 @@ public class Notificacoes
     }
     
     // Adiciona uma notificacao
-    
     public void addNotificacao(Notificacao n){
         this.notificacoes.add(n.clone());
     }
     
     // Remove uma notificacao
-    
     public void removeNotificacao(Notificacao n){
         this.notificacoes.remove(n);
     }
     
     // Liberta as Notificacoes
-    
     public void libertaNotificacoes(){
         this.notificacoes.clear();
     }
@@ -91,4 +88,5 @@ public class Notificacoes
     public int quantosElementos(){
         return this.notificacoes.size();
     }
+    
 }

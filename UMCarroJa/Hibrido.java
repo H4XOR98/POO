@@ -22,6 +22,17 @@ public class Hibrido extends Veiculo{
         this.consumoE = 0;
     }
     
+    public Hibrido (TipoVeiculo tipoVeiculo, String marca,int nif, String matricula, boolean disponivel, Ponto localizacao, double preco, 
+                     double numTotalKms, double classificacao, Collection<Double> classificacoes, double velocidadeMedia, double autonomiaG, double autonomiaE,
+                    double consumoG, double consumoE){
+        super(tipoVeiculo, marca, matricula, nif, disponivel, localizacao, preco, numTotalKms,classificacao, classificacoes);
+        this.velocidadeMedia = velocidadeMedia;
+        this.autonomiaG = autonomiaG;
+        this.autonomiaE = autonomiaE;
+        this.consumoG = consumoG;
+        this.consumoE = consumoE;
+    }
+    
     public Hibrido (Hibrido h){
         super(h);
         this.velocidadeMedia = h.getVelocidadeMedia();
@@ -31,16 +42,6 @@ public class Hibrido extends Veiculo{
         this.consumoE = h.getConsumoE();
     }
     
-    public Hibrido (TipoVeiculo tipoVeiculo,int nifProprietario, String matricula, boolean disponivel, Ponto localizacao, double preco,
-                    double numTotalKms,double classificacao, Collection<Integer> classificacoes, double velocidadeMedia, double autonomiaG, double autonomiaE,
-                    double consumoG, double consumoE){
-        super(tipoVeiculo, nifProprietario, matricula, disponivel, localizacao, preco,numTotalKms, classificacao, classificacoes);
-        this.velocidadeMedia = velocidadeMedia;
-        this.autonomiaG = autonomiaG;
-        this.autonomiaE = autonomiaE;
-        this.consumoG = consumoG;
-        this.consumoE = consumoE;
-    }
     
     // Gets
     
@@ -95,11 +96,13 @@ public class Hibrido extends Veiculo{
     // Equals
     
     public boolean equals (Object o){
-        if (this == o)
-          return true;
+        if (this == o){
+            return true;
+        }
           
-        if((o == null) || (this.getClass() != o.getClass()))
-          return false;
+        if((o == null) || (this.getClass() != o.getClass())){
+            return false;
+        }
           
         Hibrido h = (Hibrido) o;
         return super.equals(h) && this.velocidadeMedia == h.getVelocidadeMedia() && this.autonomiaG == h.getAutonomiaG() && 
@@ -110,6 +113,7 @@ public class Hibrido extends Veiculo{
     
     public String toString(){
         StringBuilder sb = new StringBuilder();
+        sb.append("--------- HIBRIDO ---------\n");
         sb.append(super.toString());
         sb.append("Velocidade Média: " + this.velocidadeMedia + " Km/h\n");
         sb.append("Gasolina\n");

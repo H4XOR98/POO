@@ -118,7 +118,7 @@ public class GestorAlugueres
     public double totalFaturadoProprietario(int nif){
         double totalFaturado = 0;
         for(Aluguer a : this.alugueres){
-            if(a.getVeiculo().getNifProprietario() == nif){
+            if(a.getVeiculo().getNif() == nif){
                 totalFaturado += a.getPrecoViagem();
             }
         }

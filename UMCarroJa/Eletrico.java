@@ -18,9 +18,10 @@ public class Eletrico extends Veiculo{
         this.consumo = 0;
     }
     
-    public Eletrico (TipoVeiculo tipoVeiculo, int nifProprietario, String matricula, boolean disponivel, Ponto localizacao, double preco,
-                     double numTotalKms, double classificacao, Collection<Integer> classificacoes, double velocidadeMedia, double autonomia, double consumo){
-        super(tipoVeiculo, nifProprietario, matricula, disponivel, localizacao, preco, numTotalKms, classificacao, classificacoes);
+    public Eletrico (TipoVeiculo tipoVeiculo, String marca,int nif, String matricula, boolean disponivel, Ponto localizacao, double preco, 
+                     double numTotalKms, double classificacao, Collection<Double> classificacoes, double velocidadeMedia, double autonomia,
+                     double consumo){
+        super(tipoVeiculo, marca, matricula, nif, disponivel, localizacao, preco, numTotalKms,classificacao, classificacoes);
         this.velocidadeMedia = velocidadeMedia;
         this.autonomia = autonomia;
         this.consumo = consumo;
@@ -71,11 +72,13 @@ public class Eletrico extends Veiculo{
     // Equals
     
     public boolean equals (Object o){
-        if (this == o)
-          return true;
+        if (this == o){
+            return true;
+        }
           
-        if((o == null) || (this.getClass() != o.getClass()))
-          return false;
+        if((o == null) || (this.getClass() != o.getClass())){
+            return false;
+        }
           
         Eletrico e = (Eletrico) o;
         return super.equals(e) && this.velocidadeMedia == e.getVelocidadeMedia() && this.autonomia == e.getAutonomia() &&
@@ -86,6 +89,7 @@ public class Eletrico extends Veiculo{
     
     public String toString(){
         StringBuilder sb = new StringBuilder();
+        sb.append("--------- ELETRICO ---------\n");
         sb.append(super.toString());
         sb.append("Velocidade Média: " + this.velocidadeMedia + " Km/h\n");
         sb.append("Autonomia: " + this.autonomia + " %\n");

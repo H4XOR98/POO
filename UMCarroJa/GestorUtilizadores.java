@@ -13,7 +13,6 @@ public class GestorUtilizadores {
         this.utilizadores = new HashSet<>();
     }
 
-
     public GestorUtilizadores(Collection<Utilizador> utilizadores) {
         setUtilizadores(utilizadores);
     }
@@ -53,7 +52,7 @@ public class GestorUtilizadores {
     
     public String toString(){
         StringBuilder sb = new StringBuilder();
-        sb.append("--------------Utilizadores--------------\n");
+        sb.append("-------------- Utilizadores --------------\n");
         for(Utilizador u: this.utilizadores){
             sb.append(u.toString());
         }
@@ -67,10 +66,11 @@ public class GestorUtilizadores {
     
     //-------------
     
-    public void insereUtilizador(Utilizador u){
-        if(!this.utilizadores.contains(u)){
-            this.utilizadores.add(u);
+    public void insereUtilizador(Utilizador u) throws UtilizadorExistenteException{
+        if(this.utilizadores.contains(u)){
+            throw new UtilizadorExistenteException(u);
         }
+        this.utilizadores.add(u);
     }
     
     

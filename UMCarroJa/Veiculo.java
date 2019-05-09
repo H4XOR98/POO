@@ -6,47 +6,37 @@ public abstract class Veiculo{
     // Variáveis de Instância
     
     private TipoVeiculo tipoVeiculo;
-    private int nifProprietario;
+    private String marca;
     private String matricula;
+    private int nif;
     private boolean disponivel;
     private Ponto localizacao;
     private double preco;
-    private double classificacao;
     private double numTotalKms;
-    private Collection<Integer> classificacoes;
+    private double classificacao;
+    private Collection<Double> classificacoes;
     
     // Construtores
     
     public Veiculo(){
-        this.tipoVeiculo = null;
-        this.nifProprietario = 0;
+        this.tipoVeiculo = TipoVeiculo.Carro;
+        this.marca = "n/a";
         this.matricula = " ";
+        this.nif = 0;
         this.disponivel = false;
         this.localizacao = new Ponto();
         this.preco = 0;
-        this.classificacao = 0;
         this.numTotalKms = 0;
-        this.classificacoes = new HashSet<>();
+        this.classificacao = 0;
+        this.classificacoes = new ArrayList<>();
     }
     
-    public Veiculo (Veiculo veiculo){
-        this.tipoVeiculo = veiculo.getTipoVeiculo();
-        this.nifProprietario = veiculo.getNifProprietario();
-        this.matricula = veiculo.getMatricula();
-        this.disponivel = veiculo.getDisponivel();
-        this.localizacao = veiculo.getLocalizacao();
-        this.preco = veiculo.getPreco();
-        this.numTotalKms = veiculo.getNumTotalKms();
-        this.classificacao = veiculo.getClassificacao();
-        this.classificacoes = veiculo.getClassificacoes();
-    }
-    
-    public Veiculo (TipoVeiculo tipoVeiculo,int nifProprietario, String matricula, 
-                    boolean disponivel, Ponto localizacao, double preco, double numTotalKms,
-                    double classificacao, Collection<Integer> classificacoes){
+    public Veiculo (TipoVeiculo tipoVeiculo, String marca, String matricula, int nif, boolean disponivel, Ponto localizacao, double preco, double numTotalKms, double classificacao, 
+                    Collection<Double> classificacoes){
         this.tipoVeiculo = tipoVeiculo;
-        this.nifProprietario = nifProprietario;
+        this.marca= marca;
         this.matricula = matricula;
+        this.nif = nif;
         this.disponivel = disponivel;
         setLocalizacao(localizacao);
         this.preco = preco;
@@ -55,18 +45,36 @@ public abstract class Veiculo{
         setClassificacoes(classificacoes);
     }
     
+    public Veiculo (Veiculo veiculo){
+        this.tipoVeiculo = veiculo.getTipoVeiculo();
+        this.marca = veiculo.getMarca();
+        this.matricula = veiculo.getMatricula();
+        this.nif = veiculo.getNif();
+        this.disponivel = veiculo.getDisponivel();
+        this.localizacao = veiculo.getLocalizacao();
+        this.preco = veiculo.getPreco();
+        this.numTotalKms = veiculo.getNumTotalKms();
+        this.classificacao = veiculo.getClassificacao();
+        this.classificacoes = veiculo.getClassificacoes();
+    }
+    
+    
     // Gets
     
     public TipoVeiculo getTipoVeiculo(){
         return this.tipoVeiculo;
     }
     
-    public int getNifProprietario(){
-        return this.nifProprietario;
+    public String getMarca(){
+        return this.matricula;
     }
     
     public String getMatricula(){
         return this.matricula;
+    }
+    
+    public int getNif(){
+        return this.nif;
     }
     
     public boolean getDisponivel(){
@@ -89,9 +97,9 @@ public abstract class Veiculo{
         return this.classificacao;
     }
     
-    public Collection<Integer> getClassificacoes(){
-        Collection<Integer> aux = new HashSet<>();
-        for(Integer i : this.classificacoes){
+    public Collection<Double> getClassificacoes(){
+        Collection<Double> aux = new ArrayList<>();
+        for(double i : this.classificacoes){
             aux.add(i);
         }
         return aux;
@@ -103,13 +111,18 @@ public abstract class Veiculo{
         this.tipoVeiculo = newTipoVeiculo;
     }
     
-    public void setNifProprietario(int nifProprietario){
-        this.nifProprietario = nifProprietario;
+    public void setMarca (String newMarca){
+        this.marca = newMarca;
     }
-
+    
     public void setMatricula (String newMatricula){
         this.matricula = newMatricula;
     }
+    
+    public void setNif(int newNif){
+        this.nif = newNif;
+    }
+
     
     public void setDisponivel (boolean newDisponivel){
         this.disponivel = newDisponivel;
@@ -123,17 +136,17 @@ public abstract class Veiculo{
         this.preco = newPreco;
     }
     
-    public void setClassificacao (double newClassificacao){
-        this.classificacao = newClassificacao;
-    }
-
     public void setNumTotalKms (double newnumTotalKms){
         this.numTotalKms = newnumTotalKms;
     }
     
-    public void setClassificacoes(Collection<Integer> classificacoes){
-        this.classificacoes = new HashSet<>();
-        for(Integer i : classificacoes){
+    public void setClassificacao (int newClassificacao){
+        this.classificacao = newClassificacao;
+    }
+    
+    public void setClassificacoes(Collection<Double> classificacoes){
+        this.classificacoes = new ArrayList<>();
+        for(double i : classificacoes){
             this.classificacoes.add(i);
         }
     }
@@ -152,8 +165,8 @@ public abstract class Veiculo{
             return false;
         }
         Veiculo v = (Veiculo) o;
-        return (this.tipoVeiculo.equals(v.getTipoVeiculo()) && this.nifProprietario == v.getNifProprietario() &&
-                this.matricula.equals(v.getMatricula()) && this.disponivel == v.getDisponivel() && 
+        return (this.tipoVeiculo.equals(v.getTipoVeiculo()) && this.marca.equals(v.getMarca()) && this.matricula.equals(v.getMatricula()) &&
+                this.nif == v.getNif()  && this.disponivel == v.getDisponivel() && 
                 this.localizacao.equals(v.getLocalizacao()) && this.preco == v.getPreco() &&
                 this.numTotalKms == v.getNumTotalKms() && this.classificacao == v.getClassificacao() &&
                 this.classificacoes.equals(v.getClassificacoes()));
@@ -164,8 +177,9 @@ public abstract class Veiculo{
     public String toString(){
         StringBuilder sb = new StringBuilder();
         sb.append("Tipo Veículo: " + this.tipoVeiculo + "\n");
-        sb.append("NIF Proprietário: " + this.nifProprietario + "\n");
+        sb.append("Marca: " + this.marca + "\n");
         sb.append("Matricula: " + this.matricula + "\n");
+        sb.append("NIF Proprietário: " + this.nif + "\n");
         sb.append("Disponível: " + this.disponivel + "\n");
         sb.append(this.localizacao.toString() + "\n");
         sb.append("Preco: " + this.getPreco() + "€/Km\n"); 
@@ -188,4 +202,18 @@ public abstract class Veiculo{
         setPreco(preco);
     }
     
+    public void novaAvaliacao(double avaliacao) throws AvaliacaoInvalidaException{
+        if(avaliacao < 0 || avaliacao > 100){
+            throw new AvaliacaoInvalidaException(avaliacao);
+        }
+        if(this.classificacoes.isEmpty()){
+            this.classificacoes.add(this.classificacao);
+        }
+        this.classificacao = 0;
+        this.classificacoes.add(avaliacao);
+        for(double n : this.classificacoes){
+            this.classificacao += n;
+        }
+        this.classificacao /=  this.classificacoes.size();
+    }
 }

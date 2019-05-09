@@ -7,8 +7,8 @@
  * @version (número de versão ou data)
  */
 public class Notificacao {
-    private String remetente;
-    private String destinatario;
+    private int remetente;
+    private int destinatario;
     private String assunto;
     private String conteudo;
     private boolean lida;
@@ -16,8 +16,8 @@ public class Notificacao {
     private static int id = 0;
 
     public Notificacao() {
-        this.remetente = "n/a";
-        this.destinatario = "n/a";
+        this.remetente = 0;
+        this.destinatario = 0;
         this.assunto = "n/a";
         this.conteudo = "n/a";
         this.lida = false;
@@ -25,7 +25,7 @@ public class Notificacao {
     }
 
 
-    public Notificacao(String remetente, String destinatario, String assunto, String conteudo, boolean lida) {
+    public Notificacao(int remetente, int destinatario, String assunto, String conteudo, boolean lida) {
         this.remetente = remetente;
         this.destinatario = destinatario;
         this.assunto = assunto;
@@ -43,11 +43,11 @@ public class Notificacao {
         this.lida = notificacao.getLida();
     }
 
-    public String getRemetente() {
+    public int getRemetente() {
         return this.remetente;
     }
 
-    public String getDestinatario() {
+    public int getDestinatario() {
         return this.destinatario;
     }
 
@@ -64,11 +64,11 @@ public class Notificacao {
     }
 
 
-    public void setRemetente(String remetente) {
+    public void setRemetente(int remetente) {
         this.remetente = remetente;
     }
 
-    public void setDestinatario(String destinatario) {
+    public void setDestinatario(int destinatario) {
         this.destinatario = destinatario;
     }
 
@@ -102,8 +102,8 @@ public class Notificacao {
             return false;
         }
         Notificacao n = (Notificacao) o;
-        return (this.remetente.equals(n.getRemetente()) && this.destinatario.equals(n.getDestinatario()) && this.assunto.equals(n.getAssunto()) && 
-                this.conteudo.equals(n.getConteudo()) && this.lida == n.getLida());
+        return this.remetente == n.getRemetente() && this.destinatario == n.getDestinatario() && this.assunto.equals(n.getAssunto()) && 
+                this.conteudo.equals(n.getConteudo()) && this.lida == n.getLida();
     }
     
     // toString

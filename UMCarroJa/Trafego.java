@@ -5,13 +5,13 @@
  * @author (your name here)
  * @version (version number or date here)
  */
-public enum EstadoTrafego
+public enum Trafego
 {
     Fluido(1.05),Congestinado(1.6);
     
     private double percentagem;
     
-    private EstadoTrafego(double percentagem) {
+    private Trafego(double percentagem) {
         this.percentagem = percentagem;
     }
     
@@ -19,7 +19,7 @@ public enum EstadoTrafego
         return this.percentagem;
     }
     
-    public static EstadoTrafego getRandom() {
+    public static Trafego getRandom() {
         return values()[(int) (Math.random() * values().length)];
     }
 }

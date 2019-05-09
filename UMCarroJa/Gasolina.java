@@ -25,9 +25,10 @@ public class Gasolina extends Veiculo{
         this.consumo = g.getConsumo();
     }
     
-    public Gasolina (TipoVeiculo tipoVeiculo, int nifProprietario, String matricula, boolean disponivel, Ponto localizacao, double preco,
-                     double numTotalKms, double classificacao, Collection<Integer> classificacoes, double velocidadeMedia, double autonomia, double consumo){
-        super(tipoVeiculo, nifProprietario, matricula, disponivel, localizacao, preco, numTotalKms,classificacao, classificacoes);
+    public Gasolina (TipoVeiculo tipoVeiculo, String marca,int nif, String matricula, boolean disponivel, Ponto localizacao, double preco, 
+                     double numTotalKms, double classificacao, Collection<Double> classificacoes, double velocidadeMedia, double autonomia,
+                     double consumo){
+        super(tipoVeiculo, marca, matricula, nif, disponivel, localizacao, preco, numTotalKms,classificacao, classificacoes);
         this.velocidadeMedia = velocidadeMedia;
         this.autonomia = autonomia;
         this.consumo = consumo;
@@ -70,11 +71,13 @@ public class Gasolina extends Veiculo{
     // Equals
     
     public boolean equals (Object o){
-        if (this == o)
-          return true;
+        if (this == o){
+            return true;
+        }
           
-        if((o == null) || (this.getClass() != o.getClass()))
-          return false;
+        if((o == null) || (this.getClass() != o.getClass())){
+            return false;
+        }
           
         Gasolina g = (Gasolina) o;
         return super.equals(g) && this.velocidadeMedia == g.getVelocidadeMedia() && this.autonomia == g.getAutonomia() &&
@@ -85,6 +88,7 @@ public class Gasolina extends Veiculo{
     
     public String toString(){
         StringBuilder sb = new StringBuilder();
+        sb.append("--------- GASOLINA ---------\n");
         sb.append(super.toString());
         sb.append("Velocidade Média: " + this.velocidadeMedia + " Km/h\n");
         sb.append("Autonomia: " + this.autonomia + " %\n");

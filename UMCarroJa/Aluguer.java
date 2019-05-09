@@ -1,4 +1,4 @@
-
+import java.time.temporal.ChronoUnit;
 import java.time.LocalDateTime;
 
 public class Aluguer{
@@ -12,8 +12,8 @@ public class Aluguer{
     private LocalDateTime dataInicio;
     private LocalDateTime dataFim;
     private double precoViagem;
-    private EstadoMetereologia meteo;
-    private EstadoTrafego trafego;
+    private Metereologia meteo;
+    private Trafego trafego;
 
 
     public Aluguer() {
@@ -25,8 +25,8 @@ public class Aluguer{
         this.dataInicio = LocalDateTime.now();
         this.dataFim = LocalDateTime.now();
         this.precoViagem = 0;
-        this.meteo = EstadoMetereologia.getRandom();
-        this.trafego = EstadoTrafego.getRandom();
+        this.meteo = Metereologia.getRandom();
+        this.trafego = Trafego.getRandom();
     }
 
 
@@ -39,6 +39,8 @@ public class Aluguer{
         this.dataInicio = dataInicio;
         this.dataFim = dataFim;
         this.precoViagem = precoViagem;
+        this.meteo = Metereologia.getRandom();
+        this.trafego = Trafego.getRandom();
     }
 
     public Aluguer(Aluguer aluguer){
@@ -50,6 +52,8 @@ public class Aluguer{
         this.dataInicio = aluguer.getDataInicio();
         this.dataFim = aluguer.getDataFim();
         this.precoViagem = aluguer.getPrecoViagem();
+        this.meteo = aluguer.getMetereologia();
+        this.trafego = aluguer.getTrafego();
     }
 
 
@@ -86,6 +90,14 @@ public class Aluguer{
     
     public double getPrecoViagem() {
         return this.precoViagem;
+    }
+    
+    public Metereologia getMetereologia(){
+        return this.meteo;
+    }
+    
+    public Trafego getTrafego(){
+        return this.trafego;
     }
 
     //setters
@@ -130,10 +142,14 @@ public class Aluguer{
         sb.append("Destino: \n\t" + this.destino.toString());
         sb.append(this.cliente.toString());
         sb.append(this.veiculo.toString());
-        sb.append("Numero de Kms: " + this.numKms + ";\n");
         sb.append("Data:\n");
         sb.append("\tInicio " + this.dataInicio.toString() + ";\n");
         sb.append("\tFim " + this.dataFim.toString() + ";\n");
+        sb.append("Numero de Kms: " + this.numKms + ";\n");
+        sb.append("Estado:\n");
+        sb.append("\tMetereologia: " + this.meteo + ";\n");
+        sb.append("\tTrafego: " + this.trafego + ";\n");
+        sb.append("A pagar " + this.precoViagem + "€.\n");
         return sb.toString();
     }
     
@@ -156,4 +172,13 @@ public class Aluguer{
     public Aluguer clone(){
         return new Aluguer(this);
     }   
+    
+    public double tempoRealViagem(){
+        double duracao = ChronoUnit.MINUTES.between(this.dataInicio, this.dataFim);
+        duracao *= (100 - this.cliente.getDestreza())/100;
+        duracao *= (100 - this.veiculo.getClassificacao())/100;
+        duracao *= this.meteo.getPercentagem();
+        duracao *= this.trafego.getPercentagem();
+        return duracao;
+    }
 }
