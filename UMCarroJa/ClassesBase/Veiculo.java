@@ -8,12 +8,17 @@ public abstract class Veiculo{
     // Variáveis de Instância
     
     private TipoVeiculo tipoVeiculo;
+    private TipoCombustivel tipoCombustivel;
     private String marca;
     private String matricula;
     private int nif;
+    private int velocidadeMedia;
+    private double preco; // por Km
+    private double consumo; // por Km
+    private double autonomiaMax;
     private Ponto localizacao;
-    private double preco;
-    private double numTotalKms;
+    
+    private double autonomiaAtual;
     private double classificacao;
     private Collection<Double> classificacoes;
     
@@ -21,38 +26,50 @@ public abstract class Veiculo{
     
     public Veiculo(){
         this.tipoVeiculo = TipoVeiculo.Carro;
+        this.tipoCombustivel = TipoCombustivel.Gasolina;
         this.marca = "n/a";
-        this.matricula = " ";
+        this.matricula = "n/a";
         this.nif = 0;
+        this.velocidadeMedia = 0;
+        this.preco = 0.0;
+        this.consumo = 0.0;
+        this.autonomiaMax = 0.0;
         this.localizacao = new Ponto();
-        this.preco = 0;
-        this.numTotalKms = 0;
-        this.classificacao = 0;
+        this.autonomiaAtual = 0.0;
+        this.classificacao = 0.0;
         this.classificacoes = new ArrayList<>();
     }
     
-    public Veiculo (TipoVeiculo tipoVeiculo, String marca, String matricula, int nif, Ponto localizacao, double preco, double numTotalKms, double classificacao, 
-                    Collection<Double> classificacoes){
+    public Veiculo (TipoVeiculo tipoVeiculo,TipoCombustivel tipoCombustivel,String marca, String matricula, int nif, int velocidadeMedia, double preco, double consumo, 
+                    double autonomiaMax, Ponto localizacao){
         this.tipoVeiculo = tipoVeiculo;
-        this.marca= marca;
+        this.tipoCombustivel = tipoCombustivel;
+        this.marca = marca;
         this.matricula = matricula;
         this.nif = nif;
-        setLocalizacao(localizacao);
+        this.velocidadeMedia = velocidadeMedia;
         this.preco = preco;
-        this.numTotalKms = numTotalKms;
-        this.classificacao = classificacao;
-        setClassificacoes(classificacoes);
+        this.consumo = consumo;
+        this.autonomiaMax = autonomiaMax;
+        setLocalizacao(localizacao);
+        this.autonomiaAtual = autonomiaMax;
+        this.classificacao = 0.0;
+        this.classificacoes = new ArrayList<>();
     }
     
     public Veiculo (Veiculo veiculo){
         this.tipoVeiculo = veiculo.getTipoVeiculo();
+        this.tipoCombustivel = veiculo.getTipoCombustivel();
         this.marca = veiculo.getMarca();
         this.matricula = veiculo.getMatricula();
         this.nif = veiculo.getNif();
-        this.localizacao = veiculo.getLocalizacao();
+        this.velocidadeMedia = veiculo.getVelocidadeMedia();
         this.preco = veiculo.getPreco();
-        this.numTotalKms = veiculo.getNumTotalKms();
-        this.classificacao = veiculo.getClassificacao();
+        this.consumo = veiculo.getConsumo();
+        this.autonomiaMax = veiculo.getAutonomiaMax();
+        this.localizacao = veiculo.getLocalizacao();
+        this.autonomiaAtual = veiculo.getAutonomiaMax;
+        this.classificacao = veiculo.getAutonomia();
         this.classificacoes = veiculo.getClassificacoes();
     }
     
@@ -63,8 +80,12 @@ public abstract class Veiculo{
         return this.tipoVeiculo;
     }
     
+    public TipoVeiculo getTipoCombustivel(){
+        return this.tipoCombustivel;
+    }
+    
     public String getMarca(){
-        return this.matricula;
+        return this.marca;
     }
     
     public String getMatricula(){
