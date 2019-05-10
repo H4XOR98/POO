@@ -1,4 +1,6 @@
+package Gestores;
 
+import ClassesBase.*;
 import java.util.*;
 
 public class Veiculos{

@@ -1,3 +1,6 @@
+package Gestores;
+
+import ClassesBase.*;
 import java.util.*;
 /**
  * Escreva a descrição da classe GestorAlugueres aqui.

@@ -1,3 +1,6 @@
+package ClassesBase;
+
+import Exceptions.*;
 import java.util.*;
 import java.time.LocalDate;
 /**
@@ -122,9 +125,4 @@ public class Proprietario extends Utilizador
         this.classificacao /=  this.classificacoes.size();
     }
     
-    public void confirmaAluguer(Aluguer a){
-        if(a.getEstado().equals(EstadoAluguer.Espera)){
-            a.setEstado(EstadoAluguer.Alugado);
-        }
-    }
 }

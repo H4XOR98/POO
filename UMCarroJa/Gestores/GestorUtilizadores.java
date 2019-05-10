@@ -1,3 +1,7 @@
+package Gestores;
+
+import ClassesBase.*;
+import Exceptions.*;
 import java.util.*;
 /**
  * Escreva a descrição da classe GestorUtilizador aqui.

@@ -1,4 +1,6 @@
+package ClassesBase;
 
+import Exceptions.*;
 import java.util.*;
 
 public abstract class Veiculo{
@@ -9,7 +11,6 @@ public abstract class Veiculo{
     private String marca;
     private String matricula;
     private int nif;
-    private boolean disponivel;
     private Ponto localizacao;
     private double preco;
     private double numTotalKms;
@@ -23,7 +24,6 @@ public abstract class Veiculo{
         this.marca = "n/a";
         this.matricula = " ";
         this.nif = 0;
-        this.disponivel = false;
         this.localizacao = new Ponto();
         this.preco = 0;
         this.numTotalKms = 0;
@@ -31,13 +31,12 @@ public abstract class Veiculo{
         this.classificacoes = new ArrayList<>();
     }
     
-    public Veiculo (TipoVeiculo tipoVeiculo, String marca, String matricula, int nif, boolean disponivel, Ponto localizacao, double preco, double numTotalKms, double classificacao, 
+    public Veiculo (TipoVeiculo tipoVeiculo, String marca, String matricula, int nif, Ponto localizacao, double preco, double numTotalKms, double classificacao, 
                     Collection<Double> classificacoes){
         this.tipoVeiculo = tipoVeiculo;
         this.marca= marca;
         this.matricula = matricula;
         this.nif = nif;
-        this.disponivel = disponivel;
         setLocalizacao(localizacao);
         this.preco = preco;
         this.numTotalKms = numTotalKms;
@@ -50,7 +49,6 @@ public abstract class Veiculo{
         this.marca = veiculo.getMarca();
         this.matricula = veiculo.getMatricula();
         this.nif = veiculo.getNif();
-        this.disponivel = veiculo.getDisponivel();
         this.localizacao = veiculo.getLocalizacao();
         this.preco = veiculo.getPreco();
         this.numTotalKms = veiculo.getNumTotalKms();
@@ -75,10 +73,6 @@ public abstract class Veiculo{
     
     public int getNif(){
         return this.nif;
-    }
-    
-    public boolean getDisponivel(){
-        return this.disponivel;
     }
     
     public Ponto getLocalizacao(){
@@ -123,11 +117,6 @@ public abstract class Veiculo{
         this.nif = newNif;
     }
 
-    
-    public void setDisponivel (boolean newDisponivel){
-        this.disponivel = newDisponivel;
-    }
-    
     public void setLocalizacao (Ponto newLocalizacao){
         this.localizacao = newLocalizacao.clone();
     }
@@ -166,10 +155,8 @@ public abstract class Veiculo{
         }
         Veiculo v = (Veiculo) o;
         return (this.tipoVeiculo.equals(v.getTipoVeiculo()) && this.marca.equals(v.getMarca()) && this.matricula.equals(v.getMatricula()) &&
-                this.nif == v.getNif()  && this.disponivel == v.getDisponivel() && 
-                this.localizacao.equals(v.getLocalizacao()) && this.preco == v.getPreco() &&
-                this.numTotalKms == v.getNumTotalKms() && this.classificacao == v.getClassificacao() &&
-                this.classificacoes.equals(v.getClassificacoes()));
+                this.nif == v.getNif() && this.localizacao.equals(v.getLocalizacao()) && this.preco == v.getPreco() && this.numTotalKms == v.getNumTotalKms() && 
+                this.classificacao == v.getClassificacao() && this.classificacoes.equals(v.getClassificacoes()));
     }
     
     // toString
@@ -180,7 +167,6 @@ public abstract class Veiculo{
         sb.append("Marca: " + this.marca + "\n");
         sb.append("Matricula: " + this.matricula + "\n");
         sb.append("NIF Proprietário: " + this.nif + "\n");
-        sb.append("Disponível: " + this.disponivel + "\n");
         sb.append(this.localizacao.toString() + "\n");
         sb.append("Preco: " + this.getPreco() + "€/Km\n"); 
         sb.append("Numero Total de Kms " + this.numTotalKms + "\n");
@@ -190,10 +176,6 @@ public abstract class Veiculo{
     
     
     //Metodos
-    public void disponibilizaVeiculo(){
-        setDisponivel(true);
-    }
-    
     public abstract void abastecerVeiculo();
     
     public abstract double quantidadeCombustivel();

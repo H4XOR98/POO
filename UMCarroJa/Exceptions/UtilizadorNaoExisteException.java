@@ -1,3 +1,5 @@
+package Exceptions;
+
 
 /**
  * Escreva a descrição da classe UtilizadorNaoExisteException aqui.

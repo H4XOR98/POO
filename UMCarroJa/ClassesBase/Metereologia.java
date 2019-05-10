@@ -1,3 +1,5 @@
+package ClassesBase;
+
 
 /**
  * Enumeration class EstadoMetereologia - write a description of the enum class here

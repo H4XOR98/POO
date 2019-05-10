@@ -1,3 +1,5 @@
+package ClassesBase;
+
 
 import java.util.*;
 
@@ -25,10 +27,10 @@ public class Gasolina extends Veiculo{
         this.consumo = g.getConsumo();
     }
     
-    public Gasolina (TipoVeiculo tipoVeiculo, String marca,int nif, String matricula, boolean disponivel, Ponto localizacao, double preco, 
+    public Gasolina (TipoVeiculo tipoVeiculo, String marca,int nif, String matricula, Ponto localizacao, double preco, 
                      double numTotalKms, double classificacao, Collection<Double> classificacoes, double velocidadeMedia, double autonomia,
                      double consumo){
-        super(tipoVeiculo, marca, matricula, nif, disponivel, localizacao, preco, numTotalKms,classificacao, classificacoes);
+        super(tipoVeiculo, marca, matricula, nif, localizacao, preco, numTotalKms,classificacao, classificacoes);
         this.velocidadeMedia = velocidadeMedia;
         this.autonomia = autonomia;
         this.consumo = consumo;

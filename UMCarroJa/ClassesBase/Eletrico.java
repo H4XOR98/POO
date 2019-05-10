@@ -1,3 +1,5 @@
+package ClassesBase;
+
 
 import java.util.*;
 
@@ -18,10 +20,10 @@ public class Eletrico extends Veiculo{
         this.consumo = 0;
     }
     
-    public Eletrico (TipoVeiculo tipoVeiculo, String marca,int nif, String matricula, boolean disponivel, Ponto localizacao, double preco, 
+    public Eletrico (TipoVeiculo tipoVeiculo, String marca,int nif, String matricula, Ponto localizacao, double preco, 
                      double numTotalKms, double classificacao, Collection<Double> classificacoes, double velocidadeMedia, double autonomia,
                      double consumo){
-        super(tipoVeiculo, marca, matricula, nif, disponivel, localizacao, preco, numTotalKms,classificacao, classificacoes);
+        super(tipoVeiculo, marca, matricula, nif, localizacao, preco, numTotalKms,classificacao, classificacoes);
         this.velocidadeMedia = velocidadeMedia;
         this.autonomia = autonomia;
         this.consumo = consumo;
