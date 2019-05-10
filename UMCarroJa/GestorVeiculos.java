@@ -77,14 +77,14 @@ public class GestorVeiculos{
     // Adiciona um veículo
     
     public void insereVeiculo (Veiculo v){
-        Veiculos aux = this.gestor.get(v.getNifProprietario());
+        Veiculos aux = this.gestor.get(v.getNif());
         aux.addVeiculo(v);
     }
     
     // remove um veículo
     
     public void removeVeiculo (Veiculo v){
-        Veiculos aux = this.gestor.get(v.getNifProprietario());
+        Veiculos aux = this.gestor.get(v.getNif());
         aux.removeVeiculo(v);
     }
     

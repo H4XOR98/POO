@@ -109,7 +109,7 @@ public class Proprietario extends Utilizador
     
     public void novaAvaliacao(double avaliacao) throws AvaliacaoInvalidaException{
         if(avaliacao < 0 || avaliacao > 100){
-            throw new AvaliacaoInvalidaException(avaliacao);
+            throw new AvaliacaoInvalidaException("" + avaliacao);
         }
         if(this.classificacoes.isEmpty()){
             this.classificacoes.add(this.classificacao);

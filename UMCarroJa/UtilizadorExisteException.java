@@ -5,9 +5,9 @@
  * @author (seu nome) 
  * @version (número de versão ou data)
  */
-public class UtilizadorExistenteException extends Exception
+public class UtilizadorExisteException extends Exception
 {
-    public UtilizadorExistenteException(Utilizador u){
-        super(u.toString());
+    public UtilizadorExisteException(String u){
+        super(u);
     }
 }

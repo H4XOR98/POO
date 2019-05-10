@@ -34,30 +34,6 @@ public class GestorNotificacoes
         caixaNotificacoes.forEach((k,n) -> this.caixaNotificacoes.put(k,n.clone()));
     }
     
-    
-    public boolean temNotificacoes(int nif){
-        return this.caixaNotificacoes.containsKey(nif);
-    }
-    
-    public int quantasNotificacoes(int nif){
-        return this.caixaNotificacoes.get(nif).quantosElementos();
-    }
-    
-    public Notificacoes todasNotificacoes(int nif){
-        return this.caixaNotificacoes.get(nif);
-    }
-    
-    public void apagaTodasNotificacoes(int nif){
-        this.caixaNotificacoes.remove(this.caixaNotificacoes.get(nif));
-    }
-    
-    public void enviaNotificacao(Notificacao n){
-        int dest = n.getDestinatario();
-        this.caixaNotificacoes.get(dest).addNotificacao(n);
-    }
-    
-    
-    
     public String toString(){
         StringBuilder sb = new StringBuilder();
         sb.append("----------------- GESTOR NOTIFICACOES -----------------\n");
@@ -79,5 +55,24 @@ public class GestorNotificacoes
     
     public GestorNotificacoes clone(){
         return new GestorNotificacoes(this);
+    }
+    
+    
+    
+    public boolean temNotificacoes(int nif){
+        return this.caixaNotificacoes.containsKey(nif);
+    }
+    
+    public int quantasNotificacoes(int nif){
+        return this.caixaNotificacoes.get(nif).quantosElementos();
+    }
+    
+    public void enviaNotificacao(Notificacao n){
+        int dest = n.getDestinatario();
+        this.caixaNotificacoes.get(dest).addNotificacao(n);
+    }
+    
+    public void apagaCaixaNotificacoes(){
+        this.caixaNotificacoes.clear();
     }
 }

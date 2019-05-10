@@ -173,6 +173,10 @@ public class Aluguer{
         return new Aluguer(this);
     }   
     
+    
+    
+    
+    
     public double tempoRealViagem(){
         double duracao = ChronoUnit.MINUTES.between(this.dataInicio, this.dataFim);
         duracao *= (100 - this.cliente.getDestreza())/100;
@@ -181,4 +185,8 @@ public class Aluguer{
         duracao *= this.trafego.getPercentagem();
         return duracao;
     }
+    
+    
+    
+    
 }

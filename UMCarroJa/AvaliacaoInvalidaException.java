@@ -7,7 +7,7 @@
  */
 public class AvaliacaoInvalidaException extends Exception
 {
-    public AvaliacaoInvalidaException (double avaliacao){
-        super("" + avaliacao);
+    public AvaliacaoInvalidaException (String avaliacao){
+        super();
     }
 }

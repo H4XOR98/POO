@@ -66,18 +66,19 @@ public class GestorUtilizadores {
     
     //-------------
     
-    public void insereUtilizador(Utilizador u) throws UtilizadorExistenteException{
+    public void insereUtilizador(Utilizador u) throws UtilizadorExisteException{
         if(this.utilizadores.contains(u)){
-            throw new UtilizadorExistenteException(u);
+            throw new UtilizadorExisteException(u.toString());
         }
-        this.utilizadores.add(u);
+        this.utilizadores.add(u.clone());
     }
     
     
-    public void removeUtilizador(Utilizador u){
-        if(this.utilizadores.contains(u)){
-            this.utilizadores.remove(u);
+    public void removeUtilizador(Utilizador u) throws UtilizadorNaoExisteException{
+        if(!this.utilizadores.contains(u)){
+            throw new UtilizadorNaoExisteException(u.toString());
         }
+        this.utilizadores.remove(u);
     }
     
     public void libertaUtilizadores(){

@@ -2,10 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="41a98601-eb9f-4b59-a759-49b43cfe5646" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/Teste.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/TipoAluguer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Aluguer.java" beforeDir="false" afterPath="$PROJECT_DIR$/Aluguer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Veiculos.java" beforeDir="false" afterPath="$PROJECT_DIR$/Veiculos.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AvaliacaoInvalidaException.java" beforeDir="false" afterPath="$PROJECT_DIR$/AvaliacaoInvalidaException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Cliente.java" beforeDir="false" afterPath="$PROJECT_DIR$/Cliente.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GestorNotificacoes.java" beforeDir="false" afterPath="$PROJECT_DIR$/GestorNotificacoes.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GestorUtilizadores.java" beforeDir="false" afterPath="$PROJECT_DIR$/GestorUtilizadores.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GestorVeiculos.java" beforeDir="false" afterPath="$PROJECT_DIR$/GestorVeiculos.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Proprietario.java" beforeDir="false" afterPath="$PROJECT_DIR$/Proprietario.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Veiculo.java" beforeDir="false" afterPath="$PROJECT_DIR$/Veiculo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.bluej" beforeDir="false" afterPath="$PROJECT_DIR$/package.bluej" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -30,6 +36,7 @@
         <option value="$PROJECT_DIR$/Proprietario.java" />
         <option value="$PROJECT_DIR$/Cliente.java" />
         <option value="$PROJECT_DIR$/GestorUtilizadores.java" />
+        <option value="$PROJECT_DIR$/AvaliacaoInvalidaException.java" />
       </list>
     </option>
   </component>
@@ -53,6 +60,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="PackagesPane" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -64,8 +73,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
-      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -104,16 +111,18 @@
       <workItem from="1556715718782" duration="3717000" />
       <workItem from="1556721693569" duration="1778000" />
       <workItem from="1556790752369" duration="120000" />
+      <workItem from="1557425507026" duration="37000" />
+      <workItem from="1557439110018" duration="5000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="6865000" />
+    <option name="totallyTimeSpent" value="6907000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1680" height="1050" extended-state="0" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.12637363" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.12881564" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -224,13 +233,32 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/GestorUtilizador.ctxt" />
-    <entry file="file://$PROJECT_DIR$/GestorAluguer.java">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
+    <entry file="file://$PROJECT_DIR$/GestorAluguer.java" />
     <entry file="file://$PROJECT_DIR$/GestorUtilizadores.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="708">
           <caret line="52" column="27" selection-start-line="52" selection-start-column="27" selection-end-line="52" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/GestorAlugueres.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="11" column="3" selection-start-line="11" selection-start-column="3" selection-end-line="11" selection-end-column="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/AvaliacaoInvalidaException.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="13" lean-forward="true" selection-start-line="13" selection-end-line="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/AvaliacaoInvalidaException.ctxt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="6" lean-forward="true" selection-start-line="6" selection-end-line="6" />
         </state>
       </provider>
     </entry>
