@@ -102,4 +102,11 @@ public class Aluguer{
     public Aluguer clone(){
         return new Aluguer(this);
     }   
+    
+    
+    
+    public Veiculo determinaVeiculo (PreferenciaAluguer preferencia){
+        Veiculo vei = new Veiculo();
+        return vei;
+    }
 }

@@ -4,7 +4,7 @@ import ClassesBase.*;
 import java.util.*;
 
 public class Veiculos{
-    
+    /*
     // Variáveis de Instância
     
     private Collection<Veiculo> veiculos;
@@ -93,5 +93,5 @@ public class Veiculos{
     public void libertaVeiculos(){
         this.veiculos.clear();
     }
-    
+    */
 }
