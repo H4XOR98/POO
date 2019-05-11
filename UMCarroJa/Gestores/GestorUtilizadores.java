@@ -88,4 +88,14 @@ public class GestorUtilizadores {
     public void libertaUtilizadores(){
         this.utilizadores.clear();
     }
+    
+    
+    public Utilizador getUtilizador(int nif) throws UtilizadorNaoExisteException{
+        for(Utilizador u : this.utilizadores){
+            if (u.getNif() == nif){
+                return u.clone();
+            }
+        }
+        throw new UtilizadorNaoExisteException("" + nif);
+    }
 }
