@@ -11,12 +11,6 @@ public class Ponto {
   private int x;
   private int y;
   
-  
-  Comparator<Ponto> comparaPontos = (a,b) -> {if(a.distancia(b) == 0) return 0;
-                                              if(a.distancia(b) > 0) return 1;
-                                              else return -1;
-                                             };
-  
   /**
    * Construtores da classe Ponto.
    * Declaracao dos construtores por omissao (vazio),

@@ -7,7 +7,12 @@ public class GestorVeiculos{
     
     // Variáveis de Instância
     
-    private Map<Integer,Veiculos> gestor;
+    private Map<Integer,Veiculo> gestor;
+    
+    Comparator<Ponto> comparaLocalizacao = (a,b) -> {if(a.distancia(b) == 0) return 0;
+                                                     if(a.distancia(b) > 0) return 1;
+                                                     else return -1;
+                                                    };
     
     
     Comparator<Veiculo> comparaPrecos = (a,b) -> {if(a.getPreco() == b.getPreco()) return 0;
@@ -23,13 +28,14 @@ public class GestorVeiculos{
         this.gestor = new HashMap<>();   
     }
     
+    public GestorVeiculos (Map<Integer,Veiculos> gestor){
+        setGestor(gestor);
+    }
+    
     public GestorVeiculos (GestorVeiculos gv){
         this.gestor = gv.getGestor();
     }
     
-    public GestorVeiculos (Map<Integer,Veiculos> gestor){
-        setGestor(gestor);
-    }
     
     // Gets
     
@@ -96,6 +102,13 @@ public class GestorVeiculos{
         this.gestor.clear();
     }
     
-    
-    
+    public Veiculo determinaVeiculo(PreferenciaAluguer preferencia){
+        if(preferencia.equals("MaisBarato")){
+            TreeSet<Veiculo> maisBarato = new TreeSet<>(comparaPrecos);
+            this.getor.forEach(Veiculo v : this.gestor.values()){
+                maisBarato.add(v.clone());
+            }
+            return maisBarato.first();
+        }
+    }
 }

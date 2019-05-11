@@ -16,81 +16,71 @@ public class Aluguer{
     public Aluguer() {
         this.nif = 0;
         this.destino = new Ponto();
+        this.tipoCombustivel = TipoCombustivel.Gasolina;
+        this.preferencia = PreferenciaAluguer.MaisPerto;
     }
 
 
-    public Aluguer(Ponto destino, Cliente cliente, Veiculo veiculo, double numKms, double precoViagem) {
-        
+    public Aluguer(int nif, Ponto destino, TipoCombustivel tipoCombustivel, PreferenciaAluguer preferencia) {
+        this.nif = nif;
+        this.destino = destino;
+        this.tipoCombustivel = tipoCombustivel;
+        this.preferencia = preferencia;
     }
 
-    public Aluguer(Aluguer aluguer){
-        
+    public Aluguer(Aluguer a){
+        this.nif = a.getNif();
+        this.destino = a.getDestino();
+        this.tipoCombustivel = a.getTipoCombustivel();
+        this.preferencia = a.getPreferencia();
     }
 
 
     //getters
 
+    public int getNif() {
+        return this.nif;
+    }
+    
     public Ponto getDestino() {
-        return this.destino.clone();
+        return this.destino;
     }
 
-    public Cliente getCliente() {
-        return this.cliente.clone();
+    public TipoCombustivel getTipoCombustivel() {
+        return this.tipoCombustivel;
     }
 
-    public Veiculo getVeiculo() {
-        return this.veiculo.clone();
-    }
-
-    public double getNumKms() {
-        return this.numKms;
-    }
-    
-    public double getPrecoViagem() {
-        return this.precoViagem;
-    }
-    
-    public Metereologia getMetereologia(){
-        return this.meteo;
-    }
-    
-    public Trafego getTrafego(){
-        return this.trafego;
+    public PreferenciaAluguer getPreferencia() {
+        return this.preferencia;
     }
 
     //setters
 
+    public void setNif(int nif) {
+        this.nif = nif;
+    }
+
     public void setDestino(Ponto destino) {
-        this.destino = destino.clone();
+        this.destino = destino;
     }
 
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente.clone();
+    public void setTipoCombustivel(TipoCombustivel tipoCombustivel) {
+        this.tipoCombustivel = tipoCombustivel;
     }
 
-    public void setVeiculo(Veiculo veiculo) {
-        this.veiculo = veiculo.clone();
+    public void setPreferencia(PreferenciaAluguer preferencia) {
+        this.preferencia = preferencia;
     }
 
-    public void setNumKms(double numKms) {
-        this.numKms = numKms;
-    }
-
-    public void setPrecoViagem(double precoViagem) {
-        this.precoViagem = precoViagem;
-    }
+    
     
     public String toString(){
         StringBuilder sb = new StringBuilder();
         sb.append("............ALUGUER............\n");
-        sb.append("Destino: \n\t" + this.destino.toString());
-        sb.append(this.cliente.toString());
-        sb.append(this.veiculo.toString());
-        sb.append("Numero de Kms: " + this.numKms + ";\n");
-        sb.append("Estado:\n");
-        sb.append("\tMetereologia: " + this.meteo + ";\n");
-        sb.append("\tTrafego: " + this.trafego + ";\n");
-        sb.append("A pagar " + this.precoViagem + "€.\n");
+        sb.append("Destino: \n\t" + this.destino.toString() + ";\n");
+        sb.append("Nif: " + this.nif + ";\n");
+        sb.append("Tipo de Combustivel: " + this.tipoCombustivel + ";\n");
+        sb.append("Preferencia: " + this.preferencia + "\n");
         return sb.toString();
     }
     
@@ -104,12 +94,12 @@ public class Aluguer{
         }
         Aluguer a = (Aluguer)o;
         
-        return (this.destino.equals(a.getDestino()) && this.cliente.equals(a.getCliente()) &&  this.veiculo.equals(a.getVeiculo()) && this.numKms == a.getNumKms());
+        return (this.destino.equals(a.getDestino()) && this.nif==a.getNif() && this.tipoCombustivel.equals(a.getTipoCombustivel()) &&
+                this.preferencia == a.getPreferencia());
     }
     
     
     public Aluguer clone(){
         return new Aluguer(this);
     }   
-    
 }
