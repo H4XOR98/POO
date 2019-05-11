@@ -7,14 +7,15 @@ import java.time.LocalDateTime;
 public class Aluguer{
     
     // Variáveis de Instância
-    private int nifCliente;
+    private int nif;
     private Ponto destino;
     private TipoCombustivel tipoCombustivel;
     private PreferenciaAluguer preferencia;
 
 
     public Aluguer() {
-        
+        this.nif = 0;
+        this.destino = new Ponto();
     }
 
 
