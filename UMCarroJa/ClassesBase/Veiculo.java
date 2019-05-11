@@ -3,7 +3,7 @@ package ClassesBase;
 import Exceptions.*;
 import java.util.*;
 
-public abstract class Veiculo{
+public class Veiculo{
     
     // Variáveis de Instância
     
@@ -17,7 +17,6 @@ public abstract class Veiculo{
     private double consumo; // por Km
     private double autonomiaMax;
     private Ponto localizacao;
-    
     private double autonomiaAtual;
     private double classificacao;
     private Collection<Double> classificacoes;
@@ -36,7 +35,7 @@ public abstract class Veiculo{
         this.autonomiaMax = 0.0;
         this.localizacao = new Ponto();
         this.autonomiaAtual = 0.0;
-        this.classificacao = 0.0;
+        this.classificacao = 100.0;
         this.classificacoes = new ArrayList<>();
     }
     
@@ -53,7 +52,7 @@ public abstract class Veiculo{
         this.autonomiaMax = autonomiaMax;
         setLocalizacao(localizacao);
         this.autonomiaAtual = autonomiaMax;
-        this.classificacao = 0.0;
+        this.classificacao = 100.0;
         this.classificacoes = new ArrayList<>();
     }
     
@@ -68,8 +67,8 @@ public abstract class Veiculo{
         this.consumo = veiculo.getConsumo();
         this.autonomiaMax = veiculo.getAutonomiaMax();
         this.localizacao = veiculo.getLocalizacao();
-        this.autonomiaAtual = veiculo.getAutonomiaMax;
-        this.classificacao = veiculo.getAutonomia();
+        this.autonomiaAtual = veiculo.getAutonomiaAtual();
+        this.classificacao = veiculo.getClassificacao();
         this.classificacoes = veiculo.getClassificacoes();
     }
     
@@ -80,7 +79,7 @@ public abstract class Veiculo{
         return this.tipoVeiculo;
     }
     
-    public TipoVeiculo getTipoCombustivel(){
+    public TipoCombustivel getTipoCombustivel(){
         return this.tipoCombustivel;
     }
     
@@ -96,16 +95,28 @@ public abstract class Veiculo{
         return this.nif;
     }
     
-    public Ponto getLocalizacao(){
-        return this.localizacao;
+    public int getVelocidadeMedia(){
+        return this.velocidadeMedia;
     }
     
     public double getPreco(){
         return this.preco;
     }
     
-    public double getNumTotalKms(){
-        return this.numTotalKms;
+    public double getConsumo(){
+        return this.consumo;
+    }
+    
+    public double getAutonomiaMax(){
+        return this.autonomiaMax;
+    }
+    
+    public Ponto getLocalizacao(){
+        return this.localizacao;
+    }
+    
+    public double getAutonomiaAtual(){ 
+        return this.autonomiaAtual;
     }
     
     public double getClassificacao(){
@@ -126,6 +137,10 @@ public abstract class Veiculo{
         this.tipoVeiculo = newTipoVeiculo;
     }
     
+    public void setTipoCombustivel(TipoCombustivel newTipoCombustivel){
+        this.tipoCombustivel = newTipoCombustivel;
+    }
+    
     public void setMarca (String newMarca){
         this.marca = newMarca;
     }
@@ -133,21 +148,33 @@ public abstract class Veiculo{
     public void setMatricula (String newMatricula){
         this.matricula = newMatricula;
     }
-    
+   
     public void setNif(int newNif){
         this.nif = newNif;
+    }
+    
+    public void setVelocidadeMedia(int newVelocidadeMedia){
+        this.velocidadeMedia = newVelocidadeMedia;
+    }
+    
+    public void setPreco(double newPreco){
+        this.preco = newPreco;
+    }
+    
+    public void setConsumo(double newConsumo){
+        this.consumo = newConsumo;
+    }
+    
+    public void setAutonomiaMax(double newAutonomiaMax){
+        this.autonomiaMax = newAutonomiaMax;
     }
 
     public void setLocalizacao (Ponto newLocalizacao){
         this.localizacao = newLocalizacao.clone();
     }
     
-    public void setPreco (double newPreco){
-        this.preco = newPreco;
-    }
-    
-    public void setNumTotalKms (double newnumTotalKms){
-        this.numTotalKms = newnumTotalKms;
+    public void setAutonomiaAtual(double newAutonomiaAtual){ 
+        this.autonomiaAtual = newAutonomiaAtual;
     }
     
     public void setClassificacao (int newClassificacao){
@@ -163,7 +190,9 @@ public abstract class Veiculo{
 
     // Clone
     
-    public abstract Veiculo clone();
+    public Veiculo clone(){
+        return new Veiculo(this);
+    }
         
     // Equals
     
@@ -175,31 +204,40 @@ public abstract class Veiculo{
             return false;
         }
         Veiculo v = (Veiculo) o;
-        return (this.tipoVeiculo.equals(v.getTipoVeiculo()) && this.marca.equals(v.getMarca()) && this.matricula.equals(v.getMatricula()) &&
-                this.nif == v.getNif() && this.localizacao.equals(v.getLocalizacao()) && this.preco == v.getPreco() && this.numTotalKms == v.getNumTotalKms() && 
-                this.classificacao == v.getClassificacao() && this.classificacoes.equals(v.getClassificacoes()));
+        return (this.tipoVeiculo.equals(v.getTipoVeiculo()) && this.tipoCombustivel.equals(v.getTipoCombustivel()) && this.marca.equals(v.getMarca()) && 
+                this.matricula.equals(v.getMatricula()) && this.nif == v.getNif() && this.velocidadeMedia == v.getVelocidadeMedia() && this.preco == v.getPreco() &&
+                this.consumo == v.getConsumo() && this.autonomiaMax == v.getAutonomiaMax() && this.localizacao.equals(v.getLocalizacao()) && 
+                this.autonomiaAtual == v.getAutonomiaAtual() && this.classificacao == v.getClassificacao() && this.classificacoes.equals(v.getClassificacoes()));
     }
     
     // toString
 
     public String toString(){
         StringBuilder sb = new StringBuilder();
-        sb.append("Tipo Veículo: " + this.tipoVeiculo + "\n");
-        sb.append("Marca: " + this.marca + "\n");
-        sb.append("Matricula: " + this.matricula + "\n");
-        sb.append("NIF Proprietário: " + this.nif + "\n");
+        sb.append("------------ " + this.tipoVeiculo + " \n");
+        sb.append("Tipo Combustivel: " + this.tipoCombustivel + ";\n");
+        sb.append("Marca: " + this.marca + ";\n");
+        sb.append("Matricula: " + this.matricula + ";\n");
+        sb.append("NIF Proprietário: " + this.nif + ";\n");
+        sb.append("Velocidade Media: " + this.velocidadeMedia + " km/h;\n");
+        sb.append("Preco: " + this.preco + " €/km;\n");
+        sb.append("Consumo: " + this.consumo + " L/km;\n");
+        sb.append("Autonomia Maxima: " + this.autonomiaMax + " L;\n");
         sb.append(this.localizacao.toString() + "\n");
-        sb.append("Preco: " + this.getPreco() + "€/Km\n"); 
-        sb.append("Numero Total de Kms " + this.numTotalKms + "\n");
-        sb.append("Classificação: " + this.classificacao + "\n");
+        sb.append("Autonomia Atual: " + this.autonomiaAtual + " L;\n");
+        sb.append("Classificação: " + this.classificacao + ".\n");
         return sb.toString();
     }
     
     
     //Metodos
-    public abstract void abastecerVeiculo();
+    public void abastecerVeiculo(){
+        setAutonomiaAtual(this.autonomiaMax);
+    }
     
-    public abstract double quantidadeCombustivel();
+    public double quantidadeCombustivel(){
+        return this.autonomiaAtual;
+    }
     
     public void alteraPrecoKm(double preco){
         setPreco(preco);
@@ -208,9 +246,6 @@ public abstract class Veiculo{
     public void novaAvaliacao(double avaliacao) throws AvaliacaoInvalidaException{
         if(avaliacao < 0 || avaliacao > 100){
             throw new AvaliacaoInvalidaException("" + avaliacao);
-        }
-        if(this.classificacoes.isEmpty()){
-            this.classificacoes.add(this.classificacao);
         }
         this.classificacao = 0;
         this.classificacoes.add(avaliacao);

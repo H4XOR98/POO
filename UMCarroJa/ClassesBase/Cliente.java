@@ -27,16 +27,15 @@ public class Cliente extends Utilizador
     public Cliente(){
         super();
         this.localizacao = new Ponto();
-        this.destreza = 100;
+        this.destreza = 100.0;
         this.classificacoes = new ArrayList<>();
     }
 
 
-    public Cliente(String email, String password, String nome, int nif, String morada, Ponto localizacao, double destreza, ArrayList<Double> classificacoes){
+    public Cliente(String email, String password, String nome, int nif, String morada, Ponto localizacao){
         super(email, password, nome, nif, morada);
         setLocalizacao(localizacao);
-        this.destreza = destreza;
-        setClassificacoes(classificacoes);
+        this.d
     }
     
     public Cliente(Cliente cliente){
