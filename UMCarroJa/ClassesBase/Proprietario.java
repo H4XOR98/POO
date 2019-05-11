@@ -36,11 +36,10 @@ public class Proprietario extends Utilizador
      * Aceita como parametros o email, o nome, a password,
      * a morada e a data de nascimento de um Proprietario.
      */
-    public Proprietario(String email, String password, String nome, int nif, String morada, LocalDate dataNascimento, 
-                        double classificacao, Collection<Double> classificacoes){
+    public Proprietario(String email, String password, String nome, int nif, String morada){
         super(email, password, nome, nif, morada);
-        this.classificacao = classificacao;
-        setClassificacoes(classificacoes);
+        this.classificacao = 100.0;
+        this.classificacoes = new ArrayList<>();
     }
     
     
@@ -96,6 +95,7 @@ public class Proprietario extends Utilizador
     
     public String toString(){
         StringBuilder sb = new StringBuilder();
+        sb.append("----------- Proprietario -----------\n");
         sb.append(super.toString());
         sb.append("Classificacao:   " + this.classificacao + ";\n");
         return sb.toString();
@@ -113,9 +113,6 @@ public class Proprietario extends Utilizador
     public void novaAvaliacao(double avaliacao) throws AvaliacaoInvalidaException{
         if(avaliacao < 0 || avaliacao > 100){
             throw new AvaliacaoInvalidaException("" + avaliacao);
-        }
-        if(this.classificacoes.isEmpty()){
-            this.classificacoes.add(this.classificacao);
         }
         this.classificacao = 0;
         this.classificacoes.add(avaliacao);

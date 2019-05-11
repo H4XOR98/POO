@@ -35,7 +35,8 @@ public class Cliente extends Utilizador
     public Cliente(String email, String password, String nome, int nif, String morada, Ponto localizacao){
         super(email, password, nome, nif, morada);
         setLocalizacao(localizacao);
-        this.d
+        this.destreza = 100.0;
+        this.classificacoes = new ArrayList<>();
     }
     
     public Cliente(Cliente cliente){
@@ -87,13 +88,15 @@ public class Cliente extends Utilizador
 
         Cliente cliente = (Cliente)o;
 
-        return super.equals(cliente) && this.localizacao == cliente.getLocalizacao() && this.destreza == cliente.getDestreza() && this.classificacoes.equals(cliente.getClassificacoes());
+        return super.equals(cliente) && this.localizacao == cliente.getLocalizacao() && this.destreza == cliente.getDestreza() &&
+               this.classificacoes.equals(cliente.getClassificacoes());
     }
 
 
 
     public String toString(){
         StringBuilder sb = new StringBuilder();
+        sb.append("----------- Cliente -----------\n");
         sb.append(super.toString());
         sb.append(this.localizacao.toString());
         sb.append("Destreza: " + this.destreza + ";\n");
@@ -110,19 +113,12 @@ public class Cliente extends Utilizador
         if(avaliacao < 0 || avaliacao > 100){
             throw new AvaliacaoInvalidaException("" + avaliacao);
         }
-        if(this.classificacoes.isEmpty()){
-            this.classificacoes.add(this.destreza);
-        }
         this.destreza = 0;
         this.classificacoes.add(avaliacao);
         for(double n : this.classificacoes){
             this.destreza += n;
         }
-        this.destreza = this.destreza / this.classificacoes.size();
+        this.destreza /=  this.classificacoes.size();
     }
     
-    
-    public void solicitaAluguer(){
-        
-    }
 }
