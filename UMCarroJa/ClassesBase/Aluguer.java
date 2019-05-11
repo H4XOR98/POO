@@ -14,34 +14,16 @@ public class Aluguer{
 
 
     public Aluguer() {
-        this.destino = new Ponto();
-        this.cliente = new Cliente();
-        this.veiculo = null;
-        this.numKms = 0;
-        this.precoViagem = 0;
-        this.meteo = Metereologia.getRandom();
-        this.trafego = Trafego.getRandom();
+        
     }
 
 
     public Aluguer(Ponto destino, Cliente cliente, Veiculo veiculo, double numKms, double precoViagem) {
-        this.destino = destino;
-        this.cliente = cliente;
-        this.veiculo = veiculo;
-        this.numKms = numKms;
-        this.precoViagem = precoViagem;
-        this.meteo = Metereologia.getRandom();
-        this.trafego = Trafego.getRandom();
+        
     }
 
     public Aluguer(Aluguer aluguer){
-        this.destino = aluguer.getDestino();
-        this.cliente = aluguer.getCliente();
-        this.veiculo = aluguer.getVeiculo();
-        this.numKms = aluguer.getNumKms();
-        this.precoViagem = aluguer.getPrecoViagem();
-        this.meteo = aluguer.getMetereologia();
-        this.trafego = aluguer.getTrafego();
+        
     }
 
 

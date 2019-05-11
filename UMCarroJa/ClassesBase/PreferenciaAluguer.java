@@ -9,5 +9,5 @@ package ClassesBase;
  */
 public enum PreferenciaAluguer
 {
-    MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY
+    MaisPerto,MaisBarato,MaisPertoBarato,Especifico,Autonomia
 }
