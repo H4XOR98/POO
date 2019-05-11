@@ -39,8 +39,8 @@ public class Veiculo{
         this.classificacoes = new ArrayList<>();
     }
     
-    public Veiculo (TipoVeiculo tipoVeiculo,TipoCombustivel tipoCombustivel,String marca, String matricula, int nif, int velocidadeMedia, double preco, double consumo, 
-                    double autonomiaMax, Ponto localizacao){
+    public Veiculo (TipoVeiculo tipoVeiculo,TipoCombustivel tipoCombustivel,String marca, String matricula, int nif, int velocidadeMedia, 
+                    double preco, double consumo, double autonomiaMax, Ponto localizacao){
         this.tipoVeiculo = tipoVeiculo;
         this.tipoCombustivel = tipoCombustivel;
         this.marca = marca;
@@ -71,8 +71,7 @@ public class Veiculo{
         this.classificacao = veiculo.getClassificacao();
         this.classificacoes = veiculo.getClassificacoes();
     }
-    
-    
+   
     // Gets
     
     public TipoVeiculo getTipoVeiculo(){
@@ -229,29 +228,52 @@ public class Veiculo{
         return sb.toString();
     }
     
+    // Métodos
     
-    //Metodos
+    // Abastecer um Veículo
+    
     public void abastecerVeiculo(){
         setAutonomiaAtual(this.autonomiaMax);
     }
     
-    public double quantidadeCombustivel(){
+    // Atualizar a autonomia de um Veículo após um Aluguer
+    
+    public void diminuirAutonomiaAtual (double autonomiaGasta){
+        setAutonomiaAtual(this.autonomiaAtual - autonomiaGasta);
+    }
+    
+    // Devolver a autonomia atual de um Veículo
+    
+    public double devolverAutonomiaAtual(){
         return this.autonomiaAtual;
     }
     
-    public void alteraPrecoKm(double preco){
+    // Alterar o preço de um Veículo
+    
+    public void alterarPreco (double preco){
         setPreco(preco);
     }
     
-    public void novaAvaliacao(double avaliacao) throws AvaliacaoInvalidaException{
-        if(avaliacao < 0 || avaliacao > 100){
+    // Verificar se um Veículo tem a autonomia a baixo dos 10% 
+    
+    public boolean autonomiaBaixa (){
+        boolean r = false;
+        if (this.autonomiaAtual < (this.autonomiaMax * 0.1)) r = true;
+        return r;
+    }
+    
+    // Adiciona uma nova avaliação e calcula a média
+    
+    public void novaAvaliacao (double avaliacao) throws AvaliacaoInvalidaException{
+        if (avaliacao < 0 || avaliacao > 100){
             throw new AvaliacaoInvalidaException("" + avaliacao);
         }
         this.classificacao = 0;
         this.classificacoes.add(avaliacao);
-        for(double n : this.classificacoes){
+        for (double n : this.classificacoes){
             this.classificacao += n;
         }
         this.classificacao /=  this.classificacoes.size();
     }
+    
 }
