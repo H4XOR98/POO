@@ -208,7 +208,7 @@ public class Aluguer{
     }
     
     
-    public void iniciaAluguer(Cliente cliente) throws AutonomiaVeiculoInsuficienteException, DuracaoNegativaException{
+    private void iniciaAluguer(Cliente cliente) throws AutonomiaVeiculoInsuficienteException, DuracaoNegativaException{
         this.distancia = this.veiculo.getLocalizacao().distancia(this.destino);
         if(this.distancia > this.veiculo.getAutonomiaAtual()){
             throw new AutonomiaVeiculoInsuficienteException("Ups! A autonomia é insuficiente.");
@@ -217,22 +217,23 @@ public class Aluguer{
         cliente.setLocalizacao(this.veiculo.getLocalizacao());
     }
     
+    private void terminaAluguer(Cliente cliente, Proprietario proprietario, double avaliacaoCliente,double avaliacaoVeiculo,
+                              double avaliacaoProprietario) throws AutonomiaVeiculoInsuficienteException, AvaliacaoInvalidaException, 
+                              DuracaoNegativaException{
+        tempoRealViagem(cliente);
+        custoViagem();
+        veiculo.diminuirAutonomiaAtual(this.distancia);
+        veiculo.novaAvaliacao(avaliacaoVeiculo);
+        cliente.novaAvaliacao(avaliacaoCliente);
+        proprietario.novaAvaliacao(avaliacaoProprietario);  
+    }
     
     public void alugaVeiculo (Cliente cliente, Veiculo veiculo,Proprietario proprietario, double avaliacaoCliente,double avaliacaoVeiculo,
                               double avaliacaoProprietario) throws AutonomiaVeiculoInsuficienteException, AvaliacaoInvalidaException, 
                               DuracaoNegativaException{
         this.veiculo = veiculo;
         iniciaAluguer(cliente);
-        tempoRealViagem(cliente);
-        custoViagem();
-        veiculo.diminuirAutonomiaAtual(this.distancia);
-        veiculo.novaAvaliacao(avaliacaoVeiculo);
-        cliente.novaAvaliacao(avaliacaoCliente);
-        proprietario.novaAvaliacao(avaliacaoProprietario);
+        terminaAluguer(cliente,proprietario,avaliacaoCliente,avaliacaoVeiculo,avaliacaoProprietario);
         this.veiculo = this.veiculo.clone();
     }
-   
-    
-    
-    
 }
