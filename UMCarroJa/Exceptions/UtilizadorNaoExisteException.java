@@ -9,7 +9,7 @@ package Exceptions;
  */
 public class UtilizadorNaoExisteException extends Exception
 {
-    public UtilizadorNaoExisteException(String u){
-        super(u);
+    public UtilizadorNaoExisteException(String s){
+        super(s);
     }
 }

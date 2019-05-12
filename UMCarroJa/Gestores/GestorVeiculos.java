@@ -1,3 +1,4 @@
+
 package Gestores;
 
 import Exceptions.*;
@@ -121,51 +122,62 @@ public class GestorVeiculos{
     
     // Liberta o Gestor de Veículos
     
-    public void libertaGestor(){
+    public void libertaGestorVeiculos(){
+        this.gestor.forEach((k,v) -> v.clear());
         this.gestor.clear();
     }
     
     // Devolver o Veiculo mais barato
     
-    public Veiculo determinaVeiculoMaisBarato() throws VeiculoNaoExisteException{
+    public Veiculo determinaVeiculoMaisBarato(TipoCombustivel tipoCombustivel) throws VeiculoNaoExisteException{
         if (this.gestor.isEmpty()) throw new VeiculoNaoExisteException("Ups! Gestor de Veiculos Vazio.\n");
         TreeSet<Veiculo> maisBarato = new TreeSet<>(comparaPrecos);
         this.gestor.forEach((k,v) -> { for (Veiculo veiculo : v) maisBarato.add(veiculo.clone()); });
-        return maisBarato.first().clone();
+        for(Veiculo veiculo : maisBarato){
+            if(tipoCombustivel.equals(veiculo.getTipoCombustivel())){
+                return veiculo.clone();
+            }
+        }
+        throw new VeiculoNaoExisteException("Ups! Não existe nenhum veículo a " + tipoCombustivel + ".\n");
     }
     
     // Devolver o Veiculo mais perto
   
-    public Veiculo determinaVeiculoMaisPerto (Ponto localizacao) throws VeiculoNaoExisteException{
+    public Veiculo determinaVeiculoMaisPerto (Ponto localizacao,TipoCombustivel tipoCombustivel) throws VeiculoNaoExisteException{
         if (this.gestor.isEmpty()) throw new VeiculoNaoExisteException("Ups! Gestor de Veiculos Vazio.\n");
         TreeSet<Veiculo> maisPerto = new TreeSet<>(comparaLocalizacao);
         this.gestor.forEach((k,v) -> { for (Veiculo veiculo : v) maisPerto.add(veiculo.clone()); });
         double distanciaMenor = Double.MAX_VALUE;
         Veiculo vei = null;
         for (Veiculo veiculo : maisPerto){
-            if (veiculo.getLocalizacao().distancia(localizacao) < distanciaMenor){
+            if (veiculo.getLocalizacao().distancia(localizacao) < distanciaMenor && tipoCombustivel.equals(veiculo.getTipoCombustivel())){
                 vei = veiculo;
                 distanciaMenor = veiculo.getLocalizacao().distancia(localizacao);
             }
+        }
+        if(vei == null){
+            throw new VeiculoNaoExisteException("Ups! Não existe nenhum veículo a " + tipoCombustivel + ".\n");
         }
         return vei.clone();
     }
         
     // Devolver o Veiculo mais barato dentro de uma distância -> Erro
     
-    public Veiculo determinaVeiculoMaisBaratoPerto (Ponto localizacao, double distanciaMax) throws VeiculoNaoExisteException {
+    public Veiculo determinaVeiculoMaisBaratoPerto (Ponto localizacao, double distanciaMax, TipoCombustivel tipoCombustivel) throws VeiculoNaoExisteException {
         if (this.gestor.isEmpty()) throw new VeiculoNaoExisteException("Ups! Gestor de Veiculos Vazio.\n");
         TreeSet<Veiculo> maisBarato = new TreeSet<>(comparaPrecos);
         this.gestor.forEach((k,v) -> { for (Veiculo veiculo : v) maisBarato.add(veiculo.clone()); });
         for (Veiculo veiculo : maisBarato){
-            if (localizacao.distancia(veiculo.getLocalizacao()) <= distanciaMax) return veiculo.clone();
+            if (localizacao.distancia(veiculo.getLocalizacao()) <= distanciaMax && tipoCombustivel.equals(veiculo.getTipoCombustivel())){
+                return veiculo.clone();
+            }
         }
-        throw new VeiculoNaoExisteException("Ups! Não existe nenhum veículo a " + distanciaMax + " Kms de si.\n");
+        throw new VeiculoNaoExisteException("Ups! Não existe nenhum veículo a " + distanciaMax + " Kms de si e que seja a " + tipoCombustivel + ".\n");
     }
     
     // Devolver um Veículo expecífico
     
-    public Veiculo devolveVeiculo (String matricula) throws VeiculoNaoExisteException{
+    public Veiculo devolveVeiculoEspecifico (String matricula) throws VeiculoNaoExisteException{
         if (this.gestor.isEmpty()) throw new VeiculoNaoExisteException("Ups! Gestor de Veiculos Vazio.\n");
         TreeSet<Veiculo> veiculos = new TreeSet<>();
         this.gestor.forEach((k,v) -> { 
@@ -179,7 +191,7 @@ public class GestorVeiculos{
     
     // Devolver um Veiculo com uma autonomia expecífica
     
-    public Veiculo devolveVeiculoAutonomia (Ponto localizacao, double autonomia) throws VeiculoNaoExisteException{
+    public Veiculo devolveVeiculoAutonomia (Ponto localizacao, double autonomia, TipoCombustivel tipoCombustivel) throws VeiculoNaoExisteException{
         if (this.gestor.isEmpty()) throw new VeiculoNaoExisteException("Ups! Gestor de Veiculos Vazio.\n");
         TreeSet<Veiculo> veiculos = new TreeSet<>();
         this.gestor.forEach((k,v) -> {
@@ -190,7 +202,7 @@ public class GestorVeiculos{
         double distanciaMenor = Double.MAX_VALUE;
         Veiculo vei = null;
         for (Veiculo veiculo : veiculos){
-            if (veiculo.getLocalizacao().distancia(localizacao) < distanciaMenor){
+            if (veiculo.getLocalizacao().distancia(localizacao) < distanciaMenor && tipoCombustivel.equals(veiculo.getTipoCombustivel())){
                 vei = veiculo;
                 distanciaMenor = veiculo.getLocalizacao().distancia(localizacao);
             }

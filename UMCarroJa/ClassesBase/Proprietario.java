@@ -122,4 +122,10 @@ public class Proprietario extends Utilizador
         this.classificacao /=  this.classificacoes.size();
     }
     
+    public void abasteceVeiculo(Veiculo veiculo) throws VeiculoNaoPertenceException{
+        if(veiculo.getNif() != this.getNif()){
+            throw new VeiculoNaoPertenceException("O veiculo com a matricula " + veiculo.getNif() + ", não lhe pertence!\n" );
+        }
+        veiculo.abastecerVeiculo();
+    }
 }

@@ -9,7 +9,7 @@ package Exceptions;
  */
 public class VeiculoExisteException extends Exception
 {
-    public VeiculoExisteException(String u){
-        super(u);
+    public VeiculoExisteException(String s){
+        super(s);
     }
 }

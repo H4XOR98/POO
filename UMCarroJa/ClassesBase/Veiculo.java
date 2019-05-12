@@ -238,8 +238,8 @@ public class Veiculo{
     
     // Atualizar a autonomia de um Veículo após um Aluguer
     
-    public void diminuirAutonomiaAtual (double autonomiaGasta){
-        setAutonomiaAtual(this.autonomiaAtual - autonomiaGasta);
+    public void diminuirAutonomiaAtual (double distancia){
+        setAutonomiaAtual(this.autonomiaAtual - distancia);
     }
     
     // Devolver a autonomia atual de um Veículo

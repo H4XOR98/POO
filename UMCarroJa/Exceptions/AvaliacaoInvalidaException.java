@@ -9,7 +9,7 @@ package Exceptions;
  */
 public class AvaliacaoInvalidaException extends Exception
 {
-    public AvaliacaoInvalidaException (String avaliacao){
-        super();
+    public AvaliacaoInvalidaException (String s){
+        super(s);
     }
 }

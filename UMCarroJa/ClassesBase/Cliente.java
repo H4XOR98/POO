@@ -120,5 +120,4 @@ public class Cliente extends Utilizador
         }
         this.destreza /=  this.classificacoes.size();
     }
-    
 }
