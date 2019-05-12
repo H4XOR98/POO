@@ -1,7 +1,6 @@
 package ClassesBase;
 
 import Exceptions.*;
-import Exceptions.*;
 
 public class Aluguer{
     
@@ -13,7 +12,8 @@ public class Aluguer{
     private Veiculo veiculo;
     private double custo;
     private double distancia;
-    private double duracao;
+    private double duracaoEstimada;
+    private double duracaoReal;
     private Metereologia meteo;
     private Trafego trafego;
 
@@ -26,7 +26,8 @@ public class Aluguer{
         this.veiculo = new Veiculo();
         this.custo = 0;
         this.distancia = 0;
-        this.duracao = 0;
+        this.duracaoEstimada = 0;
+        this.duracaoReal = 0;
         this.meteo = Metereologia.getRandom();
         this.trafego = Trafego.getRandom();
     }
@@ -40,7 +41,8 @@ public class Aluguer{
         this.veiculo = new Veiculo();
         this.custo = 0;
         this.distancia = 0;
-        this.duracao = 0;
+        this.duracaoEstimada = 0;
+        this.duracaoReal = 0;
         this.meteo = Metereologia.getRandom();
         this.trafego = Trafego.getRandom();
     }
@@ -50,10 +52,11 @@ public class Aluguer{
         this.destino = a.getDestino();
         this.tipoCombustivel = a.getTipoCombustivel();
         this.preferencia = a.getPreferencia();
-        this.veiculo = a.getVeiculo();
+        this.veiculo = new Veiculo();
         this.custo = a.getCusto();
         this.distancia = a.getDistancia();
-        this.duracao = a.getDuracao();
+        this.duracaoEstimada = a.getDuracaoEstimada();
+        this.duracaoReal = a.getDuracaoReal();
         this.meteo = a.getMeteorologia();
         this.trafego = a.getTrafego();
     }
@@ -85,8 +88,12 @@ public class Aluguer{
         return this.distancia;
     }
     
-    public double getDuracao() {
-        return this.duracao;
+    public double getDuracaoEstimada() {
+        return this.duracaoEstimada;
+    }
+    
+    public double getDuracaoReal() {
+        return this.duracaoReal;
     }
     
     public Metereologia getMeteorologia() {
@@ -125,23 +132,27 @@ public class Aluguer{
         this.distancia = distancia;
     }
     
-    public void setDuracao(int duracao) {
-        this.duracao = duracao;
+    public void setDuracaoEstimada(int duaracaoEstimada) {
+        this.duracaoEstimada = duracaoEstimada;
     }
     
-    
+    public void setDuracaoReal(int duracaoReal) {
+        this.duracaoReal = duracaoReal;
+    }
     
     
     public String toString(){
         StringBuilder sb = new StringBuilder();
         sb.append("............ALUGUER............\n");
         sb.append("Destino: \n\t" + this.destino.toString() + ";\n");
-        sb.append("Nif: " + this.nif + ";\n");
+        sb.append("Nif Cliente: " + this.nif + ";\n");
         sb.append("Tipo de Combustivel: " + this.tipoCombustivel + ";\n");
         sb.append("Preferencia: " + this.preferencia + ";\n");
         sb.append("Custo: " + this.custo + ";\n");
         sb.append("Distancia: " + this.distancia + ";\n");
-        sb.append("Duracao: " + this.duracao + ";\n");
+        sb.append("Duracao: \n");
+        sb.append("\tEstimada: " + this.duracaoEstimada + ";\n");
+        sb.append("\tReal: " + this.duracaoReal + ";\n");
         sb.append("Metereologia: " + this.meteo + ";\n");
         sb.append("Trafego: " + this.trafego + ";\n");
         return sb.toString();
@@ -156,10 +167,7 @@ public class Aluguer{
             return false;
         }
         Aluguer a = (Aluguer)o;
-        
-        return (this.destino.equals(a.getDestino()) && this.nif==a.getNif() && this.tipoCombustivel.equals(a.getTipoCombustivel()) &&
-                this.preferencia == a.getPreferencia() && this.custo == a.getCusto() && this.distancia == a.getDistancia() &&
-                this.duracao == a.getDuracao() && this.meteo.equals(a.getMeteorologia()) && this.trafego.equals(a.getTrafego()));
+        return true;
     }
    
     
@@ -169,52 +177,62 @@ public class Aluguer{
     
     //------------------------------------
     
-    public double custoViagem(Veiculo veiculo, double duracao){
-        return duracao * veiculo.getPreco();
+    private double converteEmHoras(double duracao) throws DuracaoNegativaException{
+        if(duracao < 0){
+            throw new DuracaoNegativaException("Ups! Duracao negativa não é aceite pelo Sistema.\n");
+        }
+        int horas = (int)Math.floor(duracao);
+        double minutos = (duracao - horas) * 0.6;
+        return (horas + minutos);
     }
     
-    public double tempoViagem(Cliente cliente,Veiculo veiculo){
-        double distancia = cliente.getLocalizacao().distancia(veiculo.getLocalizacao());
-        double duracao = distancia / 4;
-        distancia = this.destino.distancia(veiculo.getLocalizacao());
-        duracao += distancia * veiculo.getVelocidadeMedia();
-        return duracao;
+    private void custoViagem(){
+        this.custo = this.distancia * this.veiculo.getPreco();
     }
     
-    public double tempoRealViagem(Cliente cliente,Veiculo veiculo){
-        double duracao = tempoViagem(cliente,veiculo);
-        duracao *= (100 - cliente.getDestreza())/100;
-        duracao *= (100 - veiculo.getClassificacao())/100;
-        duracao *= this.meteo.getPercentagem();
-        duracao *= this.trafego.getPercentagem();
-        return duracao;
+    private void tempoViagem(Cliente cliente) throws DuracaoNegativaException{
+        this.distancia = cliente.getLocalizacao().distancia(this.veiculo.getLocalizacao());
+        this.duracaoEstimada = distancia / 4;
+        this.distancia = this.destino.distancia(this.veiculo.getLocalizacao());
+        this.duracaoEstimada += this.distancia * this.veiculo.getVelocidadeMedia();
+        this.duracaoEstimada = converteEmHoras(this.duracaoEstimada);
+    }
+    
+    private void tempoRealViagem(Cliente cliente) throws DuracaoNegativaException{
+        this.duracaoReal = this.duracaoEstimada;
+        this.duracaoReal *= (100 - cliente.getDestreza())/100;
+        this.duracaoReal *= (100 - this.veiculo.getClassificacao())/100;
+        this.duracaoReal *= this.meteo.getPercentagem();
+        this.duracaoReal *= this.trafego.getPercentagem();
+        this.duracaoReal = converteEmHoras(this.duracaoReal);
     }
     
     
-    
-    public double iniciaAluguer(Cliente cliente, Veiculo veiculo) throws AutonomiaVeiculoInsuficienteException{
-        this.distancia = veiculo.getLocalizacao().distancia(this.destino);
-        if(this.distancia > veiculo.getAutonomiaAtual()){
+    public void iniciaAluguer(Cliente cliente) throws AutonomiaVeiculoInsuficienteException, DuracaoNegativaException{
+        this.distancia = this.veiculo.getLocalizacao().distancia(this.destino);
+        if(this.distancia > this.veiculo.getAutonomiaAtual()){
             throw new AutonomiaVeiculoInsuficienteException("Ups! A autonomia é insuficiente.");
         }
-        double tempoViagem = tempoViagem(cliente,veiculo);
-        cliente.setLocalizacao(veiculo.getLocalizacao());
-        return tempoViagem;
+        tempoViagem(cliente);
+        cliente.setLocalizacao(this.veiculo.getLocalizacao());
     }
     
     
     public void alugaVeiculo (Cliente cliente, Veiculo veiculo,Proprietario proprietario, double avaliacaoCliente,double avaliacaoVeiculo,
-                              double avaliacaoProprietario) throws AutonomiaVeiculoInsuficienteException, AvaliacaoInvalidaException{
-        double tempoViagem = iniciaAluguer(cliente,veiculo);
-        double custoEstimado = custoViagem(veiculo,tempoViagem);
-        this.duracao = tempoRealViagem(cliente,veiculo);
-        this.custo =  custoViagem(veiculo,this.duracao);
+                              double avaliacaoProprietario) throws AutonomiaVeiculoInsuficienteException, AvaliacaoInvalidaException, 
+                              DuracaoNegativaException{
+        this.veiculo = veiculo;
+        iniciaAluguer(cliente);
+        tempoRealViagem(cliente);
+        custoViagem();
         veiculo.diminuirAutonomiaAtual(this.distancia);
         veiculo.novaAvaliacao(avaliacaoVeiculo);
         cliente.novaAvaliacao(avaliacaoCliente);
         proprietario.novaAvaliacao(avaliacaoProprietario);
+        this.veiculo = this.veiculo.clone();
     }
    
+    
     
     
 }
