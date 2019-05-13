@@ -2,6 +2,7 @@ package Gestores;
 
 import ClassesBase.*;
 import java.util.*;
+import Exceptions.*;
 /**
  * Escreva a descrição da classe GestorAlugueres aqui.
  * 
@@ -75,18 +76,20 @@ public class GestorAlugueres
     
     // Adiciona um veículo
     
-    public void addAluguer(Aluguer a){
-        if(!this.alugueres.contains(a)){
-            this.alugueres.add(a.clone());
+    public void addAluguer(Aluguer a) throws AluguerExisteException{
+        if(this.alugueres.contains(a)){
+            throw new AluguerExisteException("O aluguer já exite!\n");
         }
+        this.alugueres.add(a.clone());
     }
     
     // Remove um veículo
     
-    public void removeAluguer(Aluguer a){
-        if(this.alugueres.contains(a)){
-            this.alugueres.remove(a);
+    public void removeAluguer(Aluguer a) throws AluguerNaoExisteException{
+        if(!this.alugueres.contains(a)){
+            throw new AluguerNaoExisteException("O aluguer não exite!\n");
         }
+        this.alugueres.remove(a);
     }
     
     // Liberta os Veículos
@@ -99,7 +102,7 @@ public class GestorAlugueres
     public Collection<Aluguer> historicoCliente(Cliente cliente){
         Collection<Aluguer> aux = new HashSet<>();
         for(Aluguer a : this.alugueres){
-            if(a.getCliente().equals(cliente)){
+            if(a.getNif() == cliente.getNif()){
                 aux.add(a);//não necessita de clone, pois é uma "visao"
             }
         }
@@ -122,7 +125,7 @@ public class GestorAlugueres
         double totalFaturado = 0;
         for(Aluguer a : this.alugueres){
             if(a.getVeiculo().getNif() == nif){
-                totalFaturado += a.getPrecoViagem();
+                totalFaturado += a.getCusto();
             }
         }
         return totalFaturado;

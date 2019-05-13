@@ -7,9 +7,9 @@ package Exceptions;
  * @author (seu nome) 
  * @version (número de versão ou data)
  */
-public class VeiculoExisteException extends Exception
+public class VeiculoJaExisteException extends Exception
 {
-    public VeiculoExisteException(String s){
+    public VeiculoJaExisteException(String s){
         super(s);
     }
 }

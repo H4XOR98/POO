@@ -1,6 +1,7 @@
 package ClassesBase;
 
 import Exceptions.*;
+import java.text.DecimalFormat;
 
 public class Aluguer{
     
@@ -10,6 +11,7 @@ public class Aluguer{
     private TipoCombustivel tipoCombustivel;
     private PreferenciaAluguer preferencia;
     private Veiculo veiculo;
+    private EstadoAluguer estadoAluguer;
     private double custo;
     private double distancia;
     private double duracaoEstimada;
@@ -24,6 +26,7 @@ public class Aluguer{
         this.tipoCombustivel = TipoCombustivel.Gasolina;
         this.preferencia = PreferenciaAluguer.MaisPerto;
         this.veiculo = new Veiculo();
+        this.estadoAluguer = EstadoAluguer.Espera;
         this.custo = 0;
         this.distancia = 0;
         this.duracaoEstimada = 0;
@@ -39,6 +42,7 @@ public class Aluguer{
         this.tipoCombustivel = tipoCombustivel;
         this.preferencia = preferencia;
         this.veiculo = new Veiculo();
+        this.estadoAluguer = EstadoAluguer.Espera;
         this.custo = 0;
         this.distancia = 0;
         this.duracaoEstimada = 0;
@@ -52,7 +56,7 @@ public class Aluguer{
         this.destino = a.getDestino();
         this.tipoCombustivel = a.getTipoCombustivel();
         this.preferencia = a.getPreferencia();
-        this.veiculo = new Veiculo();
+        this.veiculo = a.getVeiculo();
         this.custo = a.getCusto();
         this.distancia = a.getDistancia();
         this.duracaoEstimada = a.getDuracaoEstimada();
@@ -78,6 +82,14 @@ public class Aluguer{
 
     public PreferenciaAluguer getPreferencia() {
         return this.preferencia;
+    }
+    
+    public Veiculo getVeiculo() {
+        return this.veiculo;
+    }
+    
+    public EstadoAluguer getEstadoAluguer() {
+        return this.estadoAluguer;
     }
     
     public double getCusto() {
@@ -124,6 +136,10 @@ public class Aluguer{
         this.preferencia = preferencia;
     }
 
+    public void setEstadoAluguer(EstadoAluguer estadoAluguer) {
+        this.estadoAluguer = estadoAluguer;
+    }
+    
     public void setCusto(double custo) {
         this.custo = custo;
     }
@@ -148,9 +164,10 @@ public class Aluguer{
         sb.append("Nif Cliente: " + this.nif + ";\n");
         sb.append("Tipo de Combustivel: " + this.tipoCombustivel + ";\n");
         sb.append("Preferencia: " + this.preferencia + ";\n");
+        sb.append(this.veiculo.toString());
+        sb.append("Estado Aluguer: " + this.estadoAluguer + ";\n");
         sb.append("Custo: " + this.custo + ";\n");
         sb.append("Distancia: " + this.distancia + ";\n");
-        sb.append("Duracao: \n");
         sb.append("\tEstimada: " + this.duracaoEstimada + ";\n");
         sb.append("\tReal: " + this.duracaoReal + ";\n");
         sb.append("Metereologia: " + this.meteo + ";\n");
@@ -167,7 +184,10 @@ public class Aluguer{
             return false;
         }
         Aluguer a = (Aluguer)o;
-        return true;
+        return this.nif == a.getNif() && this.destino.equals(a.getDestino()) && this.tipoCombustivel.equals(a.getTipoCombustivel()) && 
+               this.preferencia.equals(a.getPreferencia()) && this.veiculo.equals(a.getDestino()) && this.preferencia.equals(a.getPreferencia()) &&
+               this.custo == a.getCusto() && this.distancia == a.getDistancia() && this.duracaoEstimada == a.getDuracaoEstimada() && 
+               this.duracaoReal == a.getDuracaoReal() && this.meteo.equals(a.getMeteorologia()) && this.trafego.equals(a.getTrafego()); 
     }
    
     
@@ -179,11 +199,14 @@ public class Aluguer{
     
     private double converteEmHoras(double duracao) throws DuracaoNegativaException{
         if(duracao < 0){
-            throw new DuracaoNegativaException("Ups! Duracao negativa não é aceite pelo Sistema.\n");
+            throw new DuracaoNegativaException("Ups! Duracao negativa não é aceite pelo sistema.\n");
         }
         int horas = (int)Math.floor(duracao);
         double minutos = (duracao - horas) * 0.6;
-        return (horas + minutos);
+        double tempo = horas + minutos;
+        DecimalFormat df = new DecimalFormat("#.##");      
+        tempo = Double.valueOf(df.format(tempo));
+        return tempo;
     }
     
     private void custoViagem(){

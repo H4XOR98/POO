@@ -1,4 +1,3 @@
-
 package Gestores;
 
 import Exceptions.*;
@@ -9,7 +8,7 @@ public class GestorVeiculos{
     
     // Variáveis de Instância
     
-    private Map<Integer,Collection<Veiculo>> gestor;
+    private Map<Integer,Set<Veiculo>> gestor;
     
     // Comparators
     
@@ -35,11 +34,7 @@ public class GestorVeiculos{
     // Construtores
     
     public GestorVeiculos(){
-        this.gestor = new HashMap<>();   
-    }
-    
-    public GestorVeiculos (Map<Integer,Collection<Veiculo>> gestor){
-        setGestor(gestor);
+        this.gestor = new HashMap<Integer,Set<Veiculo>>();   
     }
     
     public GestorVeiculos (GestorVeiculos gv){
@@ -48,10 +43,10 @@ public class GestorVeiculos{
     
     // Gets
     
-    public Map<Integer,Collection<Veiculo>> getGestor(){
-        Map<Integer,Collection<Veiculo>> aux = new HashMap<Integer,Collection<Veiculo>>();
+    public Map<Integer,Set<Veiculo>> getGestor(){
+        Map<Integer,Set<Veiculo>> aux = new HashMap<>();
         this.gestor.forEach((k,v) -> {
-            Collection<Veiculo> veiculos = new HashSet<>();
+            Set<Veiculo> veiculos = new HashSet<>();
             for (Veiculo veiculo : v){
                 veiculos.add(veiculo.clone());
             }
@@ -62,15 +57,15 @@ public class GestorVeiculos{
     
     // Sets
     
-    public void setGestor (Map<Integer,Collection<Veiculo>> newGestor){
-        this.gestor = new HashMap<Integer,Collection<Veiculo>>();
+    public void setGestor (Map<Integer,Set<Veiculo>> newGestor){
+        this.gestor = new HashMap<>();
         newGestor.forEach((k,v) -> {
-            Collection<Veiculo> veiculos = new HashSet<>();
+            Set<Veiculo> veiculos = new HashSet<>();
             for (Veiculo veiculo : v){
                 veiculos.add(veiculo.clone());
             }
             this.gestor.put(k, veiculos);
-        });
+        });     
     }
     
     // Clone
@@ -99,86 +94,103 @@ public class GestorVeiculos{
     public String toString(){
         StringBuilder sb = new StringBuilder();
         sb.append("---------- Gestor Veículos ----------\n");
-        this.gestor.forEach((k,v) -> sb.append(v.toString()));
+        this.gestor.forEach((k,v) -> {
+            sb.append("NIF: " + k.toString() + "\n");
+            for (Veiculo veiculo : v) sb.append(veiculo.toString());
+        });
         return sb.toString();
     }
     
-    // Adiciona um veículo
+    // Adiciona um Veiculo
     
-    public void insereVeiculo (Veiculo v){
+    public void insereVeiculo (Veiculo v) throws UtilizadorNaoExisteException{
+        if (!this.gestor.containsKey(v.getNif())) throw new UtilizadorNaoExisteException ("Proprietário não registado.\n");
         if (this.gestor.get(v.getNif()).isEmpty()){
-            Collection<Veiculo> veiculos = new HashSet<>();
+            Set<Veiculo> veiculos = new HashSet<>();
             this.gestor.put(v.getNif(), veiculos);
         }
         this.gestor.get(v.getNif()).add(v.clone());
     }
     
-    // remove um veículo
+    // Atualiza um Veiculo
     
-    public void removeVeiculo (Veiculo v){
-        Collection<Veiculo> aux = this.gestor.get(v.getNif());
-        aux.remove(v);
+    public void updateVeiculo (Veiculo veiculo){
+        Set<Veiculo> veiculos = this.gestor.get(veiculo.getNif());
+        for (Veiculo v : veiculos){
+            if (v.getMatricula().equals(veiculo.getMatricula())) v = veiculo.clone();
+        }
     }
     
-    // Liberta o Gestor de Veículos
+    // Liberta o GestorVeiculos
     
-    public void libertaGestorVeiculos(){
-        this.gestor.forEach((k,v) -> v.clear());
+    public void libertaGestor(){
         this.gestor.clear();
     }
     
     // Devolver o Veiculo mais barato
     
-    public Veiculo determinaVeiculoMaisBarato(TipoCombustivel tipoCombustivel) throws VeiculoNaoExisteException{
-        if (this.gestor.isEmpty()) throw new VeiculoNaoExisteException("Ups! Gestor de Veiculos Vazio.\n");
+    public Veiculo veiculoMaisBarato (TipoVeiculo tipoVeiculo, TipoCombustivel tipoCombustivel) 
+    throws VeiculoNaoExisteException{
+        if (this.gestor.isEmpty()) throw new VeiculoNaoExisteException ("Ups! Gestor de Veiculos Vazio.\n");
         TreeSet<Veiculo> maisBarato = new TreeSet<>(comparaPrecos);
-        this.gestor.forEach((k,v) -> { for (Veiculo veiculo : v) maisBarato.add(veiculo.clone()); });
-        for(Veiculo veiculo : maisBarato){
-            if(tipoCombustivel.equals(veiculo.getTipoCombustivel())){
-                return veiculo.clone();
+        this.gestor.forEach((k,v) -> { 
+            for (Veiculo veiculo : v){
+                if (veiculo.getTipoVeiculo().equals(tipoVeiculo) && veiculo.getTipoCombustivel().equals(tipoCombustivel)){
+                maisBarato.add(veiculo.clone());
+                }
             }
-        }
-        throw new VeiculoNaoExisteException("Ups! Não existe nenhum veículo a " + tipoCombustivel + ".\n");
+        });
+        return maisBarato.first();
     }
     
     // Devolver o Veiculo mais perto
   
-    public Veiculo determinaVeiculoMaisPerto (Ponto localizacao,TipoCombustivel tipoCombustivel) throws VeiculoNaoExisteException{
-        if (this.gestor.isEmpty()) throw new VeiculoNaoExisteException("Ups! Gestor de Veiculos Vazio.\n");
+    public Veiculo veiculoMaisPerto (TipoVeiculo tipoVeiculo, TipoCombustivel tipoCombustivel, Ponto localizacao) 
+    throws VeiculoNaoExisteException{
+        if (this.gestor.isEmpty()) throw new VeiculoNaoExisteException ("Ups! Gestor de Veiculos Vazio.\n");
         TreeSet<Veiculo> maisPerto = new TreeSet<>(comparaLocalizacao);
-        this.gestor.forEach((k,v) -> { for (Veiculo veiculo : v) maisPerto.add(veiculo.clone()); });
+        this.gestor.forEach((k,v) -> { 
+            for (Veiculo veiculo : v){
+                if (veiculo.getTipoVeiculo().equals(tipoVeiculo) && veiculo.getTipoCombustivel().equals(tipoCombustivel)){
+                    maisPerto.add(veiculo.clone());
+                }
+            }            
+        });
         double distanciaMenor = Double.MAX_VALUE;
         Veiculo vei = null;
         for (Veiculo veiculo : maisPerto){
-            if (veiculo.getLocalizacao().distancia(localizacao) < distanciaMenor && tipoCombustivel.equals(veiculo.getTipoCombustivel())){
+            if (veiculo.getLocalizacao().distancia(localizacao) < distanciaMenor){
                 vei = veiculo;
                 distanciaMenor = veiculo.getLocalizacao().distancia(localizacao);
             }
         }
-        if(vei == null){
-            throw new VeiculoNaoExisteException("Ups! Não existe nenhum veículo a " + tipoCombustivel + ".\n");
-        }
         return vei.clone();
     }
         
-    // Devolver o Veiculo mais barato dentro de uma distância -> Erro
+    // Devolver o Veiculo mais barato dentro de uma distância
     
-    public Veiculo determinaVeiculoMaisBaratoPerto (Ponto localizacao, double distanciaMax, TipoCombustivel tipoCombustivel) throws VeiculoNaoExisteException {
-        if (this.gestor.isEmpty()) throw new VeiculoNaoExisteException("Ups! Gestor de Veiculos Vazio.\n");
+    public Veiculo veiculoMaisPertoBarato (TipoVeiculo tipoVeiculo, TipoCombustivel tipoCombustivel, Ponto localizacao, double distanciaMax) 
+    throws VeiculoNaoExisteException{
+        if (this.gestor.isEmpty()) throw new VeiculoNaoExisteException ("Ups! Gestor de Veiculos Vazio.\n");
         TreeSet<Veiculo> maisBarato = new TreeSet<>(comparaPrecos);
-        this.gestor.forEach((k,v) -> { for (Veiculo veiculo : v) maisBarato.add(veiculo.clone()); });
-        for (Veiculo veiculo : maisBarato){
-            if (localizacao.distancia(veiculo.getLocalizacao()) <= distanciaMax && tipoCombustivel.equals(veiculo.getTipoCombustivel())){
-                return veiculo.clone();
+        this.gestor.forEach((k,v) -> { 
+            for (Veiculo veiculo : v){
+                if (veiculo.getTipoVeiculo().equals(tipoVeiculo) && veiculo.getTipoCombustivel().equals(tipoCombustivel)){
+                    maisBarato.add(veiculo.clone());
+                }
             }
+        });
+        for (Veiculo veiculo : maisBarato){
+            if (localizacao.distancia(veiculo.getLocalizacao()) <= distanciaMax) return veiculo.clone();
         }
-        throw new VeiculoNaoExisteException("Ups! Não existe nenhum veículo a " + distanciaMax + " Kms de si e que seja a " + tipoCombustivel + ".\n");
+        throw new VeiculoNaoExisteException ("Ups! Não existe nenhum veículo a " + distanciaMax + " Kms de si.\n");
     }
     
     // Devolver um Veículo expecífico
     
-    public Veiculo devolveVeiculoEspecifico (String matricula) throws VeiculoNaoExisteException{
-        if (this.gestor.isEmpty()) throw new VeiculoNaoExisteException("Ups! Gestor de Veiculos Vazio.\n");
+    public Veiculo veiculoEspecifico (String matricula) 
+    throws VeiculoNaoExisteException{
+        if (this.gestor.isEmpty()) throw new VeiculoNaoExisteException ("Ups! Gestor de Veiculos Vazio.\n");
         TreeSet<Veiculo> veiculos = new TreeSet<>();
         this.gestor.forEach((k,v) -> { 
             for (Veiculo veiculo : v){
@@ -186,29 +198,33 @@ public class GestorVeiculos{
             }
         });
         if (!veiculos.isEmpty()) return veiculos.first().clone();
-        throw new VeiculoNaoExisteException("Ups! Não existe nenhum veículo com a matrícula " + matricula + ".\n");
+        throw new VeiculoNaoExisteException ("Ups! Não existe nenhum veículo com a matrícula " + matricula + ".\n");
     }
     
     // Devolver um Veiculo com uma autonomia expecífica
     
-    public Veiculo devolveVeiculoAutonomia (Ponto localizacao, double autonomia, TipoCombustivel tipoCombustivel) throws VeiculoNaoExisteException{
-        if (this.gestor.isEmpty()) throw new VeiculoNaoExisteException("Ups! Gestor de Veiculos Vazio.\n");
+    public Veiculo veiculoAutonomia (TipoVeiculo tipoVeiculo, TipoCombustivel tipoCombustivel, Ponto localizacao, double autonomia) 
+    throws VeiculoNaoExisteException{
+        if (this.gestor.isEmpty()) throw new VeiculoNaoExisteException ("Ups! Gestor de Veiculos Vazio.\n");
         TreeSet<Veiculo> veiculos = new TreeSet<>();
         this.gestor.forEach((k,v) -> {
             for (Veiculo veiculo : v){
-                if (veiculo.getAutonomiaAtual() == autonomia) veiculos.add(veiculo.clone());
+                if (veiculo.getTipoVeiculo().equals(tipoVeiculo) && veiculo.getTipoCombustivel().equals(tipoCombustivel) && 
+                    veiculo.getAutonomiaAtual() == autonomia){ 
+                        veiculos.add(veiculo.clone());
+                }
             }
         });
         double distanciaMenor = Double.MAX_VALUE;
         Veiculo vei = null;
         for (Veiculo veiculo : veiculos){
-            if (veiculo.getLocalizacao().distancia(localizacao) < distanciaMenor && tipoCombustivel.equals(veiculo.getTipoCombustivel())){
+            if (veiculo.getLocalizacao().distancia(localizacao) < distanciaMenor){
                 vei = veiculo;
                 distanciaMenor = veiculo.getLocalizacao().distancia(localizacao);
             }
         }
         if (!veiculos.isEmpty()) return vei.clone();
-        throw new VeiculoNaoExisteException("Ups! Não existe nenhum veículo com a autonomia atual de " + autonomia + ".\n");
+        throw new VeiculoNaoExisteException ("Ups! Não existe nenhum veículo com a autonomia atual de " + autonomia + ".\n");
     }
                 
 }

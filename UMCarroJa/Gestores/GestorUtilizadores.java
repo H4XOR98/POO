@@ -10,14 +10,14 @@ import java.util.*;
  * @version (número de versão ou data)
  */
 public class GestorUtilizadores {
-    private Collection<Utilizador> utilizadores;
+    private Map<Integer,Utilizador> utilizadores;
 
 
     public GestorUtilizadores() {
-        this.utilizadores = new HashSet<>();
+        this.utilizadores = new HashMap<>();
     }
 
-    public GestorUtilizadores(Collection<Utilizador> utilizadores) {
+    public GestorUtilizadores(HashMap<Integer,Utilizador> utilizadores) {
         setUtilizadores(utilizadores);
     }
 
@@ -25,18 +25,18 @@ public class GestorUtilizadores {
         gUtilizadores.getUtilizadores();
     }
 
-    public Collection<Utilizador> getUtilizadores() {
-        Collection<Utilizador> aux = new HashSet<>();
-        for (Utilizador u : this.utilizadores) {
-            aux.add(u.clone());
+    public Map<Integer,Utilizador> getUtilizadores() {
+        Map<Integer,Utilizador> aux = new HashMap<>();
+        for (Utilizador u : this.utilizadores.values()) {
+            aux.put(u.getNif(),u.clone());
         }
         return aux;
     }
 
-    public void setUtilizadores(Collection<Utilizador> utilizadores) {
-        this.utilizadores = new HashSet<>();
-        for (Utilizador u : utilizadores) {
-            this.utilizadores.add(u.clone());
+    public void setUtilizadores(Map<Integer,Utilizador> utilizadores) {
+        this.utilizadores = new HashMap<>();
+        for (Utilizador u : utilizadores.values()) {
+            this.utilizadores.put(u.getNif(),u.clone());
         }
     }
 
@@ -57,7 +57,7 @@ public class GestorUtilizadores {
     public String toString(){
         StringBuilder sb = new StringBuilder();
         sb.append("-------------- Utilizadores --------------\n");
-        for(Utilizador u: this.utilizadores){
+        for(Utilizador u: this.utilizadores.values()){
             sb.append(u.toString());
         }
         return sb.toString();
@@ -70,19 +70,19 @@ public class GestorUtilizadores {
     
     //-------------
     
-    public void insereUtilizador(Utilizador u) throws UtilizadorExisteException{
-        if(this.utilizadores.contains(u)){
-            throw new UtilizadorExisteException(u.toString());
+    public void insereUtilizador(Utilizador u) throws UtilizadorJaExisteException{
+        if(this.utilizadores.containsKey(u.getNif())){
+            throw new UtilizadorJaExisteException(u.toString());
         }
-        this.utilizadores.add(u.clone());
+        this.utilizadores.put(u.getNif(),u.clone());
     }
     
     
-    public void removeUtilizador(Utilizador u) throws UtilizadorNaoExisteException{
-        if(!this.utilizadores.contains(u)){
-            throw new UtilizadorNaoExisteException(u.toString());
+    public void removeUtilizador(int nif) throws UtilizadorNaoExisteException{
+        if(!this.utilizadores.containsKey(nif)){
+            throw new UtilizadorNaoExisteException("Não existe nenhum utilizador com o nif " + nif + " no sistema!");
         }
-        this.utilizadores.remove(u);
+        this.utilizadores.remove(nif);
     }
     
     public void libertaUtilizadores(){
@@ -91,11 +91,9 @@ public class GestorUtilizadores {
     
     
     public Utilizador getUtilizador(int nif) throws UtilizadorNaoExisteException{
-        for(Utilizador u : this.utilizadores){
-            if (u.getNif() == nif){
-                return u.clone();
-            }
+        if(!this.utilizadores.containsKey(nif)){
+            throw new UtilizadorNaoExisteException("O nif: " + nif + " não existe no sistema!\n");
         }
-        throw new UtilizadorNaoExisteException("" + nif);
+        return this.utilizadores.get(nif).clone();
     }
 }

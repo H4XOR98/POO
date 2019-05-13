@@ -7,9 +7,9 @@ package Exceptions;
  * @author (seu nome) 
  * @version (número de versão ou data)
  */
-public class UtilizadorExisteException extends Exception
+public class UtilizadorJaExisteException extends Exception
 {
-    public UtilizadorExisteException(String s){
+    public UtilizadorJaExisteException(String s){
         super(s);
     }
 }
