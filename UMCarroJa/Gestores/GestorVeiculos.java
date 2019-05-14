@@ -9,7 +9,7 @@ public class GestorVeiculos{
     
     // Variáveis de Instância
     
-    private Set<Veiculo> gestor;
+    private Map<String,Veiculo> veiculos;
     
     // Comparators
     
@@ -29,30 +29,26 @@ public class GestorVeiculos{
     // Construtores
     
     public GestorVeiculos(){
-        this.gestor = new Set<Veiculo>();   
+        this.veiculos = new HashMap<String,Veiculo>();   
     }
     
     public GestorVeiculos (GestorVeiculos gv){
-        this.gestor = gv.getGestor();
+        this.veiculos = gv.getVeiculos();
     }
     
     // Gets
     
-    public Set<Veiculo> getGestor(){
-        Set<Veiculo> veiculos = new HashSet<>();
-        for (Veiculo veiculo : this.gestor){
-            veiculos.add(veiculo.clone());
-        }
-        return veiculos;
+    public Map<String,Veiculo> getVeiculos() {
+        Map<String,Veiculo> aux = new HashMap<>();
+        this.veiculos.forEach((k,v) -> aux.put(k,v.clone()));
+        return aux;
     }
     
     // Sets
     
-    public void setGestor (Set<Veiculo> newGestor){
-        this.gestor = new HashSet<>();
-        for (Veiculo veiculo : newGestor){
-            this.gestor.add(veiculo.clone());
-        }
+    public void setVeiculos (Map<String,Veiculo> veiculos) {
+        this.veiculos = new HashMap<>();
+        veiculos.forEach((k,v) -> this.veiculos.put(k,v.clone()));
     }
     
     // Clone
@@ -73,7 +69,7 @@ public class GestorVeiculos{
         
         GestorVeiculos gv = (GestorVeiculos)o;
         
-        return this.gestor.equals(gv.getGestor());
+        return this.veiculos.equals(gv.getVeiculos());
     }
     
     // toString
@@ -81,7 +77,7 @@ public class GestorVeiculos{
     public String toString(){
         StringBuilder sb = new StringBuilder();
         sb.append("---------- Gestor Veículos ----------\n");
-        for (Veiculo veiculo : this.gestor) {
+        for (Veiculo veiculo : this.veiculos.values()) {
             sb.append("\n" + veiculo.toString());
         }
         return sb.toString();
@@ -92,26 +88,22 @@ public class GestorVeiculos{
     // Adiciona um Veiculo
     
     public void insereVeiculo (Veiculo v) throws UtilizadorNaoExisteException,VeiculoJaExisteException{
-        if(this.gestor.contains(v)){
+        if(this.veiculos.containsValue(v)){
             throw new VeiculoJaExisteException("O veiculo com a matricula " + v.getMatricula() + " ja se encontra registado no sistema!\n");
         }
-        this.gestor.add(v.clone());
+        this.veiculos.put(v.getMatricula(),v.clone());
     }
     
     // Atualiza um Veiculo
     
     public void updateVeiculo (Veiculo veiculo){
-        for (Veiculo v : this.gestor){
-            if (v.equals(veiculo)){
-                v = veiculo.clone();
-            }
-        }
+        
     }
     
     // Liberta o GestorVeiculos
     
     public void libertaGestor(){
-        this.gestor.clear();
+        this.veiculos.clear();
     }
     
     // Devolver o Veiculo mais barato

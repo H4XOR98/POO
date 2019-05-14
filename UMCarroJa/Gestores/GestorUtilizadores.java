@@ -17,10 +17,6 @@ public class GestorUtilizadores {
         this.utilizadores = new HashMap<>();
     }
 
-    public GestorUtilizadores(HashMap<Integer,Utilizador> utilizadores) {
-        setUtilizadores(utilizadores);
-    }
-
     public GestorUtilizadores(GestorUtilizadores gUtilizadores) {
         gUtilizadores.getUtilizadores();
     }
