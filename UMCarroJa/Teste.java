@@ -64,6 +64,9 @@ public class Teste{
         catch (UtilizadorJaExisteException e){
             System.out.println(e.getMessage());
         }
+        catch (UtilizadorNaoExisteException e){
+            
+        }
         
         
         
