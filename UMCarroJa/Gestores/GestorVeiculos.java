@@ -129,7 +129,7 @@ public class GestorVeiculos{
     
     // Devolver o Veiculo mais barato
     
-    public Veiculo veiculoMaisBarato (TipoVeiculo tipoVeiculo, TipoCombustivel tipoCombustivel, double distanciaViagem) 
+    public Veiculo veiculoMaisBarato (TipoVeiculo tipoVeiculo, TipoCombustivel tipoCombustivel, Ponto destino) 
     throws VeiculoNaoExisteException{
         
         if (this.gestor.isEmpty()) throw new VeiculoNaoExisteException ("Ups! Gestor de veículos vazio.\n");
@@ -138,7 +138,9 @@ public class GestorVeiculos{
         this.gestor.forEach((k,v) -> { 
             for (Veiculo veiculo : v){
                 if (veiculo.getTipoVeiculo().equals(tipoVeiculo) && veiculo.getTipoCombustivel().equals(tipoCombustivel) &&
-                    veiculo.autonomiaBaixa() == false && veiculo.getAutonomiaAtual() >= distanciaViagem) maisBarato.add(veiculo.clone());   
+                    veiculo.autonomiaBaixa() == false && veiculo.getAutonomiaAtual() >= veiculo.getLocalizacao().distancia(destino)){ 
+                        maisBarato.add(veiculo.clone());
+                }
             }
         });
         
@@ -148,7 +150,7 @@ public class GestorVeiculos{
     
     // Devolver o Veiculo mais perto
   
-    public Veiculo veiculoMaisPerto (TipoVeiculo tipoVeiculo, TipoCombustivel tipoCombustivel, Ponto localizacao, double distanciaViagem) 
+    public Veiculo veiculoMaisPerto (TipoVeiculo tipoVeiculo, TipoCombustivel tipoCombustivel, Ponto localizacao, Ponto destino) 
     throws VeiculoNaoExisteException{
         
         if (this.gestor.isEmpty()) throw new VeiculoNaoExisteException ("Ups! Gestor de Veiculos Vazio.\n");
@@ -159,16 +161,11 @@ public class GestorVeiculos{
         this.gestor.forEach((k,v) -> { 
             for (Veiculo veiculo : v){
                 if (veiculo.getTipoVeiculo().equals(tipoVeiculo) && veiculo.getTipoCombustivel().equals(tipoCombustivel) &&
-                    veiculo.autonomiaBaixa() == false && veiculo.getAutonomiaAtual() >= distanciaViagem) maisPerto.add(veiculo.clone());
+                    veiculo.autonomiaBaixa() == false && veiculo.getAutonomiaAtual() >= veiculo.getLocalizacao().distancia(destino)){
+                        maisPerto.add(veiculo.clone());
+                }
             }            
         });
-        
-        for (Veiculo veiculo : maisPerto){
-            if (veiculo.getLocalizacao().distancia(localizacao) < distanciaMenor){
-                vei = veiculo;
-                distanciaMenor = veiculo.getLocalizacao().distancia(localizacao);
-            }
-        }
         
         if (!maisPerto.isEmpty()) return vei.clone();
         throw new VeiculoNaoExisteException ("Ups! Nenhum veículo disponível para a realização da viagem!\n");
@@ -177,7 +174,7 @@ public class GestorVeiculos{
     // Devolver o Veiculo mais barato dentro de uma distância
     
     public Veiculo veiculoMaisPertoBarato (TipoVeiculo tipoVeiculo, TipoCombustivel tipoCombustivel, Ponto localizacao, double distanciaMax, 
-    double distanciaViagem) throws VeiculoNaoExisteException{
+    Ponto destino) throws VeiculoNaoExisteException{
         
         if (this.gestor.isEmpty()) throw new VeiculoNaoExisteException ("Ups! Gestor de Veiculos Vazio.\n");
         TreeSet<Veiculo> maisBarato = new TreeSet<>(comparaPrecos);
@@ -185,7 +182,9 @@ public class GestorVeiculos{
         this.gestor.forEach((k,v) -> { 
             for (Veiculo veiculo : v){
                 if (veiculo.getTipoVeiculo().equals(tipoVeiculo) && veiculo.getTipoCombustivel().equals(tipoCombustivel) &&
-                    veiculo.autonomiaBaixa() == false && veiculo.getAutonomiaAtual() >= distanciaViagem) maisBarato.add(veiculo.clone());
+                    veiculo.autonomiaBaixa() == false && veiculo.getAutonomiaAtual() >= veiculo.getLocalizacao().distancia(destino)){ 
+                        maisBarato.add(veiculo.clone());
+                }
             }
         });
         
@@ -200,7 +199,7 @@ public class GestorVeiculos{
     
     // Devolver um Veículo expecífico
     
-    public Veiculo veiculoEspecifico (String matricula, double distanciaViagem) 
+    public Veiculo veiculoEspecifico (String matricula, Ponto destino) 
     throws VeiculoNaoExisteException{
         
         if (this.gestor.isEmpty()) throw new VeiculoNaoExisteException ("Ups! Gestor de Veiculos Vazio.\n");
@@ -213,8 +212,9 @@ public class GestorVeiculos{
         });
         
         if (!veiculos.isEmpty()){
-            if (veiculos.get(0).autonomiaBaixa() == false && veiculos.get(0).getAutonomiaAtual() >= distanciaViagem){
-                return veiculos.get(0).clone();
+            if (veiculos.get(0).autonomiaBaixa() == false && 
+                veiculos.get(0).getAutonomiaAtual() >= veiculos.get(0).getLocalizacao().distancia(destino)){
+                    return veiculos.get(0).clone();
             }
             else throw new VeiculoNaoExisteException ("Ups! Esse veículo não tem autonomia suficiente.\n");
         }
@@ -240,32 +240,34 @@ public class GestorVeiculos{
         });
         
         if (!veiculos.isEmpty()) return veiculos.first().clone();
-        throw new VeiculoNaoExisteException ("Ups! Não existe nenhum veículo com a autonomia atual de " + autonomia + ", que possa ser alugado.\n");
+        throw new VeiculoNaoExisteException ("Ups! Não existe nenhum veículo com a autonomia atual de " + autonomia + " que possa ser alugado.\n");
     }
 
-                
+    // Escolher um veículo conforme um aluguer
     
-    
-    public void escolheVeiculo(Aluguer a, Cliente cliente, String str, double num) throws VeiculoNaoExisteException{
+    public void escolheVeiculo (Aluguer a, Cliente cliente, String str, double num) throws VeiculoNaoExisteException{
+        
         Veiculo v;
+        
         switch(a.getPreferencia()){
             case MaisBarato:
-                v = veiculoMaisBarato(a.getTipoVeiculo(),a.getTipoCombustivel(),a.getDistancia());
+                v = veiculoMaisBarato(a.getTipoVeiculo(), a.getTipoCombustivel(), a.getDestino());
                 break;
             case MaisPerto:
-                v = veiculoMaisPerto(a.getTipoVeiculo(),a.getTipoCombustivel(),cliente.getLocalizacao(),a.getDistancia());
+                v = veiculoMaisPerto(a.getTipoVeiculo(), a.getTipoCombustivel(), cliente.getLocalizacao(), a.getDestino());
                 break;
             case MaisPertoBarato:
-                v = veiculoMaisPertoBarato(a.getTipoVeiculo(),a.getTipoCombustivel(),cliente.getLocalizacao(), num, a.getDistancia());
+                v = veiculoMaisPertoBarato(a.getTipoVeiculo(), a.getTipoCombustivel(), cliente.getLocalizacao(), num, a.getDestino());
                 break;
             case Especifico:
-                v = veiculoEspecifico(str, a.getDistancia());
+                v = veiculoEspecifico(str, a.getDestino());
                 break;
             case Autonomia:
             default:
                 v = veiculoAutonomia(a.getTipoVeiculo(),a.getTipoCombustivel(),cliente.getLocalizacao(), num);
                 break;
         }
+        
         a.setVeiculo(v);
         StringBuilder sb = new StringBuilder();
         sb.append("-------------- Estimativa de Aluguer --------------\n");

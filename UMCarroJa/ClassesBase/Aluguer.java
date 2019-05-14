@@ -6,6 +6,7 @@ import java.text.DecimalFormat;
 public class Aluguer{
     
     // Variáveis de Instância
+    
     private int nif;
     private Ponto destino;
     private TipoCombustivel tipoCombustivel;
@@ -19,7 +20,8 @@ public class Aluguer{
     private Metereologia meteo;
     private Trafego trafego;
 
-
+    // Construtores
+    
     public Aluguer() {
         this.nif = 0;
         this.destino = new Ponto();
@@ -33,7 +35,6 @@ public class Aluguer{
         this.meteo = Metereologia.getRandom();
         this.trafego = Trafego.getRandom();
     }
-
 
     public Aluguer(int nif, Ponto destino, TipoCombustivel tipoCombustivel, PreferenciaAluguer preferencia) {
         this.nif = nif;
@@ -62,8 +63,7 @@ public class Aluguer{
         this.trafego = a.getTrafego();
     }
 
-
-    //getters
+    // Gets
 
     public int getNif() {
         return this.nif;
@@ -113,9 +113,7 @@ public class Aluguer{
         return this.trafego;
     }
     
-    
-    
-    //setters
+    // Sets
 
     public void setNif(int nif) {
         this.nif = nif;
@@ -215,41 +213,41 @@ public class Aluguer{
     }
     
     
-    public double tempoClienteVeiculo(Cliente cliente){
+    public double tempoClienteVeiculo(Cliente cliente) throws DuracaoNegativaException{
         double tempo = cliente.getLocalizacao().distancia(this.veiculo.getLocalizacao());
         tempo /= 4;
         tempo = converteEmHoras(tempo);
         return tempo;
     }
     
-    private void tempoViagem(Cliente cliente) throws DuracaoNegativaException{
-        this.distancia = cliente.getLocalizacao().distancia(this.veiculo.getLocalizacao());
-        this.duracaoEstimada = distancia / 4;
+    private double tempoViagemEstimado (Cliente cliente) throws DuracaoNegativaException{
+        double tempo = tempoClienteVeiculo(cliente);
         this.distancia = this.destino.distancia(this.veiculo.getLocalizacao());
-        this.duracaoEstimada += this.distancia * this.veiculo.getVelocidadeMedia();
-        this.duracaoEstimada = converteEmHoras(this.duracaoEstimada);
+        tempo += this.distancia * this.veiculo.getVelocidadeMedia();
+        tempo = converteEmHoras(tempo);
+        return tempo;
     }
     
-    private void tempoRealViagem(Cliente cliente) throws DuracaoNegativaException{
+    /*private void tempoRealViagem(Cliente cliente) throws DuracaoNegativaException{
         this.duracaoReal = this.duracaoEstimada;
         this.duracaoReal *= (100 - cliente.getDestreza())/100;
         this.duracaoReal *= (100 - this.veiculo.getClassificacao())/100;
         this.duracaoReal *= this.meteo.getPercentagem();
         this.duracaoReal *= this.trafego.getPercentagem();
         this.duracaoReal = converteEmHoras(this.duracaoReal);
-    }
+    }*/
     
     
-    private void iniciaAluguer(Cliente cliente) throws VeiculoNaoExisteException, DuracaoNegativaException{
+    /*private void iniciaAluguer(Cliente cliente) throws VeiculoNaoExisteException, DuracaoNegativaException{
         this.distancia = this.veiculo.getLocalizacao().distancia(this.destino);
         if(this.distancia > this.veiculo.getAutonomiaAtual()){
             throw new VeiculoNaoExisteException("Ups! A autonomia é insuficiente.");
         }
         tempoViagem(cliente);
         cliente.setLocalizacao(this.veiculo.getLocalizacao());
-    }
+    }*/
     
-    private void terminaAluguer(Cliente cliente, Proprietario proprietario, double avaliacaoCliente,double avaliacaoVeiculo,
+    /*private void terminaAluguer(Cliente cliente, Proprietario proprietario, double avaliacaoCliente,double avaliacaoVeiculo,
                               double avaliacaoProprietario) throws VeiculoNaoExisteException, AvaliacaoInvalidaException, 
                               DuracaoNegativaException{
         tempoRealViagem(cliente);
@@ -258,14 +256,14 @@ public class Aluguer{
         veiculo.novaAvaliacao(avaliacaoVeiculo);
         cliente.novaAvaliacao(avaliacaoCliente);
         proprietario.novaAvaliacao(avaliacaoProprietario);  
-    }
+    }*/
     
-    public void alugaVeiculo (Cliente cliente, Veiculo veiculo,Proprietario proprietario, double avaliacaoCliente,double avaliacaoVeiculo,
+    /*public void alugaVeiculo (Cliente cliente, Veiculo veiculo,Proprietario proprietario, double avaliacaoCliente,double avaliacaoVeiculo,
                               double avaliacaoProprietario) throws VeiculoNaoExisteException, AvaliacaoInvalidaException, 
                               DuracaoNegativaException{
         this.veiculo = veiculo;
         iniciaAluguer(cliente);
         terminaAluguer(cliente,proprietario,avaliacaoCliente,avaliacaoVeiculo,avaliacaoProprietario);
         this.veiculo = this.veiculo.clone();
-    }
+    }*/
 }
