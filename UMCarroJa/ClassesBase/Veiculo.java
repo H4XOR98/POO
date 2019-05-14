@@ -203,10 +203,7 @@ public class Veiculo{
             return false;
         }
         Veiculo v = (Veiculo) o;
-        return (this.tipoVeiculo.equals(v.getTipoVeiculo()) && this.tipoCombustivel.equals(v.getTipoCombustivel()) && this.marca.equals(v.getMarca()) && 
-                this.matricula.equals(v.getMatricula()) && this.nif == v.getNif() && this.velocidadeMedia == v.getVelocidadeMedia() && this.preco == v.getPreco() &&
-                this.consumo == v.getConsumo() && this.autonomiaMax == v.getAutonomiaMax() && this.localizacao.equals(v.getLocalizacao()) && 
-                this.autonomiaAtual == v.getAutonomiaAtual() && this.classificacao == v.getClassificacao() && this.classificacoes.equals(v.getClassificacoes()));
+        return (this.matricula.equals(v.getMatricula()));
     }
     
     // toString

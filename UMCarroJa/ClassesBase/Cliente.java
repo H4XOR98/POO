@@ -88,8 +88,7 @@ public class Cliente extends Utilizador
 
         Cliente cliente = (Cliente)o;
 
-        return super.equals(cliente) && this.localizacao == cliente.getLocalizacao() && this.destreza == cliente.getDestreza() &&
-               this.classificacoes.equals(cliente.getClassificacoes());
+        return super.equals(cliente);
     }
 
 

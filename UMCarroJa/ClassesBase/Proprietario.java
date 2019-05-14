@@ -88,7 +88,7 @@ public class Proprietario extends Utilizador
         
         Proprietario p = (Proprietario)o;
         
-        return super.equals(p) && this.classificacao == p.getClassificacao() && this.classificacoes.equals(p.getClassificacoes());
+        return super.equals(p);
     }
     
     // toString

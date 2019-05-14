@@ -21,7 +21,7 @@ public class Teste{
         Utilizador pr6 = new Proprietario("carlitos@hotmail.com","naoMeAmo","Carlos",948173940,"Rua dos mares");
         
         Ponto pc1 = new Ponto (4,4);
-        Utilizador c1 = new Cliente ("goncalo.iosx@gmail.com", "pilinha", "Gonçalo Almeida", 256709718, "Vila do Conde", pc1);
+        Utilizador c1 = new Cliente ("goncalo.iosx@gmail.com", "312341313", "Gonçalo Almeida", 256709718, "Vila do Conde", pc1);
         Ponto pc2 = new Ponto (84.42827, 34.340637);
         Utilizador c2 = new Cliente ("564497795@gmail.com", "564497795", "Maria Francisca Tavares Martins Fernandes", 564497795, "Seixal", pc2);
         Ponto pc3 = new Ponto (-15.797783, 90.88934);
@@ -50,9 +50,12 @@ public class Teste{
         Veiculo v3 = new Veiculo (tv3, tb3, "Nissan", "35-FS-75", 97261940, 110, 2.5, 1.0,650.0, p3);
         
         
+        TipoVeiculo tv4 = TipoVeiculo.Carro;
+        TipoCombustivel tb4 = TipoCombustivel.Gasolina;
+        Ponto p4 = new Ponto (10,10);
+        Veiculo v4 = new Veiculo (tv4, tb4, "Volvo", "WB-32-54", 859204758, 715, 1.5, 2.0, 550.0, p4);
         
-        
-        
+
         //-------------
         
         /*
@@ -92,6 +95,7 @@ public class Teste{
             gestorVeiculos.insereVeiculo(v1);
             gestorVeiculos.insereVeiculo(v2);
             gestorVeiculos.insereVeiculo(v3);
+            gestorVeiculos.insereVeiculo(v4);
         }
         
         catch (UtilizadorNaoExisteException e){
@@ -143,10 +147,8 @@ public class Teste{
         catch(VeiculoNaoExisteException e){
             System.out.println(e.getMessage());
         }
-        for(Veiculo v : veiculos){
-            System.out.println(v.toString());
-        }
         
-        System.out.println(a1.getVeiculo().toString());
+        
+        System.out.println(a1.toString());
     }
 }

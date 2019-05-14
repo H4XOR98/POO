@@ -148,8 +148,7 @@ public abstract class Utilizador
         
         Utilizador u = (Utilizador)o;
         
-        return this.email.equals(u.getEmail()) && this.password.equals(u.getPassword()) && this.nome.equals(u.getNome()) 
-                && this.nif == u.getNif() && this.morada.equals(u.getMorada());
+        return this.nif == u.getNif();
     }
     
     
