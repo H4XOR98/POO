@@ -250,7 +250,7 @@ public class GestorVeiculos{
         Veiculo v;
         switch(a.getPreferencia()){
             case MaisBarato:
-                v = veiculoMaisBarato(a.getTipoVeiculo(),a.getTipoCombustivel(),a.getDistancia());
+                v = veiculoMaisBarato(a.getTipoVeiculo(),a.getTipoCombustivel(),a.getDestino());
                 break;
             case MaisPerto:
                 v = veiculoMaisPerto(a.getTipoVeiculo(),a.getTipoCombustivel(),cliente.getLocalizacao(),a.getDistancia());
@@ -268,6 +268,6 @@ public class GestorVeiculos{
         }
         a.setVeiculo(v);
         StringBuilder sb = new StringBuilder();
-        sb.append("-------------- Estimativa de Aluguer --------------\n");
+        sb.append("-------------- Pedido de Aluguer --------------\n");
     }
 }

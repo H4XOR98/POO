@@ -200,7 +200,7 @@ public class Aluguer{
     
     private double converteEmHoras(double duracao) throws DuracaoNegativaException{
         if(duracao < 0){
-            throw new DuracaoNegativaException("Ups! Duracao negativa não é aceite pelo Sistema.\n");
+            throw new DuracaoNegativaException("Ups! Duracao negativa não é aceite pelo sistema.\n");
         }
         int horas = (int)Math.floor(duracao);
         double minutos = (duracao - horas) * 0.6;
@@ -210,6 +210,9 @@ public class Aluguer{
         return tempo;
     }
     
+    
+    
+    /*
     private void custoViagem(){
         this.custo = this.distancia * this.veiculo.getPreco();
     }
@@ -260,12 +263,14 @@ public class Aluguer{
         proprietario.novaAvaliacao(avaliacaoProprietario);  
     }
     
-    public void alugaVeiculo (Cliente cliente, Veiculo veiculo,Proprietario proprietario, double avaliacaoCliente,double avaliacaoVeiculo,
-                              double avaliacaoProprietario) throws VeiculoNaoExisteException, AvaliacaoInvalidaException, 
-                              DuracaoNegativaException{
-        this.veiculo = veiculo;
+    public void alugaVeiculo (Cliente cliente) throws VeiculoNaoExisteException, AvaliacaoInvalidaException, DuracaoNegativaException{
         iniciaAluguer(cliente);
         terminaAluguer(cliente,proprietario,avaliacaoCliente,avaliacaoVeiculo,avaliacaoProprietario);
         this.veiculo = this.veiculo.clone();
+    }*/
+    
+    
+    public void iniciaAluguer(){
+        
     }
 }
