@@ -76,7 +76,7 @@ public class GestorVeiculos{
     // Adiciona um Veiculo
     
     public void insereVeiculo (Veiculo v) 
-    throws UtilizadorNaoExisteException, VeiculoJaExisteException{
+    throws VeiculoJaExisteException{
         
         if (this.veiculos.containsValue(v)){
             throw new VeiculoJaExisteException ("O veiculo com a matricula " + v.getMatricula() + " já se encontra registado no sistema!\n");
@@ -112,7 +112,7 @@ public class GestorVeiculos{
         }
         
         List<Veiculo> resultado = new ArrayList<>();
-        TreeSet<Veiculo> maisBarato = new TreeSet<>(comparaPrecos);
+        List<Veiculo> maisBarato = new ArrayList<>();
         
         this.veiculos.forEach((k,v) -> {    
             if (v.getTipoVeiculo().equals(tipoVeiculo) && v.getTipoCombustivel().equals(tipoCombustivel) &&
@@ -124,9 +124,12 @@ public class GestorVeiculos{
         if (maisBarato.isEmpty()){
             throw new VeiculoNaoExisteException ("Ups! Nenhum veículo disponível para a realização da viagem!\n");
         }
-                
+        
+        maisBarato.sort(comparaPrecos);
+        double precoMenor = maisBarato.get(0).getPreco();
+        
         for (Veiculo veiculo : maisBarato){
-            if (veiculo.getPreco() == maisBarato.first().getPreco()) resultado.add(veiculo);
+            if (veiculo.getPreco() <= precoMenor) resultado.add(veiculo.clone());
         }
         return resultado;
     }
@@ -178,7 +181,7 @@ public class GestorVeiculos{
         }
         
         List<Veiculo> resultado = new ArrayList<>();
-        TreeSet<Veiculo> maisBarato = new TreeSet<>(comparaPrecos);
+        List<Veiculo> maisBarato = new ArrayList<>();
         
         this.veiculos.forEach((k,v) -> {
             if (v.getTipoVeiculo().equals(tipoVeiculo) && v.getTipoCombustivel().equals(tipoCombustivel) && 
@@ -192,8 +195,11 @@ public class GestorVeiculos{
             throw new VeiculoNaoExisteException ("Ups! Não existe nenhum veículo disponível a " + distanciaMax + " Km's de si.\n");
         }
         
+        maisBarato.sort(comparaPrecos);
+        double precoMenor = maisBarato.get(0).getPreco(); 
+        
         for (Veiculo veiculo : maisBarato){
-            if (veiculo.getPreco() == maisBarato.first().getPreco()) resultado.add(veiculo.clone());
+            if (veiculo.getPreco() <= precoMenor) resultado.add(veiculo.clone());
         }
         return resultado;
     }

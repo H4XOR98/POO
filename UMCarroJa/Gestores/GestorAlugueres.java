@@ -11,25 +11,21 @@ import Exceptions.*;
  */
 public class GestorAlugueres
 {
-    private Collection<Aluguer> alugueres;
+    private Set<Aluguer> alugueres;
     
     
     public GestorAlugueres(){
         this.alugueres = new HashSet<>();
     }
     
-    public GestorAlugueres(GestorAlugueres alugueres){
-        this.alugueres = alugueres.getGestorAlugueres();
-    }
-    
-    public GestorAlugueres(Collection<Aluguer> alugueres){
-        setGestorAlugueres(alugueres);
+    public GestorAlugueres(GestorAlugueres gestorAlugueres){
+        this.alugueres = gestorAlugueres.getAlugueres();
     }
     
     // Gets
     
-    public Collection<Aluguer> getGestorAlugueres(){
-        Collection<Aluguer> aux = new HashSet<>();
+    public Set<Aluguer> getAlugueres(){
+        Set<Aluguer> aux = new HashSet<>();
         for(Aluguer a : this.alugueres){
             aux.add(a.clone());
         }
@@ -38,7 +34,7 @@ public class GestorAlugueres
     
     // Sets
     
-    public void setGestorAlugueres(Collection<Aluguer> alugueres){
+    public void setAlugueres (Set<Aluguer> alugueres){
         this.alugueres = new HashSet<>();
         for(Aluguer a : alugueres){
             this.alugueres.add(a.clone());
@@ -61,7 +57,7 @@ public class GestorAlugueres
             return false;
         }
         GestorAlugueres a = (GestorAlugueres)o;
-        return this.alugueres.equals(a.getGestorAlugueres());
+        return this.alugueres.equals(a.getAlugueres());
     }
     
     // toString
@@ -69,27 +65,19 @@ public class GestorAlugueres
     public String toString(){
         StringBuilder sb = new StringBuilder();
         for(Aluguer a : this.alugueres){
+            sb.append("----------- Gestor Alugueres -----------\n");
             sb.append(a.toString());
         }
         return sb.toString();
     }
     
-    // Adiciona um veículo
+    // Adiciona um Aluguer
     
-    public void addAluguer(Aluguer a) throws AluguerExisteException{
+    public void addAluguer(Aluguer a) throws AluguerJaExisteException{
         if(this.alugueres.contains(a)){
-            throw new AluguerExisteException("O aluguer já exite!\n");
+            throw new AluguerJaExisteException("O aluguer já exite!\n");
         }
         this.alugueres.add(a.clone());
-    }
-    
-    // Remove um veículo
-    
-    public void removeAluguer(Aluguer a) throws AluguerNaoExisteException{
-        if(!this.alugueres.contains(a)){
-            throw new AluguerNaoExisteException("O aluguer não exite!\n");
-        }
-        this.alugueres.remove(a);
     }
     
     // Liberta os Veículos
@@ -99,11 +87,11 @@ public class GestorAlugueres
     }
     
     
-    public Collection<Aluguer> historicoCliente(Cliente cliente){
-        Collection<Aluguer> aux = new HashSet<>();
+    public List<Aluguer> historicoCliente(int nif){
+        List<Aluguer> aux = new ArrayList<>();
         for(Aluguer a : this.alugueres){
-            if(a.getNif() == cliente.getNif()){
-                aux.add(a);//não necessita de clone, pois é uma "visao"
+            if(a.getNif() == nif){
+                aux.add(a.clone());
             }
         }
         return aux;
@@ -114,7 +102,7 @@ public class GestorAlugueres
         Collection<Aluguer> aux = new HashSet<>();
         for(Aluguer a : this.alugueres){
             if(a.getVeiculo().equals(veiculo)){
-                aux.add(a);//não necessita de clone, pois é uma "visao"
+                aux.add(a.clone());//não necessita de clone, pois é uma "visao"
             }
         }
         return aux;
