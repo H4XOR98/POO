@@ -1,12 +1,14 @@
-
+import java.util.Scanner;
 import java.util.*;
 import ClassesBase.*;
 import Gestores.*;
 import Exceptions.*;
+import java.lang.*;
 
 public class Teste{
     
     public static void main (String[] args){
+        Scanner sc = new Scanner(System.in);
         
         /*
          * Utilizadores
@@ -24,6 +26,9 @@ public class Teste{
         Utilizador c2 = new Cliente ("564497795@gmail.com", "564497795", "Maria Francisca Tavares Martins Fernandes", 564497795, "Seixal", pc2);
         Ponto pc3 = new Ponto (-15.797783, 90.88934);
         Utilizador c3 = new Cliente ("476759518@gmail.com", "476759518", "Emanuel de Jesus Pedrosa Viana", 476759518, "Celorico de Basto", pc3);
+        
+        
+        
         
         //-------------
         /*
@@ -52,10 +57,15 @@ public class Teste{
         GestorUtilizadores gestorUtilizadores = new GestorUtilizadores();
         try{
             gestorUtilizadores.insereUtilizador(pr1);
+            gestorVeiculos.insereProprietario(pr1);
             gestorUtilizadores.insereUtilizador(pr2);
+            gestorVeiculos.insereProprietario(pr2);
             gestorUtilizadores.insereUtilizador(pr3);
+            gestorVeiculos.insereProprietario(pr3);
             gestorUtilizadores.insereUtilizador(pr4);
+            gestorVeiculos.insereProprietario(pr4);
             gestorUtilizadores.insereUtilizador(pr5);
+            gestorVeiculos.insereProprietario(pr5);
             gestorUtilizadores.insereUtilizador(pr6);
             gestorUtilizadores.insereUtilizador(c1);
             gestorUtilizadores.insereUtilizador(c2);
@@ -65,7 +75,7 @@ public class Teste{
             System.out.println(e.getMessage());
         }
         catch (UtilizadorNaoExisteException e){
-            
+            System.out.println(e.getMessage());
         }
         
         
@@ -79,7 +89,9 @@ public class Teste{
         catch (UtilizadorNaoExisteException e){
             System.out.println(e.getMessage());
         }
-        catch
+        catch (VeiculoJaExisteException e){
+            System.out.println(e.getMessage());
+        }
         
         
         //-------------
@@ -88,10 +100,40 @@ public class Teste{
          * Aluguer
          */
         Aluguer a1 = new Aluguer(256709718,pc1,TipoCombustivel.Gasolina,PreferenciaAluguer.MaisBarato);
-        
-        
-        System.out.println(gestorVeiculos.toString());
-        
-        
+        try{
+           Utilizador cli1 = gestorUtilizadores.getUtilizador(a1.getNif());
+           double custo = 0;
+           switch(a1.getPreferencia()){
+            case MaisBarato:
+                gestorVeiculos.veiculoMaisBarato(a1);
+                break;
+            case MaisPerto:
+                gestorVeiculos.veiculoMaisPerto(a1, cli1);
+                break;
+            case MaisPertoBarato:
+                System.out.println("Introduza a distancia que esta disposto a percorrer!");
+                double distancia = sc.nextDouble();
+                gestorVeiculos.veiculoMaisPertoBarato(a1, cli1, distancia);
+                break;
+            case Especifico:
+                System.out.println("Introduza a matricula do veiculo que pretende alugar!");
+                String matricula = sc.nextLine();
+                sc.nextLine();
+                gestorVeiculos.veiculoEspecifico(a1, matricula);
+                break;
+            case Autonomia:
+            default:
+                System.out.println("Introduza a distancia que esta disposto a percorrer!");
+                double autonomia = sc.nextDouble();
+                gestorVeiculos.veiculoAutonomia(a1, cli1, autonomia);
+                break;
+        }
+        }
+        catch(UtilizadorNaoExisteException e){
+            System.out.println(e.getMessage());
+        }
+        catch(VeiculoNaoExisteException e){
+            System.out.println(e.getMessage());
+        }
     }
 }

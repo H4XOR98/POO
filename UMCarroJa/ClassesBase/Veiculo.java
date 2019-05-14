@@ -213,7 +213,7 @@ public class Veiculo{
 
     public String toString(){
         StringBuilder sb = new StringBuilder();
-        sb.append("------------ " + this.tipoVeiculo + " \n");
+        sb.append("------------ " + this.tipoVeiculo + " ------------\n");
         sb.append("Tipo Combustivel: " + this.tipoCombustivel + ";\n");
         sb.append("Marca: " + this.marca + ";\n");
         sb.append("Matricula: " + this.matricula + ";\n");
@@ -224,7 +224,7 @@ public class Veiculo{
         sb.append("Autonomia Maxima: " + this.autonomiaMax + " L;\n");
         sb.append(this.localizacao.toString() + "\n");
         sb.append("Autonomia Atual: " + this.autonomiaAtual + " L;\n");
-        sb.append("Classificação: " + this.classificacao + ".\n");
+        sb.append("Classificação: " + this.classificacao + ".\n\n");
         return sb.toString();
     }
     

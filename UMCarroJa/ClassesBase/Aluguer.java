@@ -171,6 +171,7 @@ public class Aluguer{
         sb.append("Duracao Real: " + this.duracao + " horas;\n");
         sb.append("Metereologia: " + this.meteo + ";\n");
         sb.append("Trafego: " + this.trafego + ";\n");
+        sb.append("...............................\n");
         return sb.toString();
     }
     
@@ -207,18 +208,25 @@ public class Aluguer{
         tempo = Double.valueOf(df.format(tempo));
         return tempo;
     }
-    /*
-    private void custoViagem(){
-        return distancia * this.veiculo.getPreco();
+    
+    // --- Enviar ao Cliente
+    public void distanciaVeiculoDestino(){
+        this.distancia = this.veiculo.getLocalizacao().distancia(this.destino);
     }
     
-    //--- Proprietario, passar na notificacao
+    private void custoViagem(){
+        this.custo = this.distancia * this.veiculo.getPreco();
+    }
+    
+    // --- Enviar ao Proprietário
     public double tempoClienteVeiculo(Cliente cliente) throws DuracaoNegativaException{
         double tempo = cliente.getLocalizacao().distancia(this.veiculo.getLocalizacao());
         tempo /= 4;
         tempo = converteEmHoras(tempo);
         return tempo;
     }
+    
+    
     
     ////-----------------------------------------------------------------------------------------
     
@@ -302,6 +310,6 @@ public class Aluguer{
      */
     //Inicia Alguer 
     
-    
+        
     
 }
