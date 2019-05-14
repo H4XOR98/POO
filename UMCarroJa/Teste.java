@@ -48,6 +48,11 @@ public class Teste{
         TipoCombustivel tb3 = TipoCombustivel.Hibrido;
         Ponto p3 = new Ponto (25,25);
         Veiculo v3 = new Veiculo (tv3, tb3, "Nissan", "35-FS-75", 97261940, 110, 2.5, 1.0,650.0, p3);
+        
+        
+        
+        
+        
         //-------------
         
         /*
@@ -57,16 +62,19 @@ public class Teste{
         GestorUtilizadores gestorUtilizadores = new GestorUtilizadores();
         try{
             gestorUtilizadores.insereUtilizador(pr1);
-            gestorVeiculos.insereProprietario(pr1);
             gestorUtilizadores.insereUtilizador(pr2);
-            gestorVeiculos.insereProprietario(pr2);
             gestorUtilizadores.insereUtilizador(pr3);
-            gestorVeiculos.insereProprietario(pr3);
             gestorUtilizadores.insereUtilizador(pr4);
-            gestorVeiculos.insereProprietario(pr4);
             gestorUtilizadores.insereUtilizador(pr5);
-            gestorVeiculos.insereProprietario(pr5);
             gestorUtilizadores.insereUtilizador(pr6);
+            
+            gestorVeiculos.insereProprietario(pr1);
+            gestorVeiculos.insereProprietario(pr2);
+            gestorVeiculos.insereProprietario(pr3);
+            gestorVeiculos.insereProprietario(pr4);
+            gestorVeiculos.insereProprietario(pr5);
+            gestorVeiculos.insereProprietario(pr6);
+            
             gestorUtilizadores.insereUtilizador(c1);
             gestorUtilizadores.insereUtilizador(c2);
             gestorUtilizadores.insereUtilizador(c3);
@@ -93,39 +101,39 @@ public class Teste{
             System.out.println(e.getMessage());
         }
         
-        
         //-------------
         
         /*
          * Aluguer
          */
-        Aluguer a1 = new Aluguer(256709718,pc1,TipoCombustivel.Gasolina,PreferenciaAluguer.MaisBarato);
+        List<Veiculo> veiculos = new ArrayList<>();
+        Ponto destino = new Ponto (0,0);
+        Aluguer a1 = new Aluguer (TipoVeiculo.Carro,256709718, destino, TipoCombustivel.Gasolina, PreferenciaAluguer.Especifico);
         try{
            Utilizador cli1 = gestorUtilizadores.getUtilizador(a1.getNif());
            double custo = 0;
            switch(a1.getPreferencia()){
             case MaisBarato:
-                gestorVeiculos.veiculoMaisBarato(a1);
+                veiculos = gestorVeiculos.veiculoMaisBarato(a1);
                 break;
             case MaisPerto:
-                gestorVeiculos.veiculoMaisPerto(a1, cli1);
+                veiculos = gestorVeiculos.veiculoMaisPerto(a1, cli1);
                 break;
             case MaisPertoBarato:
                 System.out.println("Introduza a distancia que esta disposto a percorrer!");
                 double distancia = sc.nextDouble();
-                gestorVeiculos.veiculoMaisPertoBarato(a1, cli1, distancia);
+                veiculos = gestorVeiculos.veiculoMaisPertoBarato(a1, cli1, distancia);
                 break;
             case Especifico:
                 System.out.println("Introduza a matricula do veiculo que pretende alugar!");
                 String matricula = sc.nextLine();
-                sc.nextLine();
                 gestorVeiculos.veiculoEspecifico(a1, matricula);
                 break;
             case Autonomia:
             default:
                 System.out.println("Introduza a distancia que esta disposto a percorrer!");
                 double autonomia = sc.nextDouble();
-                gestorVeiculos.veiculoAutonomia(a1, cli1, autonomia);
+                veiculos = gestorVeiculos.veiculoAutonomia(a1, cli1, autonomia);
                 break;
         }
         }
@@ -135,5 +143,10 @@ public class Teste{
         catch(VeiculoNaoExisteException e){
             System.out.println(e.getMessage());
         }
+        for(Veiculo v : veiculos){
+            System.out.println(v.toString());
+        }
+        
+        System.out.println(a1.getVeiculo().toString());
     }
 }

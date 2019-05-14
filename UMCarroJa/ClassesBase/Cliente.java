@@ -98,7 +98,7 @@ public class Cliente extends Utilizador
         StringBuilder sb = new StringBuilder();
         sb.append("----------- Cliente -----------\n");
         sb.append(super.toString());
-        sb.append(this.localizacao.toString());
+        sb.append(this.localizacao.toString() + ";\n");
         sb.append("Destreza: " + this.destreza + ";\n");
         return sb.toString();
     }

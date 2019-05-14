@@ -14,12 +14,6 @@ public class GestorVeiculos{
     // Comparators
     
     
-    Comparator<Veiculo> comparaLocalizacao = (a,b) -> { if (a.getLocalizacao().distancia(b.getLocalizacao()) == 0) return 0;
-                                                        if (a.getLocalizacao().distancia(b.getLocalizacao()) >  0) return 1;
-                                                        else return -1;
-                                                      };
-    
-    
     Comparator<Veiculo> comparaPrecos = (a,b) -> { if (a.getPreco() == b.getPreco()) return 0;
                                                    if (a.getPreco() >  b.getPreco()) return 1;
                                                    else return -1;
@@ -96,8 +90,7 @@ public class GestorVeiculos{
         StringBuilder sb = new StringBuilder();
         sb.append("---------- Gestor Veículos ----------\n");
         this.gestor.forEach((k,v) -> {
-            sb.append("NIF: " + k.toString() + "\n");
-            for (Veiculo veiculo : v) sb.append(veiculo.toString());
+            for (Veiculo veiculo : v) sb.append("\n" + veiculo.toString());
         });
         return sb.toString();
     }
@@ -105,7 +98,7 @@ public class GestorVeiculos{
     // Adiciona um Proprietário
     
     public void insereProprietario (Utilizador u) throws UtilizadorNaoExisteException,UtilizadorJaExisteException{
-        if(!u.getClass().toString().equals("class Proprietario")){
+        if(!u.getClass().getSimpleName().equals("Proprietario")){
             throw new UtilizadorNaoExisteException("Este utilizador não é proprietário.\n");
         }
         if (this.gestor.containsKey(u.getNif())){
@@ -145,10 +138,11 @@ public class GestorVeiculos{
     
     // Devolver o Veiculo mais barato
     
-    public void veiculoMaisBarato (Aluguer a) 
+    public List<Veiculo> veiculoMaisBarato (Aluguer a) 
     throws VeiculoNaoExisteException{
         
         if (this.gestor.isEmpty()) throw new VeiculoNaoExisteException ("Ups! Gestor de veículos vazio.\n");
+        List<Veiculo> resultado = new ArrayList<>();
         TreeSet<Veiculo> maisBarato = new TreeSet<>(comparaPrecos);
         
         this.gestor.forEach((k,v) -> { 
@@ -160,24 +154,31 @@ public class GestorVeiculos{
             }
         });
         
-        if (!maisBarato.isEmpty()){ 
-            a.setVeiculo(maisBarato.first().clone());
+        
+        if (!maisBarato.isEmpty()){
+            for (Veiculo veiculo : maisBarato){
+                if (veiculo.getPreco() == maisBarato.first().getPreco()) resultado.add(veiculo.clone());
+            }
+            return resultado;
         }
+        
         throw new VeiculoNaoExisteException ("Ups! Nenhum veículo disponível para a realização da viagem!\n");
     }
     
     // Devolver o Veiculo mais perto
   
-    public void veiculoMaisPerto (Aluguer a, Utilizador u) 
-    throws VeiculoNaoExisteException, UtilizadorNaoExisteException {
+    public List<Veiculo> veiculoMaisPerto (Aluguer a, Utilizador u) 
+    throws VeiculoNaoExisteException, UtilizadorNaoExisteException{
         if(!u.getClass().getSimpleName().equals("Cliente")){
-            throw new UtilizadorNaoExisteException("O nif " + u.getNif() + " não está registado como um Cliente.\n");
+            throw new UtilizadorNaoExisteException ("O nif " + u.getNif() + " não está registado como um Cliente.\n");
         }
-        Cliente c = (Cliente) u;
+        if (this.gestor.isEmpty()) {
+            throw new VeiculoNaoExisteException ("Ups! Gestor de Veiculos Vazio.\n");
+        }
         
-        if (this.gestor.isEmpty()) throw new VeiculoNaoExisteException ("Ups! Gestor de Veiculos Vazio.\n");
+        Cliente c = (Cliente) u;
+        List<Veiculo> resultado = new ArrayList<>();
         TreeSet<Veiculo> maisPerto = new TreeSet<>();
-        Veiculo vei;
         double distanciaMenor = Double.MAX_VALUE;
         
         this.gestor.forEach((k,v) -> { 
@@ -189,26 +190,32 @@ public class GestorVeiculos{
             }            
         });
         
-        for (Veiculo veiculo : maisPerto){
-            if (veiculo.getLocalizacao().distancia(c.getLocalizacao()) < distanciaMenor){
-                vei = veiculo.clone();
-                distanciaMenor = veiculo.getLocalizacao().distancia(c.getLocalizacao());
-            }
-        }       
         
-        if (!maisPerto.isEmpty()) a.setVeiculo(maisPerto.first().clone());
+        if (!maisPerto.isEmpty()){
+            for (Veiculo veiculo : maisPerto){
+                if (veiculo.getLocalizacao().distancia(c.getLocalizacao()) < distanciaMenor){
+                    resultado.clear();
+                    resultado.add(veiculo.clone());
+                    distanciaMenor = veiculo.getLocalizacao().distancia(c.getLocalizacao());
+                }
+                if (veiculo.getLocalizacao().distancia(c.getLocalizacao()) == distanciaMenor) resultado.add(veiculo.clone());
+            }
+            return resultado;
+        }
         throw new VeiculoNaoExisteException ("Ups! Nenhum veículo disponível para a realização da viagem!\n");
     }
         
     // Devolver o Veiculo mais barato dentro de uma distância
     
-    public void veiculoMaisPertoBarato (Aluguer a, Utilizador u, double distanciaMax) 
+    public List<Veiculo> veiculoMaisPertoBarato (Aluguer a, Utilizador u, double distanciaMax) 
     throws VeiculoNaoExisteException, UtilizadorNaoExisteException {
         if(!u.getClass().getSimpleName().equals("Cliente")){
             throw new UtilizadorNaoExisteException("O nif " + u.getNif() + " não está registado como um Cliente.\n");
         }
-        Cliente c = (Cliente) u;
         if (this.gestor.isEmpty()) throw new VeiculoNaoExisteException ("Ups! Gestor de Veiculos Vazio.\n");
+        
+        Cliente c = (Cliente) u;
+        List<Veiculo> resultado = new ArrayList<>();
         TreeSet<Veiculo> maisBarato = new TreeSet<>(comparaPrecos);
         
         this.gestor.forEach((k,v) -> { 
@@ -220,28 +227,28 @@ public class GestorVeiculos{
             }
         });
         
-        if (maisBarato.isEmpty()) throw new VeiculoNaoExisteException ("Ups! Nenhum veículo disponível para a realização da viagem!\n");
-        
-        for (Veiculo veiculo : maisBarato){
-            if (c.getLocalizacao().distancia(veiculo.getLocalizacao()) <= distanciaMax){ 
-                a.setVeiculo(veiculo.clone());
-                break;
+        if (!maisBarato.isEmpty()){
+            for (Veiculo veiculo : maisBarato){
+                if (c.getLocalizacao().distancia(veiculo.getLocalizacao()) <= distanciaMax) resultado.add(veiculo.clone());
             }
+            return resultado;
         }
-        
-        throw new VeiculoNaoExisteException ("Ups! Não existe nenhum veículo a " + distanciaMax + " Kms de si.\n");
+        throw new VeiculoNaoExisteException ("Ups! Não existe nenhum veículo disponível a " + distanciaMax + " Kms de si.\n");
     }
     
     // Devolver um Veículo expecífico
     
     public void veiculoEspecifico (Aluguer a, String matricula) 
     throws VeiculoNaoExisteException{
-        if (this.gestor.isEmpty()) throw new VeiculoNaoExisteException ("Ups! Gestor de Veiculos Vazio.\n");
+        if (this.gestor.isEmpty()) {
+            throw new VeiculoNaoExisteException ("Ups! Gestor de Veiculos Vazio.\n");
+        }
+        
         List<Veiculo> veiculos = new ArrayList<>(); 
         
         this.gestor.forEach((k,v) -> { 
             for (Veiculo veiculo : v){
-                if (veiculo.getMatricula().equals(matricula)) veiculos.add(veiculo.clone());
+                if (veiculo.getMatricula().equals(matricula)) veiculos.add(veiculo);
             }
         });
         
@@ -258,38 +265,46 @@ public class GestorVeiculos{
     
     // Devolver um Veiculo com uma autonomia expecífica
     
-    public void veiculoAutonomia (Aluguer a, Utilizador u, double autonomia) 
+    public List<Veiculo> veiculoAutonomia (Aluguer a, Utilizador u, double autonomia) 
     throws VeiculoNaoExisteException,UtilizadorNaoExisteException {
+        
         if(!u.getClass().getSimpleName().equals("Cliente")){
             throw new UtilizadorNaoExisteException ("O nif " + u.getNif() + " não está registado como um Cliente.\n");
         }
-        Cliente c = (Cliente) u;
         if (this.gestor.isEmpty()) throw new VeiculoNaoExisteException ("Ups! Gestor de Veiculos Vazio.\n");
-        TreeSet<Veiculo> veiculos = new TreeSet<>();
-        Veiculo vei = null;
-        double distanciaMenor = Double.MAX_VALUE;
+        
+        Cliente c = (Cliente) u;
+        List<Veiculo> resultado = new ArrayList<>();
         
         this.gestor.forEach((k,v) -> {
             for (Veiculo veiculo : v){
                 if (veiculo.getTipoVeiculo().equals(a.getTipoVeiculo()) && veiculo.getTipoCombustivel().equals(a.getTipoCombustivel()) && 
                     veiculo.getAutonomiaAtual() == autonomia && veiculo.autonomiaBaixa() == false){ 
-                        veiculos.add(veiculo.clone());
+                        resultado.add(veiculo.clone());
                 }
             }
         });
         
-        
-        if (!veiculos.isEmpty()){
-            for (Veiculo veiculo : veiculos){
-                if (veiculo.getLocalizacao().distancia(c.getLocalizacao()) < distanciaMenor){
-                    vei = veiculo.clone();
-                    distanciaMenor = veiculo.getLocalizacao().distancia(c.getLocalizacao());
-                }
-            }
-            a.setVeiculo(vei.clone());
-        }
-            
+        if (!resultado.isEmpty()) return resultado;
+             
         throw new VeiculoNaoExisteException ("Ups! Não existe nenhum veículo com a autonomia atual de " + autonomia + " que possa ser alugado.\n");
     }
-
+    
+    public void getVeiculo(String matricula, Aluguer a) throws VeiculoNaoExisteException{
+        if (this.gestor.isEmpty()){
+            throw new VeiculoNaoExisteException ("Ups! Gestor de Veiculos Vazio.\n");
+        }
+        List<Veiculo> veiculos = new ArrayList<>(); 
+        
+        this.gestor.forEach((k,v) -> { 
+            for (Veiculo veiculo : v){
+                if (veiculo.getMatricula().equals(matricula)) veiculos.add(veiculo);
+            }
+        });
+        
+        if (veiculos.isEmpty()){
+            throw new VeiculoNaoExisteException ("Ups! Esse veículo não tem autonomia suficiente.\n");
+        }
+        a.setVeiculo(veiculos.get(0).clone());
+    }
 }

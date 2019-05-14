@@ -7,11 +7,11 @@ public class Aluguer{
     
     // Variáveis de Instância
     
+    private TipoVeiculo tipoVeiculo;
     private int nif;
     private Ponto destino;
     private TipoCombustivel tipoCombustivel;
     private PreferenciaAluguer preferencia;
-    private TipoVeiculo tipoVeiculo;
     private Veiculo veiculo;
     private EstadoAluguer estadoAluguer;
     private double custo;
@@ -23,6 +23,7 @@ public class Aluguer{
     // Construtores
     
     public Aluguer() {
+        this.tipoVeiculo = TipoVeiculo.Carro;
         this.nif = 0;
         this.destino = new Ponto();
         this.tipoCombustivel = TipoCombustivel.Gasolina;
@@ -36,7 +37,8 @@ public class Aluguer{
         this.trafego = Trafego.getRandom();
     }
 
-    public Aluguer(int nif, Ponto destino, TipoCombustivel tipoCombustivel, PreferenciaAluguer preferencia) {
+    public Aluguer(TipoVeiculo tipoVeiculo, int nif, Ponto destino, TipoCombustivel tipoCombustivel, PreferenciaAluguer preferencia) {
+        this.tipoVeiculo = tipoVeiculo;
         this.nif = nif;
         this.destino = destino;
         this.tipoCombustivel = tipoCombustivel;
@@ -51,6 +53,7 @@ public class Aluguer{
     }
 
     public Aluguer(Aluguer a){
+        this.tipoVeiculo = a.getTipoVeiculo();
         this.nif = a.getNif();
         this.destino = a.getDestino();
         this.tipoCombustivel = a.getTipoCombustivel();
@@ -64,7 +67,11 @@ public class Aluguer{
     }
 
     // Gets
-
+    
+    public TipoVeiculo getTipoVeiculo() {
+        return this.tipoVeiculo;
+    }
+    
     public int getNif() {
         return this.nif;
     }
@@ -79,10 +86,6 @@ public class Aluguer{
 
     public PreferenciaAluguer getPreferencia() {
         return this.preferencia;
-    }
-    
-    public TipoVeiculo getTipoVeiculo() {
-        return this.tipoVeiculo;
     }
     
     public Veiculo getVeiculo() {
@@ -115,6 +118,11 @@ public class Aluguer{
     
     // Sets
 
+    
+    public void setTipoVeiculo(TipoVeiculo tipoveiculo){
+        this.tipoVeiculo = tipoVeiculo;
+    }
+    
     public void setNif(int nif) {
         this.nif = nif;
     }
@@ -129,10 +137,6 @@ public class Aluguer{
 
     public void setPreferencia(PreferenciaAluguer preferencia) {
         this.preferencia = preferencia;
-    }
-    
-    public void setTipoVeiculo(TipoVeiculo tipoveiculo){
-        this.tipoVeiculo = tipoVeiculo;
     }
     
     public void setVeiculo(Veiculo veiculo){
@@ -210,13 +214,10 @@ public class Aluguer{
     }
     
     // --- Enviar ao Cliente
-    public void distanciaVeiculoDestino(){
-        this.distancia = this.veiculo.getLocalizacao().distancia(this.destino);
-    }
-    
     private void custoViagem(){
         this.custo = this.distancia * this.veiculo.getPreco();
     }
+    
     
     // --- Enviar ao Proprietário
     public double tempoClienteVeiculo(Cliente cliente) throws DuracaoNegativaException{
@@ -230,29 +231,19 @@ public class Aluguer{
     
     ////-----------------------------------------------------------------------------------------
     
-    //--Cliente
     private void tempoViagemReal (Cliente cliente) throws DuracaoNegativaException{
-        this.duracaoReal = cliente.getLocalizacao().distancia(this.veiculo.getLocalizacao());
-        this.duracaoReal /= 4;
-        this.duracaoReal *= (100 - cliente.getDestreza())/100;
-        this.duracaoReal *= (100 - this.veiculo.getClassificacao())/100;
-        this.duracaoReal *= this.meteo.getPercentagem();
-        this.duracaoReal *= this.trafego.getPercentagem();
-        this.duracaoReal = converteEmHoras(this.duracaoReal);
+        this.duracao = cliente.getLocalizacao().distancia(this.veiculo.getLocalizacao());
+        this.duracao /= 4;
+        this.duracao *= (100 - cliente.getDestreza())/100;
+        this.duracao *= (100 - this.veiculo.getClassificacao())/100;
+        this.duracao *= this.meteo.getPercentagem();
+        this.duracao *= this.trafego.getPercentagem();
+        this.duracao = converteEmHoras(this.duracao);
     }
     
-    public void distanciaViagem(Cliente cliente){
+    public void distanciaVeiculoDestino(Cliente cliente){
         this.distancia = this.veiculo.getLocalizacao().distancia(cliente.getLocalizacao());
     }
-    
-    private void tempoRealViagem(Cliente cliente) throws DuracaoNegativaException{
-        this.duracaoReal = this.duracaoEstimada;
-        this.duracaoReal *= (100 - cliente.getDestreza())/100;
-        this.duracaoReal *= (100 - this.veiculo.getClassificacao())/100;
-        this.duracaoReal *= this.meteo.getPercentagem();
-        this.duracaoReal *= this.trafego.getPercentagem();
-        this.duracaoReal = converteEmHoras(this.duracaoReal);
-    }*/
     
     
     /*private void iniciaAluguer(Cliente cliente) throws VeiculoNaoExisteException, DuracaoNegativaException{
@@ -308,6 +299,7 @@ public class Aluguer{
      *  
      * Colocar no GestorAlugueres .|. NAO PODE SER ALTERADO
      */
+    
     //Inicia Alguer 
     
         

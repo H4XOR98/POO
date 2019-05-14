@@ -156,7 +156,7 @@ public abstract class Utilizador
     
     public String toString(){
         StringBuilder sb = new StringBuilder();
-        sb.append("Email:           " + this.email + ";\n;");
+        sb.append("Email:           " + this.email + ";\n");
         sb.append("Password:        " + this.password + ";\n");
         sb.append("Nome:            " + this.nome + ";\n");
         sb.append("NIF:             " + this.nif + ";\n");
