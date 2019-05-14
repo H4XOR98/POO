@@ -267,7 +267,7 @@ public class GestorVeiculos{
                 break;
         }
         a.setVeiculo(v);
-        StringBuilder custoTempo = new StringBuilder();
+        StringBuilder sb = new StringBuilder();
         sb.append("-------------- Estimativa de Aluguer --------------\n");
     }
 }

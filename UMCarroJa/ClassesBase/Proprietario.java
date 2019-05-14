@@ -13,7 +13,7 @@ public class Proprietario extends Utilizador
 {
     //variaveis de instancia
     private double classificacao;
-    private Collection <Double> classificacoes;
+    private List<Double> classificacoes;
     
     
     /**
@@ -55,8 +55,8 @@ public class Proprietario extends Utilizador
         return this.classificacao;
     }
     
-    public Collection<Double> getClassificacoes(){
-        Collection<Double> aux = new ArrayList<Double>();
+    public List<Double> getClassificacoes(){
+        List<Double> aux = new ArrayList<Double>();
         for (double i : this.classificacoes){
             aux.add(i);
         }
@@ -69,7 +69,7 @@ public class Proprietario extends Utilizador
         this.classificacao = classificacao;
     }
     
-    public void setClassificacoes (Collection<Double> newClassificacoes){
+    public void setClassificacoes (List<Double> newClassificacoes){
         this.classificacoes = new ArrayList<Double>();
         for(double i : newClassificacoes){
             this.classificacoes.add(i);
@@ -124,8 +124,25 @@ public class Proprietario extends Utilizador
     
     public void abasteceVeiculo(Veiculo veiculo) throws VeiculoNaoPertenceException{
         if(veiculo.getNif() != this.getNif()){
-            throw new VeiculoNaoPertenceException("O veiculo com a matricula " + veiculo.getNif() + ", não lhe pertence!\n" );
+            throw new VeiculoNaoPertenceException("O veiculo com a matricula " + veiculo.getMatricula() + ", não lhe pertence!\n" );
         }
         veiculo.abastecerVeiculo();
+    }
+    
+    public void alteraPrecoVeiculo(Veiculo veiculo, double preco) throws VeiculoNaoPertenceException{
+        if(veiculo.getNif() != this.getNif()){
+            throw new VeiculoNaoPertenceException("O veiculo com a matricula " + veiculo.getMatricula() + ", não lhe pertence!\n" );
+        }
+        veiculo.setPreco(preco);
+    }
+    
+    
+    public void confirmaAluguer (Aluguer a){
+        
+    }
+    
+    
+    public void terminaAluguer(Aluguer a, int notaCliente){
+        
     }
 }

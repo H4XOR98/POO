@@ -14,7 +14,7 @@ public class Cliente extends Utilizador
     //variaveis de instancia
     private Ponto localizacao;
     private double destreza;
-    private Collection<Double> classificacoes;
+    private List<Double> classificacoes;
     /**
      * Construtores da classe Ponto.
      * Declaracao dos construtores por omissao (vazio),
@@ -55,8 +55,8 @@ public class Cliente extends Utilizador
         return this.destreza;
     }
 
-    public Collection<Double> getClassificacoes() {
-        Collection<Double> aux = new ArrayList<>();
+    public List<Double> getClassificacoes() {
+        List<Double> aux = new ArrayList<>();
         for(double i : this.classificacoes){
             aux.add(i);
         }
@@ -71,7 +71,7 @@ public class Cliente extends Utilizador
         this.destreza = destreza;
     }
 
-    public void setClassificacoes(Collection<Double> classificacoes) {
+    public void setClassificacoes(List<Double> classificacoes) {
         this.classificacoes = new ArrayList<>();
         for(double i : classificacoes){
             this.classificacoes.add(i);
@@ -119,5 +119,9 @@ public class Cliente extends Utilizador
             this.destreza += n;
         }
         this.destreza /=  this.classificacoes.size();
+    }
+    
+    public void pedidoAluguer(Ponto destino){
+        
     }
 }
