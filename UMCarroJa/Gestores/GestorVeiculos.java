@@ -3,6 +3,7 @@ package Gestores;
 import Exceptions.*;
 import ClassesBase.*;
 import java.util.*;
+import java.lang.*;
 
 public class GestorVeiculos{
     
@@ -102,14 +103,27 @@ public class GestorVeiculos{
     }
     
     // Adiciona um Veiculo
-    
-    public void insereVeiculo (Veiculo v) throws UtilizadorNaoExisteException{
-        if (!this.gestor.containsKey(v.getNif())) throw new UtilizadorNaoExisteException ("Proprietário não registado.\n");
-        if (this.gestor.get(v.getNif()).isEmpty()){
-            Set<Veiculo> veiculos = new HashSet<>();
-            this.gestor.put(v.getNif(), veiculos);
+    public void insereProprietario (Utilizador u) throws UtilizadorNaoExisteException,UtilizadorJaExisteException{
+        if(!u.getClass().toString().equals("class Proprietario")){
+            throw new UtilizadorNaoExisteException("Este utilizador não é proprietário.\n");
         }
-        this.gestor.get(v.getNif()).add(v.clone());
+        if (this.gestor.containsKey(u.getNif())){
+            throw new UtilizadorJaExisteException ("Proprietário já registado.\n");
+        }
+        Set<Veiculo> veiculos = new HashSet<>();
+        this.gestor.put(u.getNif(),veiculos);
+    }
+    
+    
+    public void insereVeiculo (Veiculo v) throws UtilizadorNaoExisteException,VeiculoJaExisteException{
+        if(!this.gestor.containsKey(v.getNif())){
+            throw new UtilizadorNaoExisteException("O veiculo com a matricula " + v.getMatricula()+ " não tem o seu Proprietario registado no sistema!\n");
+        }
+        Set<Veiculo> veiculos = this.gestor.get(v.getNif());
+        if(veiculos.contains(v)){
+            throw new VeiculoJaExisteException("O veiculo com a matricula " + v.getMatricula() + " ja se encontra registado no sistema!\n");
+        }
+        veiculos.add(v.clone());
     }
     
     // Atualiza um Veiculo
@@ -251,7 +265,6 @@ public class GestorVeiculos{
         
         switch(a.getPreferencia()){
             case MaisBarato:
-                v = veiculoMaisBarato(a.getTipoVeiculo(),a.getTipoCombustivel(),a.getDestino());
                 v = veiculoMaisBarato(a.getTipoVeiculo(), a.getTipoCombustivel(), a.getDestino());
                 break;
             case MaisPerto:
@@ -271,6 +284,6 @@ public class GestorVeiculos{
         
         a.setVeiculo(v);
         StringBuilder sb = new StringBuilder();
-        sb.append("-------------- Pedido de Aluguer --------------\n");
+        sb.append("-------------- Estimativa de Aluguer --------------\n");
     }
 }

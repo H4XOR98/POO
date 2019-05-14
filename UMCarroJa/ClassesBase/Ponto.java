@@ -8,8 +8,8 @@ import java.util.Comparator;
  */
 public class Ponto {
   //variaveis de instancia
-  private int x;
-  private int y;
+  private double  x;
+  private double  y;
   
   /**
    * Construtores da classe Ponto.
@@ -29,7 +29,7 @@ public class Ponto {
    * Construtor parametrizado de Ponto.
    * Aceita como parametros os valores para cada coordenada.
    */
-  public Ponto(int cx, int cy) {
+  public Ponto(double  cx, double  cy) {
     this.x = cx;
     this.y = cy;
   }
@@ -56,7 +56,7 @@ public class Ponto {
    * 
    * @return valor da coordenada x.
    */
-  public int getX() {
+  public double getX() {
     return this.x;
   }
   
@@ -65,7 +65,7 @@ public class Ponto {
    * 
    * @return valor da coordenada y.
    */
-  public int getY() {
+  public double getY() {
     return this.y;
   }
   
@@ -74,7 +74,7 @@ public class Ponto {
    * 
    * @param novoX novo valor da coordenada em X
    */
-  public void setX(int novoX) {
+  public void setX(double novoX) {
     this.x = novoX;
   }
   
@@ -83,7 +83,7 @@ public class Ponto {
    * 
    * @param novoY novo valor da coordenada em Y
    */
-  public void setY(int novoY) {
+  public void setY(double novoY) {
     this.y = novoY;
   }
   
@@ -94,7 +94,7 @@ public class Ponto {
    * @param deltaX valor de deslocamento do x
    * @param deltaY valor de deslocamento do y
    */
-  public void deslocamento(int deltaX, int deltaY) {
+  public void deslocamento(double deltaX, double deltaY) {
     this.x += deltaX;
     this.y += deltaY;
   }
@@ -113,7 +113,7 @@ public class Ponto {
    * @param novoX novo valor de x.
    * @param novoY novo valor de y.
    */
-  public void movePonto(int cx, int cy) {
+  public void movePonto(double cx, double cy) {
     this.x = cx;  // ou setX(cx)
     this.y = cy;  // ou this.setY(cy)
   }
@@ -129,9 +129,9 @@ public class Ponto {
   /**
    * Metodo que determina a distÃ¢ncia de um Ponto a outro.
    * @param umPonto ponto ao qual se quer determinar a distancia
-   * @return double com o valor da distancia
+   * @return double  com o valor da distancia
    */
-  public double distancia(Ponto umPonto) {
+  public double  distancia(Ponto umPonto) {
       
     return Math.sqrt(Math.pow(this.x - umPonto.getX(), 2) +
                      Math.pow(this.y - umPonto.getY(), 2));

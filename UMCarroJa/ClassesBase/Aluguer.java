@@ -16,7 +16,7 @@ public class Aluguer{
     private EstadoAluguer estadoAluguer;
     private double custo;
     private double distancia;
-    private double duracaoReal;
+    private double duracao;
     private Metereologia meteo;
     private Trafego trafego;
 
@@ -31,7 +31,7 @@ public class Aluguer{
         this.estadoAluguer = EstadoAluguer.Espera;
         this.custo = 0;
         this.distancia = 0;
-        this.duracaoReal = 0;
+        this.duracao = 0;
         this.meteo = Metereologia.getRandom();
         this.trafego = Trafego.getRandom();
     }
@@ -45,7 +45,7 @@ public class Aluguer{
         this.estadoAluguer = EstadoAluguer.Espera;
         this.custo = 0;
         this.distancia = 0;
-        this.duracaoReal = 0;
+        this.duracao = 0;
         this.meteo = Metereologia.getRandom();
         this.trafego = Trafego.getRandom();
     }
@@ -58,7 +58,7 @@ public class Aluguer{
         this.veiculo = a.getVeiculo();
         this.custo = a.getCusto();
         this.distancia = a.getDistancia();
-        this.duracaoReal = a.getDuracaoReal();
+        this.duracao = a.getDuracao();
         this.meteo = a.getMeteorologia();
         this.trafego = a.getTrafego();
     }
@@ -101,8 +101,8 @@ public class Aluguer{
         return this.distancia;
     }
     
-    public double getDuracaoReal() {
-        return this.duracaoReal;
+    public double getDuracao() {
+        return this.duracao;
     }
     
     public Metereologia getMeteorologia() {
@@ -151,8 +151,8 @@ public class Aluguer{
         this.distancia = distancia;
     }
     
-    public void setDuracaoReal(int duracaoReal) {
-        this.duracaoReal = duracaoReal;
+    public void setDuracao(int duracao) {
+        this.duracao = duracao;
     }
     
     
@@ -168,7 +168,7 @@ public class Aluguer{
         sb.append("Estado Aluguer: " + this.estadoAluguer + ";\n");
         sb.append("Custo: " + this.custo + "€;\n");
         sb.append("Distancia: " + this.distancia + " km;\n");
-        sb.append("Duracao Real: " + this.duracaoReal + " horas;\n");
+        sb.append("Duracao Real: " + this.duracao + " horas;\n");
         sb.append("Metereologia: " + this.meteo + ";\n");
         sb.append("Trafego: " + this.trafego + ";\n");
         return sb.toString();
@@ -186,7 +186,7 @@ public class Aluguer{
         return this.nif == a.getNif() && this.destino.equals(a.getDestino()) && this.tipoCombustivel.equals(a.getTipoCombustivel()) && 
                this.preferencia.equals(a.getPreferencia()) && this.tipoVeiculo.equals(a.getTipoVeiculo()) &&  this.veiculo.equals(a.getVeiculo()) &&
                this.estadoAluguer.equals(a.getEstadoAluguer()) && this.custo == a.getCusto() && this.distancia == a.getDistancia() && 
-               this.duracaoReal == a.getDuracaoReal() && this.meteo.equals(a.getMeteorologia()) && this.trafego.equals(a.getTrafego()); 
+               this.duracao == a.getDuracao() && this.meteo.equals(a.getMeteorologia()) && this.trafego.equals(a.getTrafego()); 
     }
    
     
@@ -198,7 +198,7 @@ public class Aluguer{
     
     private double converteEmHoras(double duracao) throws DuracaoNegativaException{
         if(duracao < 0){
-            throw new DuracaoNegativaException("Ups! Duracao negativa não é aceite pelo sistema.\n");
+            throw new DuracaoNegativaException("Ups! Duracao negativa não é aceite pelo Sistema.\n");
         }
         int horas = (int)Math.floor(duracao);
         double minutos = (duracao - horas) * 0.6;
@@ -207,15 +207,12 @@ public class Aluguer{
         tempo = Double.valueOf(df.format(tempo));
         return tempo;
     }
-    
-    
-    
     /*
     private void custoViagem(){
-        this.custo = this.distancia * this.veiculo.getPreco();
+        return distancia * this.veiculo.getPreco();
     }
     
-    
+    //--- Proprietario, passar na notificacao
     public double tempoClienteVeiculo(Cliente cliente) throws DuracaoNegativaException{
         double tempo = cliente.getLocalizacao().distancia(this.veiculo.getLocalizacao());
         tempo /= 4;
@@ -223,15 +220,24 @@ public class Aluguer{
         return tempo;
     }
     
-    private double tempoViagemEstimado (Cliente cliente) throws DuracaoNegativaException{
-        double tempo = tempoClienteVeiculo(cliente);
-        this.distancia = this.destino.distancia(this.veiculo.getLocalizacao());
-        tempo += this.distancia * this.veiculo.getVelocidadeMedia();
-        tempo = converteEmHoras(tempo);
-        return tempo;
+    ////-----------------------------------------------------------------------------------------
+    
+    //--Cliente
+    private void tempoViagemReal (Cliente cliente) throws DuracaoNegativaException{
+        this.duracaoReal = cliente.getLocalizacao().distancia(this.veiculo.getLocalizacao());
+        this.duracaoReal /= 4;
+        this.duracaoReal *= (100 - cliente.getDestreza())/100;
+        this.duracaoReal *= (100 - this.veiculo.getClassificacao())/100;
+        this.duracaoReal *= this.meteo.getPercentagem();
+        this.duracaoReal *= this.trafego.getPercentagem();
+        this.duracaoReal = converteEmHoras(this.duracaoReal);
     }
     
-    /*private void tempoRealViagem(Cliente cliente) throws DuracaoNegativaException{
+    public void distanciaViagem(Cliente cliente){
+        this.distancia = this.veiculo.getLocalizacao().distancia(cliente.getLocalizacao());
+    }
+    
+    private void tempoRealViagem(Cliente cliente) throws DuracaoNegativaException{
         this.duracaoReal = this.duracaoEstimada;
         this.duracaoReal *= (100 - cliente.getDestreza())/100;
         this.duracaoReal *= (100 - this.veiculo.getClassificacao())/100;
@@ -260,7 +266,7 @@ public class Aluguer{
         cliente.novaAvaliacao(avaliacaoCliente);
         proprietario.novaAvaliacao(avaliacaoProprietario);  
     }*/
-
+    
     /*public void alugaVeiculo (Cliente cliente, Veiculo veiculo,Proprietario proprietario, double avaliacaoCliente,double avaliacaoVeiculo,
                               double avaliacaoProprietario) throws VeiculoNaoExisteException, AvaliacaoInvalidaException, 
                               DuracaoNegativaException{
@@ -270,8 +276,32 @@ public class Aluguer{
         this.veiculo = this.veiculo.clone();
     }*/
     
+    /*
+     * Criar Instancia de Aluguer(Construtor parametrizado);
+     * Buscar o cliente ao GestorUtilizadores;(getUtilizador(a.getNif())
+     * Buscar o veiculo ao GestorVeiculos
+     *      -retorna o custo Estimado do aluguer para ser possivel exibir ao cliente / IO;
+     * Iniciar aluguer;
+     * Enviar o pedido de aluguer ao Proprietaro(Tempo ClienteVeiculo)
+     * Esperar Confirmacao do Proprietario
+     * 
+     * CONFIRMA:
+     *      *Cliente:
+     *          A viagem e realizada;
+     *          Atualizar a autonomiaAtual do Veiculo;
+     *          Calculo do tempo real da viagem;
+     *          AvaliacaoDo Veiculo e do Proprietario
+     *      *Proprietario:
+     *          Registar o custo da Viagem
+     *          Avaliacao do Cliente   
+     *          
+     * RECUSAR:
+     *      Cliente: Envia notificacao;
+     *  
+     * Colocar no GestorAlugueres .|. NAO PODE SER ALTERADO
+     */
+    //Inicia Alguer 
     
-    public void iniciaAluguer(){
-        
-    }
+    
+    
 }
