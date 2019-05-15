@@ -23,22 +23,6 @@ public class Veiculo{
     
     // Construtores
     
-    public Veiculo(){
-        this.tipoVeiculo = TipoVeiculo.Carro;
-        this.tipoCombustivel = TipoCombustivel.Gasolina;
-        this.marca = "n/a";
-        this.matricula = "n/a";
-        this.nif = 0;
-        this.velocidadeMedia = 0;
-        this.preco = 0.0;
-        this.consumo = 0.0;
-        this.autonomiaMax = 0.0;
-        this.localizacao = new Ponto();
-        this.autonomiaAtual = 0.0;
-        this.classificacao = 100.0;
-        this.classificacoes = new ArrayList<>();
-    }
-    
     public Veiculo (TipoVeiculo tipoVeiculo,TipoCombustivel tipoCombustivel,String marca, String matricula, int nif, int velocidadeMedia, 
                     double preco, double consumo, double autonomiaMax, Ponto localizacao){
         this.tipoVeiculo = tipoVeiculo;
@@ -227,35 +211,43 @@ public class Veiculo{
     
     // Métodos
     
-    // Abastecer um Veículo
+    // Abastecer um veículo
     
     public void abastecerVeiculo(){
         setAutonomiaAtual(this.autonomiaMax);
     }
     
-    // Atualizar a autonomia de um Veículo após um Aluguer
+    // Atualizar a autonomia de um veículo após um aluguer
     
     public void diminuirAutonomiaAtual (double distancia){
         setAutonomiaAtual(this.autonomiaAtual - distancia * this.consumo);
     }
     
-    // Devolver a autonomia atual de um Veículo
+    // Devolver a autonomia atual de um veículo
     
     public double devolverAutonomiaAtual(){
         return this.autonomiaAtual;
     }
     
-    // Alterar o preço de um Veículo
+    // Alterar o preço de um veículo
     
     public void alterarPreco (double preco){
         setPreco(preco);
     }
     
-    // Verificar se um Veículo tem a autonomia a baixo dos 10% 
+    // Verificar se um veículo tem a autonomia a baixo dos 10% 
     
-    public boolean autonomiaBaixa (){
+    public boolean autonomiaBaixa(){
         boolean r = false;
         if (this.autonomiaAtual < (this.autonomiaMax * 0.1)) r = true;
+        return r;
+    }
+    
+    // Verificar se um veículo tem autonomia para uma viagem
+    
+    public boolean autonomiaSuficiente (Ponto destino){
+        boolean r = false;
+        if (this.autonomiaAtual >= this.localizacao.distancia(destino) / this.consumo) r = true;
         return r;
     }
     

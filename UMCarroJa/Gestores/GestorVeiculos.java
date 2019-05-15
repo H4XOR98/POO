@@ -73,7 +73,7 @@ public class GestorVeiculos{
         return sb.toString();
     }
    
-    // Adiciona um Veiculo
+    // Adiciona um veículo
     
     public void insereVeiculo (Veiculo v) 
     throws VeiculoJaExisteException{
@@ -84,7 +84,7 @@ public class GestorVeiculos{
         this.veiculos.put(v.getMatricula(),v.clone());
     }
     
-    // Liberta o GestorVeiculos
+    // Liberta o gestor de veículos
     
     public void libertaGestorVeiculos(){
         this.veiculos.clear();
@@ -102,7 +102,7 @@ public class GestorVeiculos{
         return this.veiculos.get(matricula).clone();
     }
     
-    // Devolver o Veiculo mais barato
+    // Devolver o veículo mais barato
     
     public List<Veiculo> veiculoMaisBarato (TipoVeiculo tipoVeiculo, TipoCombustivel tipoCombustivel, Ponto destino) 
     throws VeiculoNaoExisteException{
@@ -116,7 +116,7 @@ public class GestorVeiculos{
         
         this.veiculos.forEach((k,v) -> {    
             if (v.getTipoVeiculo().equals(tipoVeiculo) && v.getTipoCombustivel().equals(tipoCombustivel) &&
-                v.autonomiaBaixa() == false && v.getAutonomiaAtual() >= v.getLocalizacao().distancia(destino)){
+                v.autonomiaBaixa() == false && v.autonomiaSuficiente(destino)){
                     maisBarato.add(v.clone());
             }
         });
@@ -134,7 +134,7 @@ public class GestorVeiculos{
         return resultado;
     }
         
-    // Devolver o Veiculo mais perto
+    // Devolver o veículo mais perto
   
     public List<Veiculo> veiculoMaisPerto (TipoVeiculo tipoVeiculo, TipoCombustivel tipoCombustivel, Ponto localizacao, Ponto destino) 
     throws VeiculoNaoExisteException, UtilizadorNaoExisteException{
@@ -148,7 +148,7 @@ public class GestorVeiculos{
         
         this.veiculos.forEach((k,v) -> {
             if (v.getTipoVeiculo().equals(tipoVeiculo) && v.getTipoCombustivel().equals(tipoCombustivel) && 
-                v.autonomiaBaixa() == false && v.getAutonomiaAtual() >= v.getLocalizacao().distancia(destino)){
+                v.autonomiaBaixa() == false && v.autonomiaSuficiente(destino)){
                     maisPerto.add(v.clone());
             }          
         });
@@ -171,7 +171,7 @@ public class GestorVeiculos{
         return resultado;
     }
     
-    // Devolver o Veiculo mais barato dentro de uma distância
+    // Devolver o veículo mais barato dentro de uma distância
     
     public List<Veiculo> veiculoMaisPertoBarato (TipoVeiculo tipoVeiculo, TipoCombustivel tipoCombustivel, Ponto localizacao, Ponto destino, 
     double distanciaMax) throws VeiculoNaoExisteException, UtilizadorNaoExisteException{
@@ -185,8 +185,7 @@ public class GestorVeiculos{
         
         this.veiculos.forEach((k,v) -> {
             if (v.getTipoVeiculo().equals(tipoVeiculo) && v.getTipoCombustivel().equals(tipoCombustivel) && 
-                v.autonomiaBaixa() == false && v.getAutonomiaAtual() >= v.getLocalizacao().distancia(destino) && 
-                v.getLocalizacao().distancia(localizacao) <= distanciaMax){
+                v.autonomiaBaixa() == false && v.autonomiaSuficiente(destino) && v.getLocalizacao().distancia(localizacao) <= distanciaMax){
                     maisBarato.add(v.clone());
             } 
         });
@@ -204,7 +203,7 @@ public class GestorVeiculos{
         return resultado;
     }
     
-    // Devolver um Veículo expecífico
+    // Devolver um veículo expecífico
     
     public Veiculo veiculoEspecifico (String matricula, Ponto destino) 
     throws VeiculoNaoExisteException{
@@ -225,7 +224,7 @@ public class GestorVeiculos{
         return veiculo.clone();
     }
     
-    // Devolver um Veiculo com uma autonomia expecífica
+    // Devolver um veículo com uma autonomia expecífica
     
     public List<Veiculo> veiculoAutonomia (TipoVeiculo tipoVeiculo, TipoCombustivel tipoCombustivel, double autonomiaAtual) 
     throws VeiculoNaoExisteException, UtilizadorNaoExisteException{
