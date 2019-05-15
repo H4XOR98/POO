@@ -92,4 +92,15 @@ public class GestorUtilizadores {
         }
         return this.utilizadores.get(nif).clone();
     }
+    
+    public List<Utilizador> procuraUtilizadores(List<Integer> nifs) throws UtilizadorNaoExisteException{
+        if(nifs.isEmpty()){
+            throw new UtilizadorNaoExisteException("Não existem nif's a listar!\n");
+        }
+        List<Utilizador> utilitarios = new ArrayList<>();
+        for(int n : nifs){
+            utilitarios.add(getUtilizador(n).clone());
+        }   
+        return utilitarios;
+    }
 }

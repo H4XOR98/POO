@@ -13,6 +13,10 @@ public class GestorAlugueres
 {
     private Set<Aluguer> alugueres;
     
+    Comparator<Aluguer> compKms = (a,b) -> { if (a.getDistancia() == b.getDistancia()) return 0;
+                                             if (a.getDistancia() >  b.getDistancia()) return 1;
+                                             else return -1;
+                                           };
     
     public GestorAlugueres(){
         this.alugueres = new HashSet<>();
@@ -98,18 +102,18 @@ public class GestorAlugueres
     }
     
     
-    public Collection<Aluguer> historicoVeiculo(Veiculo veiculo){
-        Collection<Aluguer> aux = new HashSet<>();
+    public List<Aluguer> historicoProprietario(String matricula){
+        List<Aluguer> aux = new ArrayList<>();
         for(Aluguer a : this.alugueres){
-            if(a.getVeiculo().equals(veiculo)){
-                aux.add(a.clone());//não necessita de clone, pois é uma "visao"
+            if(a.getVeiculo().getMatricula().equals(matricula)){
+                aux.add(a.clone());
             }
         }
         return aux;
     }
     
     
-    public double totalFaturadoProprietario(int nif){
+    public double totalFaturadoVeiculo(int nif){
         double totalFaturado = 0;
         for(Aluguer a : this.alugueres){
             if(a.getVeiculo().getNif() == nif){
@@ -117,5 +121,28 @@ public class GestorAlugueres
             }
         }
         return totalFaturado;
+    }
+    
+    
+    public List<Integer> topDezClientesKms() throws AluguerNaoExisteException {
+        if(this.alugueres.isEmpty()){
+            throw new AluguerNaoExisteException ("Ups! Não existem alugueres!");
+        }
+        Set<Aluguer> top = new TreeSet<>(compKms);
+        for(Aluguer a : this.alugueres){
+            top.add(a);
+        }
+        List<Integer> resultado = new ArrayList<>();
+        Iterator<Aluguer> it = top.iterator();
+        Aluguer a = null;
+        int i = 0;
+        while(it.hasNext() && i<9){
+            a = it.next();
+            if(!resultado.contains(a.getNif())){
+                resultado.add(a.getNif());
+                i++;
+            }
+        }
+        return resultado;
     }
 }
