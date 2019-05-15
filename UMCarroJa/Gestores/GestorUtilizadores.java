@@ -93,6 +93,28 @@ public class GestorUtilizadores {
         return this.utilizadores.get(nif).clone();
     }
     
+    public List<Cliente> getClientes(){
+        List<Cliente> clientes = new ArrayList<>();
+        for(Utilizador u : this.utilizadores.values()){
+            if(u.getClass().getSimpleName().equals("Cliente")){
+                Cliente c = (Cliente)u;
+                clientes.add(c.clone());
+            }
+        }
+        return clientes;
+    }
+    
+    public List<Proprietario> getProprietarios(){
+        List<Proprietario> proprietarios = new ArrayList<>();
+        for(Utilizador u : this.utilizadores.values()){
+            if(u.getClass().getSimpleName().equals("Proprietario")){
+                Proprietario p = (Proprietario)u;
+                proprietarios.add(p.clone());
+            }
+        }
+        return proprietarios;
+    }
+    
     public List<Utilizador> procuraUtilizadores(List<Integer> nifs) throws UtilizadorNaoExisteException{
         if(nifs.isEmpty()){
             throw new UtilizadorNaoExisteException("Não existem nif's a listar!\n");

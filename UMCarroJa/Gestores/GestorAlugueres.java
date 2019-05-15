@@ -18,6 +18,8 @@ public class GestorAlugueres
                                              else return -1;
                                            };
     
+    Comparator<Integer> compNumVezes = (a,b) -> a - b;
+    
     public GestorAlugueres(){
         this.alugueres = new HashSet<>();
     }
