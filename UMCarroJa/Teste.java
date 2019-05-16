@@ -119,8 +119,6 @@ public class Teste{
             case MaisBarato:
                 veiculos = gestorVeiculos.veiculoMaisBarato(a1.getTipoVeiculo(), a1.getTipoCombustivel(), destino);
                 for (Veiculo v : veiculos) System.out.println(v.toString());
-                //System.out.println("Introduza a matrícula do veículo que pretende alugar!");
-                //escolhaVeiculo = sc.nextLine();
                 break;
                 
             case MaisPerto:
@@ -155,7 +153,11 @@ public class Teste{
            System.out.println("Indique a matricula do veiculo que pretende alugar.");
            String matricula = sc.nextLine();
            veiculo = gestorVeiculos.getVeiculo(matricula);
-           System.out.println(veiculo.toString());
+           a1.setVeiculo(veiculo);
+           gestorAlugueres.adicionaAluguer(a1);
+           Notificacao not = a1.pedidoAluguer(cli);
+           gestorNotificacoes.adicionaNotificacao(not);
+           System.out.println(gestorNotificacoes.toString());
         }
         
         catch(UtilizadorNaoExisteException e){
@@ -164,16 +166,14 @@ public class Teste{
         catch(VeiculoNaoExisteException e){
             System.out.println(e.getMessage());
         }
-        
-        
-        try{
-            gestorAlugueres.adicionaAluguer(a1);
-            System.out.println(gestorAlugueres.toString());
-        }
         catch(AluguerJaExisteException e){
             System.out.println(e.getMessage());
         }
+        catch(DuracaoNegativaException e){
+            System.out.println(e.getMessage());
+        }
         
-        gestorNotificacoes.adicionaNotificacao(a1.pedidoAluguer());
+        
+        
     }
 }

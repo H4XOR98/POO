@@ -79,7 +79,7 @@ public class Notificacao {
         sb.append("-----------------NOTIFICACAO-----------------\n");
         sb.append("Destinatario: " + this.destinatario + ";\n");
         sb.append("Assunto: " + this.assunto + ";\n");
-        sb.append("Conteudo: " + this.conteudo + ";\n");
+        sb.append("Conteudo: " + this.conteudo);
         return sb.toString();
     }
     

@@ -9,5 +9,5 @@ package ClassesBase;
  */
 public enum TipoCombustivel
 {
-    Gasolina, Eletrico, Hibrido
+    Gasolina, Electrico, Hibrido
 }

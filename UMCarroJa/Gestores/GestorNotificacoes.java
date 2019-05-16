@@ -58,7 +58,7 @@ public class GestorNotificacoes{
     public String toString(){
         StringBuilder sb = new StringBuilder();
         sb.append("----------------- GESTOR NOTIFICACOES -----------------\n");
-        this.caixaNotificacoes.forEach((k,v) -> sb.append("Nif: " + k + "\n" + v.toString()));
+        this.caixaNotificacoes.forEach((k,v) -> sb.append("\nNif: " + k + "\n" + v.toString() + "\n"));
         return sb.toString();
     }
     
@@ -94,9 +94,9 @@ public class GestorNotificacoes{
     
     //Adiciona uma notificação ao gestor de notificações
     public void adicionaNotificacao(Notificacao n){
-        List<Notificacao> notificacoes = this.caixaNotificacoes.get(n);
+        List<Notificacao> notificacoes = this.caixaNotificacoes.get(n.getDestinatario());
         if(!notificacoes.contains(n)){
-            notificacoes.add(n);
+            notificacoes.add(n.clone());
         }
     }
     
@@ -150,6 +150,5 @@ public class GestorNotificacoes{
     public void apagaCaixaNotificacoes(){
         this.caixaNotificacoes.clear();
     }
-    
 }
 

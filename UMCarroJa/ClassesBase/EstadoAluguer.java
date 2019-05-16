@@ -9,5 +9,5 @@ package ClassesBase;
  */
 public enum EstadoAluguer
 {
-    Espera, Aceite, Rejeitado
+    Espera, Aceite, Rejeitado, Terminado
 }
