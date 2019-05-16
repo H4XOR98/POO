@@ -121,13 +121,15 @@ public class GestorNotificacoes{
         return notificacoes.size();
     }
     
-    public List<Notificacao> getNotificacoes(int nif) throws UtilizadorNaoExisteException{
+    public List<Notificacao> getNotificacoes(int nif) throws UtilizadorNaoExisteException, NotificacaoNaoExisteException{
         if(!this.caixaNotificacoes.containsKey(nif)){
             throw new UtilizadorNaoExisteException("O nif " + nif + "não existe no sistema!");
         }
-        if()
-        List<Notificacao> notificacoes = new ArrayList<>();
         List<Notificacao> aux = this.caixaNotificacoes.get(nif);
+        if(aux.isEmpty()){
+            throw new NotificacaoNaoExisteException("A sua caixa de notificações está vazia!");
+        }
+        List<Notificacao> notificacoes = new ArrayList<>();
         for(Notificacao notificacao : aux){
             notificacoes.add(notificacao);
         }
@@ -136,7 +138,10 @@ public class GestorNotificacoes{
     
     //Apaga notificacao
     
-    public void apagaNotificacao(Notificacao n){
+    public void apagaNotificacao(Notificacao n) throws NotificacaoNaoExisteException{
+        if(!this.caixaNotificacoes.containsValue(n)){
+            throw new NotificacaoNaoExisteException("Ups! Noficacao não existe!");
+        }
         this.caixaNotificacoes.get(n.getDestinatario()).remove(n);
     }
     

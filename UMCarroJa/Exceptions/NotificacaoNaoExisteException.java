@@ -7,9 +7,9 @@ package Exceptions;
  * @author (seu nome) 
  * @version (número de versão ou data)
  */
-public class CaixaNotificacoesVaziaException extends Exception
+public class NotificacaoNaoExisteException extends Exception
 {
-    public CaixaNotificacoesVaziaException(String s){
+    public NotificacaoNaoExisteException(String s){
         super(s);
     }
 }
