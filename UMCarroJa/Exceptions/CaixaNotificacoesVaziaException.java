@@ -13,4 +13,3 @@ public class CaixaNotificacoesVaziaException extends Exception
         super(s);
     }
 }
-}
