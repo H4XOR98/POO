@@ -79,7 +79,7 @@ public class GestorAlugueres
     
     // Adiciona um Aluguer
     
-    public void adicionaAluguer(Aluguer a) throws AluguerJaExisteException{
+    public void insereAluguer(Aluguer a) throws AluguerJaExisteException{
         if(this.alugueres.contains(a)){
             throw new AluguerJaExisteException("O aluguer já exite!\n");
         }
