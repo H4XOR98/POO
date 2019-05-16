@@ -1,6 +1,6 @@
-package ClassesBase;
+package MyLogic.ClassesBase;
 
-import Exceptions.*;
+import MyLogic.Exceptions.*;
 import java.text.DecimalFormat;
 
 public class Aluguer{

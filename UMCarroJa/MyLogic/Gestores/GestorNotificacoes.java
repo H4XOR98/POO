@@ -1,8 +1,8 @@
-package Gestores;
+package MyLogic.Gestores;
 
-import ClassesBase.*;
+import MyLogic.ClassesBase.*;
 import java.util.*;
-import Exceptions.*;
+import MyLogic.Exceptions.*;
 
 public class GestorNotificacoes{
     

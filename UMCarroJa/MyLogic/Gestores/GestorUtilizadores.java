@@ -1,7 +1,7 @@
-package Gestores;
+package MyLogic.Gestores;
 
-import ClassesBase.*;
-import Exceptions.*;
+import MyLogic.ClassesBase.*;
+import MyLogic.Exceptions.*;
 import java.util.*;
 /**
  * Escreva a descrição da classe GestorUtilizador aqui.

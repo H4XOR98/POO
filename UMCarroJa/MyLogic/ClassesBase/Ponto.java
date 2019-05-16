@@ -1,4 +1,4 @@
-package ClassesBase;
+package MyLogic.ClassesBase;
 
 import java.lang.StringBuilder;
 import java.util.Comparator;

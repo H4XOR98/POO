@@ -1,7 +1,7 @@
-package Gestores;
+package MyLogic.Gestores;
 
-import Exceptions.*;
-import ClassesBase.*;
+import MyLogic.Exceptions.*;
+import MyLogic.ClassesBase.*;
 import java.util.*;
 import java.lang.*;
 
