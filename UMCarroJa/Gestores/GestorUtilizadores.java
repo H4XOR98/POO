@@ -66,11 +66,13 @@ public class GestorUtilizadores {
     
     //-------------
     
-    public void insereUtilizador(Utilizador u) throws UtilizadorJaExisteException{
+    public Notificacao insereUtilizador(Utilizador u) throws UtilizadorJaExisteException{
         if(this.utilizadores.containsKey(u.getNif())){
             throw new UtilizadorJaExisteException(u.toString());
         }
         this.utilizadores.put(u.getNif(),u.clone());
+        Notificacao n = new Notificacao(u.getNif(),"Boas Vindas","\nBem vindo à UMCarroJá!");
+        return n;
     }
     
     

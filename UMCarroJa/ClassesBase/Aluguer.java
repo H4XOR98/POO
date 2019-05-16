@@ -282,13 +282,19 @@ public class Aluguer{
     }
     
     //Cliente
-    public void efetuaViagem(Cliente cliente) throws AluguerNaoExisteException{
+    public Notificacao efetuaViagem(Cliente cliente) throws AluguerNaoExisteException{
         if(!estadoAluguer.equals(EstadoAluguer.Aceite)){
             throw new AluguerNaoExisteException("Este aluguer ainda não foi aceite!\n");
         }
+        Notificacao n = null;
         tempoViagemReal(cliente);
         this.veiculo.diminuirAutonomiaAtual(this.distancia);
         this.estadoAluguer = EstadoAluguer.Terminado;
+        if(this.veiculo.autonomiaBaixa()){
+            n = new Notificacao(this.veiculo.getNif(),"Abastecer veiuculo","\nO veiculo com a matricula " + this.veiculo.getMatricula() + 
+                                            " deve ser abastecido!\n");
+        }
+        return n;
     }
     
     //proprietario
