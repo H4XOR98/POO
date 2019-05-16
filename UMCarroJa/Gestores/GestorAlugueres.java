@@ -79,7 +79,7 @@ public class GestorAlugueres
     
     // Adiciona um Aluguer
     
-    public void addAluguer(Aluguer a) throws AluguerJaExisteException{
+    public void adicionaAluguer(Aluguer a) throws AluguerJaExisteException{
         if(this.alugueres.contains(a)){
             throw new AluguerJaExisteException("O aluguer já exite!\n");
         }
@@ -93,7 +93,7 @@ public class GestorAlugueres
     }
     
     
-    
+    /*
     public Aluguer confirmaAluguer(int id,int nif, EstadoAluguer estadoAluguer){
         Iterator<Aluguer> it = this.alugueres.iterator();
         Aluguer a = null;
@@ -109,7 +109,7 @@ public class GestorAlugueres
         }
         
     }
-    
+    */
     
     
     //-----------------------------------------

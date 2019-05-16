@@ -59,6 +59,7 @@ public class Teste{
         
         GestorVeiculos gestorVeiculos = new GestorVeiculos();
         GestorUtilizadores gestorUtilizadores = new GestorUtilizadores();
+        GestorAlugueres gestorAlugueres = new GestorAlugueres();
         GestorNotificacoes gestorNotificacoes = new GestorNotificacoes();
         
         try{
@@ -72,6 +73,17 @@ public class Teste{
             gestorUtilizadores.insereUtilizador(c1);
             gestorUtilizadores.insereUtilizador(c2);
             gestorUtilizadores.insereUtilizador(c3);
+            
+            
+            gestorNotificacoes.adicionaUtilizador(pr1);
+            gestorNotificacoes.adicionaUtilizador(pr2);
+            gestorNotificacoes.adicionaUtilizador(pr3);
+            gestorNotificacoes.adicionaUtilizador(pr4);
+            gestorNotificacoes.adicionaUtilizador(pr5);
+            gestorNotificacoes.adicionaUtilizador(pr6);
+            gestorNotificacoes.adicionaUtilizador(c1);
+            gestorNotificacoes.adicionaUtilizador(c2);
+            gestorNotificacoes.adicionaUtilizador(c3);
         }
         catch (UtilizadorJaExisteException e){
             System.out.println(e.getMessage());
@@ -153,6 +165,15 @@ public class Teste{
             System.out.println(e.getMessage());
         }
         
-        gestorNotificacoes.enviaNotificacao(a1.pedidoAluguer());
+        
+        try{
+            gestorAlugueres.adicionaAluguer(a1);
+            System.out.println(gestorAlugueres.toString());
+        }
+        catch(AluguerJaExisteException e){
+            System.out.println(e.getMessage());
+        }
+        
+        gestorNotificacoes.adicionaNotificacao(a1.pedidoAluguer());
     }
 }

@@ -314,8 +314,8 @@ public class Aluguer{
     
     //Inicia Alguer 
     public Notificacao pedidoAluguer(){
-        Notificacao n = new Notificacao(this.getNif(),this.veiculo.getNif(),"Pedido de Aluguer",
-                "Aluguer numero:" +  id + "\nPretendo alugar o veiculo com a matricula" + this.veiculo.getMatricula() + ".\n");
+        Notificacao n = new Notificacao(this.veiculo.getNif(), "Pedido de Aluguer","Aluguer numero:" +  id + "\nPretendo alugar o veiculo com a matricula" 
+                                                + this.veiculo.getMatricula() + ".\n");
         return n;
     }
     
