@@ -20,6 +20,7 @@ public class Aluguer{
     private Metereologia meteo;
     private Trafego trafego;
 
+    private static int id = 0;
     
     // Construtores
     
@@ -36,6 +37,7 @@ public class Aluguer{
         this.duracao = 0;
         this.meteo = Metereologia.getRandom();
         this.trafego = Trafego.getRandom();
+        id++;
     }
 
     public Aluguer(TipoVeiculo tipoVeiculo, int nif, Ponto destino, TipoCombustivel tipoCombustivel, PreferenciaAluguer preferencia) {
@@ -51,6 +53,7 @@ public class Aluguer{
         this.duracao = 0;
         this.meteo = Metereologia.getRandom();
         this.trafego = Trafego.getRandom();
+        id++;
     }
 
     public Aluguer(Aluguer a){
@@ -161,9 +164,17 @@ public class Aluguer{
     }
     
     
+    //Get de classe
+    
+    public static int getId() {
+        return id;
+    }
+    
+    
     public String toString(){
         StringBuilder sb = new StringBuilder();
         sb.append("............ALUGUER............\n");
+        sb.append("ID: " + id + ";\n");
         sb.append("Destino: \n\t" + this.destino.toString() + ";\n");
         sb.append("Nif Cliente: " + this.nif + ";\n");
         sb.append("Tipo de Combustivel: " + this.tipoCombustivel + ";\n");
@@ -302,9 +313,13 @@ public class Aluguer{
      */
     
     //Inicia Alguer 
-    public void pedidoAluguer(){
-        
+    public Notificacao pedidoAluguer(){
+        Notificacao n = new Notificacao(this.getNif(),this.veiculo.getNif(),"Pedido de Aluguer",
+                "Aluguer numero:" +  id + "\nPretendo alugar o veiculo com a matricula" + this.veiculo.getMatricula() + ".\n");
+        return n;
     }
+    
+    
         
     
 }

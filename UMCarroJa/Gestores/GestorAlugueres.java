@@ -93,6 +93,28 @@ public class GestorAlugueres
     }
     
     
+    
+    public Aluguer confirmaAluguer(int id,int nif, EstadoAluguer estadoAluguer){
+        Iterator<Aluguer> it = this.alugueres.iterator();
+        Aluguer a = null;
+        boolean enc = false;
+        while(it.hasNext() && !enc){
+            a = it.next();
+            if(a.getId() == id){
+                enc = true;
+            }
+        }
+        if(a.getVeiculo().getNif != nif){
+            throw new
+        }
+        
+    }
+    
+    
+    
+    //-----------------------------------------
+    
+    
     public List<Aluguer> historicoCliente(int nif){
         List<Aluguer> aux = new ArrayList<>();
         for(Aluguer a : this.alugueres){

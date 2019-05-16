@@ -59,6 +59,7 @@ public class Teste{
         
         GestorVeiculos gestorVeiculos = new GestorVeiculos();
         GestorUtilizadores gestorUtilizadores = new GestorUtilizadores();
+        GestorNotificacoes gestorNotificacoes = new GestorNotificacoes();
         
         try{
             gestorUtilizadores.insereUtilizador(pr1);
@@ -92,20 +93,16 @@ public class Teste{
         
         // Aluguer
         
+        Ponto destino = new Ponto (0,0);
+        Aluguer a1 = new Aluguer (TipoVeiculo.Carro,256709718, destino, TipoCombustivel.Gasolina, PreferenciaAluguer.MaisPertoBarato);
+        List<Veiculo> veiculos = new ArrayList<>();
+        Veiculo veiculo = new Veiculo();
+           
+        String escolhaVeiculo;
         
         try{
-           
-           Ponto destino = new Ponto (0,0);
-           Aluguer a1 = new Aluguer (TipoVeiculo.Carro,256709718, destino, TipoCombustivel.Gasolina, PreferenciaAluguer.MaisPertoBarato);
-           List<Veiculo> veiculos = new ArrayList<>();
-           Veiculo veiculo = new Veiculo();
-           
            Utilizador util = gestorUtilizadores.getUtilizador(a1.getNif());
            Cliente cli = (Cliente) util;
-           
-           String escolhaVeiculo;
-           double custo = 0;
-           
            switch(a1.getPreferencia()){
             case MaisBarato:
                 veiculos = gestorVeiculos.veiculoMaisBarato(a1.getTipoVeiculo(), a1.getTipoCombustivel(), destino);
@@ -142,10 +139,11 @@ public class Teste{
                 for (Veiculo v : veiculos) System.out.println(v.toString());
                 break;
            }
-           
-           // System.out.println(a1.toString());
-           //System.out.println(gestorVeiculos.toString());
-           
+           sc.nextLine();
+           System.out.println("Indique a matricula do veiculo que pretende alugar.");
+           String matricula = sc.nextLine();
+           veiculo = gestorVeiculos.getVeiculo(matricula);
+           System.out.println(veiculo.toString());
         }
         
         catch(UtilizadorNaoExisteException e){
@@ -155,7 +153,6 @@ public class Teste{
             System.out.println(e.getMessage());
         }
         
-       
-        
+        gestorNotificacoes.enviaNotificacao(a1.pedidoAluguer());
     }
 }

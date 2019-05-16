@@ -96,7 +96,7 @@ public class GestorVeiculos{
         if (this.veiculos.isEmpty()){
             throw new VeiculoNaoExisteException ("Ups! Gestor de Veiculos Vazio.\n");
         }
-        if (this.veiculos.containsKey(matricula)){
+        if (!this.veiculos.containsKey(matricula)){
             throw new VeiculoNaoExisteException ("Ups! Esse veículo não existe no sistema.\n");
         }
         return this.veiculos.get(matricula).clone();

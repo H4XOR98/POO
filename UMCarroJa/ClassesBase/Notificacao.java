@@ -15,7 +15,7 @@ public class Notificacao {
     private String conteudo;
     private boolean lida;
 
-    private static int id = 0;
+    
 
     public Notificacao() {
         this.remetente = 0;
@@ -23,17 +23,15 @@ public class Notificacao {
         this.assunto = "n/a";
         this.conteudo = "n/a";
         this.lida = false;
-        id++;
     }
 
 
-    public Notificacao(int remetente, int destinatario, String assunto, String conteudo, boolean lida) {
+    public Notificacao(int remetente, int destinatario, String assunto, String conteudo) {
         this.remetente = remetente;
         this.destinatario = destinatario;
         this.assunto = assunto;
         this.conteudo = conteudo;
-        this.lida = lida;
-        id++;
+        this.lida = false;
     }
 
 
@@ -89,9 +87,7 @@ public class Notificacao {
 
 
     
-    public static int getId() {
-        return id;
-    }
+    
     
     
     
@@ -113,7 +109,6 @@ public class Notificacao {
     public String toString(){
         StringBuilder sb = new StringBuilder();
         sb.append("-----------------NOTIFICACAO-----------------\n");
-        sb.append("ID: " + id + ";\n");
         sb.append("Remetente: " + this.remetente + ";\n");
         sb.append("Destinatario: " + this.destinatario + ";\n");
         sb.append("Assunto: " + this.assunto + ";\n");
