@@ -22,6 +22,23 @@ public class Veiculo{
     private Collection<Double> classificacoes;
     
     // Construtores
+    public Veiculo(){
+        this.tipoVeiculo = TipoVeiculo.Carro;
+        this.tipoCombustivel = TipoCombustivel.Gasolina;
+        this.marca = "n/a";
+        this.matricula = "n/a";
+        this.nif = 0;
+        this.velocidadeMedia = 0;
+        this.preco = 0.0;
+        this.consumo = 0.0;
+        this.autonomiaMax = 0.0;
+        this.localizacao = new Ponto();
+        this.autonomiaAtual = 0.0;
+        this.classificacao = 100.0;
+        this.classificacoes = new ArrayList<>();
+    }
+    
+    
     
     public Veiculo (TipoVeiculo tipoVeiculo,TipoCombustivel tipoCombustivel,String marca, String matricula, int nif, int velocidadeMedia, 
                     double preco, double consumo, double autonomiaMax, Ponto localizacao){

@@ -20,6 +20,7 @@ public class Aluguer{
     private Metereologia meteo;
     private Trafego trafego;
 
+    
     // Construtores
     
     public Aluguer() {
@@ -301,7 +302,9 @@ public class Aluguer{
      */
     
     //Inicia Alguer 
-    
+    public void pedidoAluguer(){
+        
+    }
         
     
 }
