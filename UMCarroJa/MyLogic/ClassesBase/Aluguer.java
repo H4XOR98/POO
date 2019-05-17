@@ -3,7 +3,6 @@ package MyLogic.ClassesBase;
 import MyLogic.Exceptions.*;
 import java.text.DecimalFormat;
 import java.time.LocalDateTime;
-
 public class Aluguer{
     
     // Variáveis de Instância
@@ -203,9 +202,12 @@ public class Aluguer{
         sb.append("Estado Aluguer: " + this.estadoAluguer + ";\n");
         sb.append("Custo: " + df.format(this.custo) + "€;\n");
         sb.append("Distancia: " +  df.format(this.distancia) + " km;\n");
-        sb.append("Duracao Real: " +  df.format(this.duracao) + " horas;\n");
+        sb.append("Datas : \n");
+        sb.append("\tInicio: " + this.dataInicio + ";\n");
+        sb.append("\tFim: " + this.dataFim.toString() + ";\n");
+        sb.append("Duracao: " +  df.format(this.duracao) + " horas;\n");
         sb.append("Metereologia: " + this.meteo + ";\n");
-        sb.append("Trafego: " + this.trafego + ";\n");
+        sb.append("Trafego: " + this.trafego.toString() + ";\n");
         sb.append("...............................\n");
         return sb.toString();
     }
@@ -251,17 +253,13 @@ public class Aluguer{
     private void tempoViagemReal (Cliente cliente){
         distanciaVeiculoDestino(cliente);
         this.duracao = this.distancia/this.veiculo.getVelocidadeMedia();
-        this.duracao *= (100 - cliente.getDestreza())/100;
-        this.duracao *= (100 - this.veiculo.getClassificacao())/100;
+        this.duracao *= 2 - (cliente.getDestreza()/100);
+        this.duracao *= 100 - (this.veiculo.getClassificacao()/100);
         this.duracao *= this.meteo.getPercentagem();
         this.duracao *= this.trafego.getPercentagem();
-        this.duracao = converteEmHoras(this.duracao);
         this.dataInicio = LocalDateTime.now();
-        /*double aux = this.duracao;
-        double horas = (int)aux;
-        double min = aux - horas;
-        this.dataFim = this.dataInicio.plusSeconds((long)horas);
-        this.dataFim = this.dataInicio.plusSeconds((long)min);*/
+        this.duracao = converteEmHoras(this.duracao);
+        this.dataFim = LocalDateTime.now().plusMinutes((long)this.duracao * 60);
     }
     
     private void custoViagem(){

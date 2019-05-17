@@ -3,6 +3,7 @@ package MyLogic.Gestores;
 import MyLogic.ClassesBase.*;
 import java.util.*;
 import MyLogic.Exceptions.*;
+import java.time.LocalDateTime;
 /**
  * Escreva a descrição da classe GestorAlugueres aqui.
  * 
@@ -125,11 +126,11 @@ public class GestorAlugueres
         return aux;
     }
     
-    
-    public List<Aluguer> historicoProprietario(String matricula){
+    public List<Aluguer> historicoClienteEntreDatas(int nif, LocalDateTime inicio, LocalDateTime fim){
         List<Aluguer> aux = new ArrayList<>();
         for(Aluguer a : this.alugueres){
-            if(a.getVeiculo().getMatricula().equals(matricula)){
+            if(a.getNif() == nif && ((a.getDataInicio().isAfter(inicio) && a.getDataInicio().isBefore(fim)) || 
+                                     (a.getDataInicio().isEqual(inicio) && a.getDataInicio().isEqual(fim)))){
                 aux.add(a.clone());
             }
         }
@@ -137,15 +138,41 @@ public class GestorAlugueres
     }
     
     
-    public double totalFaturadoVeiculo(int nif){
-        double totalFaturado = 0;
+    public List<Aluguer> historicoProprietario(int nif){
+        List<Aluguer> aux = new ArrayList<>();
         for(Aluguer a : this.alugueres){
             if(a.getVeiculo().getNif() == nif){
+                aux.add(a.clone());
+            }
+        }
+        return aux;
+    }
+    
+    
+    public List<Aluguer> historicoProprietarioEntreDatas (int nif, LocalDateTime inicio, LocalDateTime fim){
+        List<Aluguer> aux = new ArrayList<>();
+        for(Aluguer a : this.alugueres){
+            if(a.getVeiculo().getNif() == nif && ((a.getDataInicio().isAfter(inicio) && a.getDataInicio().isBefore(fim)) || 
+                                     (a.getDataInicio().isEqual(inicio) && a.getDataInicio().isEqual(fim)))){
+                aux.add(a.clone());
+            }{
+                aux.add(a.clone());
+            }
+        }
+        return aux;
+    }
+    
+    public double totalFaturadoVeiculo(String matricula, LocalDateTime inicio, LocalDateTime fim){
+        double totalFaturado = 0;
+        for(Aluguer a : this.alugueres){
+            if(a.getVeiculo().getMatricula().equals(matricula) && ((a.getDataInicio().isAfter(inicio) && a.getDataInicio().isBefore(fim)) || 
+                                     (a.getDataInicio().isEqual(inicio) && a.getDataInicio().isEqual(fim)))){
                 totalFaturado += a.getCusto();
             }
         }
         return totalFaturado;
     }
+    
     
     
     public List<Integer> topDezClientesKms() throws AluguerNaoExisteException {
@@ -160,12 +187,38 @@ public class GestorAlugueres
         Iterator<Aluguer> it = top.iterator();
         Aluguer a = null;
         int i = 0;
-        while(it.hasNext() && i<9){
+        while(it.hasNext() && i<10){
             a = it.next();
             if(!resultado.contains(a.getNif())){
                 resultado.add(a.getNif());
                 i++;
             }
+        }
+        return resultado;
+    }
+    
+    
+    public List<Integer> topDezClientesVezes() throws AluguerNaoExisteException {
+        if(this.alugueres.isEmpty()){
+            throw new AluguerNaoExisteException ("Ups! Não existem alugueres!");
+        }
+        Map<Integer,Integer> top = new TreeMap(compNumVezes);
+        for(Aluguer a : this.alugueres){
+            int nif = a.getNif();
+            if(top.containsKey(nif)){
+                int n = top.get(nif);
+                top.put(nif,n++);
+            }else{
+                top.put(nif,1);
+            }
+        }
+        List<Integer> resultado = new ArrayList();
+        Iterator<Integer> it = top.keySet().iterator();
+        int x = 0, i = 0;
+        while(it.hasNext() && i < 10){
+            x = it.next();
+            resultado.add(x);
+            i++;
         }
         return resultado;
     }

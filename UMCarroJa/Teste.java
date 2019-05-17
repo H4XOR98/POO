@@ -1,8 +1,8 @@
 import java.util.Scanner;
 import java.util.*;
-import ClassesBase.*;
-import Gestores.*;
-import Exceptions.*;
+import MyLogic.ClassesBase.*;
+import MyLogic.Gestores.*;
+import MyLogic.Exceptions.*;
 import java.lang.*;
 
 public class Teste{
@@ -39,7 +39,7 @@ public class Teste{
         Veiculo v1 = new Veiculo (tv1, tb1, "BMW", "28-AB-47", 145573473, 120, 2.0, 1.5, 700.0, p1);
         
         TipoVeiculo tv2 = TipoVeiculo.Carro;
-        TipoCombustivel tb2 = TipoCombustivel.Eletrico;
+        TipoCombustivel tb2 = TipoCombustivel.Electrico;
         Ponto p2 = new Ponto (30,30);
         Veiculo v2 = new Veiculo (tv2, tb2, "Testa", "11-AB-22", 859204758, 140, 1.5, 2.0, 700.0, p2);
         
@@ -154,10 +154,15 @@ public class Teste{
            String matricula = sc.nextLine();
            veiculo = gestorVeiculos.getVeiculo(matricula);
            a1.setVeiculo(veiculo);
-           gestorAlugueres.adicionaAluguer(a1);
+           gestorAlugueres.insereAluguer(a1);
            Notificacao not = a1.pedidoAluguer(cli);
            gestorNotificacoes.adicionaNotificacao(not);
-           System.out.println(gestorNotificacoes.toString());
+           System.out.println(a1.toString());
+           a1.pedidoAluguer(cli);
+           Proprietario pr = (Proprietario)gestorUtilizadores.getUtilizador(veiculo.getNif());
+           pr.confirmaAluguer(a1);
+           a1.efetuaViagem(cli);
+           System.out.println("\n\n\n\n\n\n\n\n\n" + a1.toString());
         }
         
         catch(UtilizadorNaoExisteException e){
@@ -169,11 +174,9 @@ public class Teste{
         catch(AluguerJaExisteException e){
             System.out.println(e.getMessage());
         }
-        catch(DuracaoNegativaException e){
+        catch(AluguerNaoExisteException e){
             System.out.println(e.getMessage());
         }
-        
-        
         
     }
 }
