@@ -2,6 +2,7 @@ package MyLogic.ClassesBase;
 
 import MyLogic.Exceptions.*;
 import java.text.DecimalFormat;
+import java.time.LocalDateTime;
 
 public class Aluguer{
     
@@ -17,6 +18,8 @@ public class Aluguer{
     private double custo;
     private double distancia;
     private double duracao;
+    private LocalDateTime dataInicio;
+    private LocalDateTime dataFim;
     private Metereologia meteo;
     private Trafego trafego;
 
@@ -35,6 +38,8 @@ public class Aluguer{
         this.custo = 0;
         this.distancia = 0;
         this.duracao = 0;
+        this.dataInicio = LocalDateTime.now();
+        this.dataFim = LocalDateTime.now();
         this.meteo = Metereologia.getRandom();
         this.trafego = Trafego.getRandom();
         id++;
@@ -51,6 +56,8 @@ public class Aluguer{
         this.custo = 0;
         this.distancia = 0;
         this.duracao = 0;
+        this.dataInicio = LocalDateTime.now();
+        this.dataFim = LocalDateTime.now();
         this.meteo = Metereologia.getRandom();
         this.trafego = Trafego.getRandom();
         id++;
@@ -67,6 +74,8 @@ public class Aluguer{
         this.custo = a.getCusto();
         this.distancia = a.getDistancia();
         this.duracao = a.getDuracao();
+        this.dataInicio = a.getDataInicio();
+        this.dataFim = a.getDataFim();
         this.meteo = a.getMeteorologia();
         this.trafego = a.getTrafego();
     }
@@ -111,6 +120,14 @@ public class Aluguer{
     
     public double getDuracao() {
         return this.duracao;
+    }
+    
+    public LocalDateTime getDataInicio(){
+        return this.dataInicio;
+    }
+    
+    public LocalDateTime getDataFim(){
+        return this.dataFim;
     }
     
     public Metereologia getMeteorologia() {
@@ -239,6 +256,12 @@ public class Aluguer{
         this.duracao *= this.meteo.getPercentagem();
         this.duracao *= this.trafego.getPercentagem();
         this.duracao = converteEmHoras(this.duracao);
+        this.dataInicio = LocalDateTime.now();
+        /*double aux = this.duracao;
+        double horas = (int)aux;
+        double min = aux - horas;
+        this.dataFim = this.dataInicio.plusSeconds((long)horas);
+        this.dataFim = this.dataInicio.plusSeconds((long)min);*/
     }
     
     private void custoViagem(){
@@ -287,7 +310,7 @@ public class Aluguer{
             throw new AluguerNaoExisteException("Este aluguer ainda não foi aceite!\n");
         }
         Notificacao n = null;
-        tempoViagemReal(cliente);
+        this.tempoViagemReal(cliente);
         this.veiculo.diminuirAutonomiaAtual(this.distancia);
         this.estadoAluguer = EstadoAluguer.Terminado;
         if(this.veiculo.autonomiaBaixa()){

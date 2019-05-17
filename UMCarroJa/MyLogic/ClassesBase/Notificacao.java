@@ -1,7 +1,7 @@
 package MyLogic.ClassesBase;
 
 
-
+import java.time.LocalDateTime;
 /**
  * Escreva a descrição da classe Notificacao aqui.
  * 
@@ -10,11 +10,13 @@ package MyLogic.ClassesBase;
  */
 public class Notificacao {
     private int destinatario;
+    private LocalDateTime data;
     private String assunto;
     private String conteudo;
 
     public Notificacao() {
         this.destinatario = 0;
+        this.data = LocalDateTime.now();
         this.assunto = "n/a";
         this.conteudo = "n/a";
     }
@@ -22,6 +24,7 @@ public class Notificacao {
     
     public Notificacao(int destinatario, String assunto, String conteudo) {
         this.destinatario = destinatario;
+        this.data = LocalDateTime.now();
         this.assunto = assunto;
         this.conteudo = conteudo;
     }
@@ -29,6 +32,7 @@ public class Notificacao {
 
     public Notificacao(Notificacao notificacao) {
         this.destinatario = notificacao.getDestinatario();
+        this.data = notificacao.getData();
         this.assunto = notificacao.getAssunto();
         this.conteudo = notificacao.getConteudo();
     }
@@ -37,6 +41,10 @@ public class Notificacao {
 
     public int getDestinatario() {
         return this.destinatario;
+    }
+    
+    public LocalDateTime getData(){
+        return this.data;
     }
     
     public String getAssunto() {
@@ -50,6 +58,10 @@ public class Notificacao {
 
     public void setDestinatario(int destinatario) {
         this.destinatario = destinatario;
+    }
+    
+    public void setData(LocalDateTime data){
+        this.data = data;
     }
     
     public void setAssunto(String assunto) {
