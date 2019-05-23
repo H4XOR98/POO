@@ -3,13 +3,14 @@ package MyLogic.Gestores;
 import MyLogic.ClassesBase.*;
 import MyLogic.Exceptions.*;
 import java.util.*;
+import java.io.Serializable;
 /**
  * Escreva a descrição da classe GestorUtilizador aqui.
  *
  * @author (seu nome)
  * @version (número de versão ou data)
  */
-public class GestorUtilizadores {
+public class GestorUtilizadores implements Serializable{
     private Map<Integer,Utilizador> utilizadores;
 
 
@@ -68,7 +69,7 @@ public class GestorUtilizadores {
     
     public Notificacao insereUtilizador(Utilizador u) throws UtilizadorJaExisteException{
         if(this.utilizadores.containsKey(u.getNif())){
-            throw new UtilizadorJaExisteException(u.toString());
+            throw new UtilizadorJaExisteException("O utilizador com nif " + u.getNif() + " já existe no sistema!\n");
         }
         this.utilizadores.put(u.getNif(),u.clone());
         Notificacao n = new Notificacao(u.getNif(),"Boas Vindas","\nBem vindo à UMCarroJá!");

@@ -119,8 +119,4 @@ public class Cliente extends Utilizador
         }
         this.destreza /=  this.classificacoes.size();
     }
-    
-    public void pedidoAluguer(Ponto destino){
-        
-    }
 }

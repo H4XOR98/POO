@@ -4,17 +4,44 @@ import MyLogic.ClassesBase.*;
 import MyLogic.Gestores.*;
 import MyLogic.Exceptions.*;
 import java.lang.*;
+import java.io.*;
 
 public class Teste{
     
     public static void main (String[] args){
-        
         Scanner sc = new Scanner(System.in);
+        GestorVeiculos gestorVeiculos = new GestorVeiculos();
+        GestorUtilizadores gestorUtilizadores = new GestorUtilizadores();
+        GestorAlugueres gestorAlugueres = new GestorAlugueres();
+        GestorNotificacoes gestorNotificacoes = new GestorNotificacoes();
+        Leitura l = new Leitura("./logsPOO_carregamentoInicial.txt");
+        try{
+            l.readFile(gestorUtilizadores, gestorVeiculos, gestorAlugueres,gestorNotificacoes);
+        }
+        catch(UtilizadorJaExisteException e){
+            System.out.println(e.getMessage());
+        }
+        catch(VeiculoJaExisteException e){
+            System.out.println(e.getMessage());
+        }
+        catch(AluguerJaExisteException e){
+            System.out.println(e.getMessage());
+        }
+        catch(UtilizadorNaoExisteException e){
+            System.out.println(e.getMessage());
+        }
+        catch(VeiculoNaoExisteException e){
+            System.out.println(e.getMessage());
+        }
+        catch(AvaliacaoInvalidaException e){
+            System.out.println(e.getMessage());
+        }
+        catch(IOException e){
+            System.out.println(e.getMessage());
+        }
         
-        
-        // Utilizadores
-        
-        
+        /*
+         * // Utilizadores
         Utilizador pr1 = new Proprietario("rubnitos@hotmail.com","Sete7Sete","Ruben",145573473,"Travessa do Gatao");
         Utilizador pr2 = new Proprietario("jorgemanel@gmail.com","joaquim2","Jorge",859204758,"Vale dos fazeres");
         Utilizador pr3 = new Proprietario("pedritonene@outlook.com","souavariado","Pedro",97261940,"Avenida dos casados");
@@ -51,16 +78,10 @@ public class Teste{
         TipoVeiculo tv4 = TipoVeiculo.Carro;
         TipoCombustivel tb4 = TipoCombustivel.Gasolina;
         Ponto p4 = new Ponto (20,20);
-        Veiculo v4 = new Veiculo (tv4, tb4, "Volvo", "WB-32-54", 859204758, 715, 1.5, 2.0, 550.0, p4);
+        Veiculo v4 = new Veiculo (tv4, tb4, "Volvo", "WB-32-54", 859204758, 100, 1.5, 2.0, 550.0, p4);
         
         
-        // Gestores
         
-        
-        GestorVeiculos gestorVeiculos = new GestorVeiculos();
-        GestorUtilizadores gestorUtilizadores = new GestorUtilizadores();
-        GestorAlugueres gestorAlugueres = new GestorAlugueres();
-        GestorNotificacoes gestorNotificacoes = new GestorNotificacoes();
         
         try{
             gestorUtilizadores.insereUtilizador(pr1);
@@ -163,6 +184,8 @@ public class Teste{
            pr.confirmaAluguer(a1);
            a1.efetuaViagem(cli);
            System.out.println("\n\n\n\n\n\n\n\n\n" + a1.toString());
+           a1.registaCusto();
+           System.out.println("\n\n\n\n\n\n\n\n\n" + a1.toString());
         }
         
         catch(UtilizadorNaoExisteException e){
@@ -177,6 +200,6 @@ public class Teste{
         catch(AluguerNaoExisteException e){
             System.out.println(e.getMessage());
         }
-        
+        */
     }
 }

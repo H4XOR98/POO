@@ -233,8 +233,7 @@ public class Aluguer{
     }   
     
     //------------------------------------
-    
-    private double converteEmHoras(double duracao){
+    public double converteEmHoras(double duracao){
         int horas = (int)Math.floor(duracao);
         double minutos = (duracao - horas) * 0.6;
         return (horas + minutos);
@@ -254,12 +253,14 @@ public class Aluguer{
         distanciaVeiculoDestino();
         this.duracao = this.distancia/this.veiculo.getVelocidadeMedia();
         this.duracao *= 2 - (cliente.getDestreza()/100);
-        this.duracao *= 100 - (this.veiculo.getClassificacao()/100);
+        this.duracao *= 2 - (this.veiculo.getClassificacao()/100);
         this.duracao *= this.meteo.getPercentagem();
         this.duracao *= this.trafego.getPercentagem();
-        this.dataInicio = LocalDateTime.now();
         this.duracao = converteEmHoras(this.duracao);
-        this.dataFim = LocalDateTime.now().plusMinutes((long)this.duracao * 60);
+        int horas = (int)Math.floor(this.duracao);
+        int minutos = (int)((this.duracao - horas) * 100);
+        this.dataFim = this.dataInicio.plusHours((long)horas);
+        this.dataFim = this.dataFim.plusMinutes((long)minutos);
     }
     
     private void custoViagem(){
@@ -323,6 +324,25 @@ public class Aluguer{
         if(!estadoAluguer.equals(EstadoAluguer.Terminado)){
             throw new AluguerNaoExisteException("Este aluguer não foi terminado!\n");
         }
-        custoViagem();
+        this.custoViagem();
+    }
+    
+    public Proprietario avaliacoesCliente(Proprietario proprietario, double notaVeiculo, double notaProprietario) 
+    throws AluguerNaoExisteException, AvaliacaoInvalidaException{
+        if(!estadoAluguer.equals(EstadoAluguer.Terminado)){
+            throw new AluguerNaoExisteException("Este aluguer não foi terminado!\n");
+        }
+        proprietario.novaAvaliacao(notaProprietario);
+        this.veiculo.novaAvaliacao(notaVeiculo);
+        return proprietario;
+    }
+    
+    public Cliente avaliacaoProprietario (Cliente cliente, double notaCliente) 
+    throws AluguerNaoExisteException, AvaliacaoInvalidaException{
+        if(!estadoAluguer.equals(EstadoAluguer.Terminado)){
+            throw new AluguerNaoExisteException("Este aluguer não foi terminado!\n");
+        }
+        cliente.novaAvaliacao(notaCliente);
+        return cliente;
     }
 }

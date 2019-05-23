@@ -4,14 +4,14 @@ import MyLogic.ClassesBase.*;
 import java.util.*;
 import MyLogic.Exceptions.*;
 import java.time.LocalDateTime;
+import java.io.Serializable;
 /**
  * Escreva a descrição da classe GestorAlugueres aqui.
  * 
  * @author (seu nome) 
  * @version (número de versão ou data)
  */
-public class GestorAlugueres
-{
+public class GestorAlugueres implements Serializable{
     private Set<Aluguer> alugueres;
     
     Comparator<Aluguer> compKms = (a,b) -> { if (a.getDistancia() == b.getDistancia()) return 0;

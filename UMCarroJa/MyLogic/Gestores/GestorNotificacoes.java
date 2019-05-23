@@ -3,8 +3,10 @@ package MyLogic.Gestores;
 import MyLogic.ClassesBase.*;
 import java.util.*;
 import MyLogic.Exceptions.*;
+import java.io.Serializable;
 
-public class GestorNotificacoes{
+
+public class GestorNotificacoes implements Serializable{
     
     // Variáveis de Instância
     

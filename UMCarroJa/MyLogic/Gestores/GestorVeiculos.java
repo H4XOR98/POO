@@ -4,8 +4,9 @@ import MyLogic.Exceptions.*;
 import MyLogic.ClassesBase.*;
 import java.util.*;
 import java.lang.*;
+import java.io.Serializable;
 
-public class GestorVeiculos{
+public class GestorVeiculos implements Serializable{
     
     // Variáveis de Instância
     

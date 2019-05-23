@@ -7,6 +7,7 @@ import java.lang.*;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.FileNotFoundException;
 
 public class Leitura{
     
@@ -61,7 +62,7 @@ public class Leitura{
     
     public void readFile (GestorUtilizadores gestorUtilizadores, GestorVeiculos gestorVeiculos, GestorAlugueres gestorAlugueres, 
     GestorNotificacoes gestorNotificacoes) throws UtilizadorJaExisteException, VeiculoJaExisteException, AluguerJaExisteException, 
-    UtilizadorNaoExisteException, VeiculoNaoExisteException, AvaliacaoInvalidaException, IOException {
+    UtilizadorNaoExisteException, VeiculoNaoExisteException, AvaliacaoInvalidaException, IOException, FileNotFoundException {
                
         BufferedReader br = new BufferedReader(new FileReader(this.file));
         
