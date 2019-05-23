@@ -246,12 +246,12 @@ public class Aluguer{
     }
     
     
-    private void distanciaVeiculoDestino(Cliente cliente){
+    private void distanciaVeiculoDestino(){
         this.distancia = this.veiculo.getLocalizacao().distancia(this.destino);
     }
     
     private void tempoViagemReal (Cliente cliente){
-        distanciaVeiculoDestino(cliente);
+        distanciaVeiculoDestino();
         this.duracao = this.distancia/this.veiculo.getVelocidadeMedia();
         this.duracao *= 2 - (cliente.getDestreza()/100);
         this.duracao *= 100 - (this.veiculo.getClassificacao()/100);
