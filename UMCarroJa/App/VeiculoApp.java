@@ -73,21 +73,41 @@ public class VeiculoApp
                                   
         String[] opcoesTop10 = {"em numero de vezes",
                                "em quilometros"};
-                                  
+        
+        // ------------------------------------------------------- 
+                               
         String[] opcoesCliente = {"Consultar Caixa Notificacoes",
-                                  "Alugar Veiculo",
-                                  "Realizar Viagem",
-                                  "Avaliar Proprietario e Veiculo",
-                                  "Historico Aluguer(entre datas)"};
+                                  "Aluguer",
+                                  "Historicos"};
                                   
+        String[] opcoesClienteAluguer = {"Alugar Veiculo",
+                                         "Realizar Viagem",
+                                         "Avaliar Proprietario e Veiculo"};
+                                         
+        String[] opcoesClienteHistoricos = {"Historico Aluguer",
+                                            "Historico Aluguer(entre datas)"};
+                                                            
+        // ------------------------------------------------------- 
+                                            
         String[] opcoesProprietario = {"Consultar Caixa Notificacoes",
-                                       "Confirmar Aluguer",
-                                       "Registar Veiculo",
-                                       "Alterar o preco por km de um Veiculo",
-                                       "Abastecer Veiculo",
-                                       "Registar custo viagem",
-                                       "Avaliar Proprietario",
-                                       "Historico Aluguer(entre datas)"};
+                                       "Aluguer",
+                                       "Historico",
+                                       "Definicoes Veiculo"};
+                                       
+                                       
+        String[] opcoesProprietarioAluguer = {"Confirmar Aluguer",
+                                              "Registar custo viagem",
+                                              "Avaliar Cliente"};
+                                       
+        String[] opcoesProprietarioHistoricos = {"Historico Aluguer",
+                                                 "Historico Aluguer(entre datas)",
+                                                 "Total faturado por um Veiculo"};                               
+                                       
+        String[] opcoesProprietarioVeiculos = {"Registar Veiculo",
+                                               "Alterar o preco por km de um Veiculo",
+                                               "Abastecer Veiculo"};                                         
+                                              
+        
                                        
         this.gestorVeiculos = new GestorVeiculos();
         this.gestorUtilizadores = new GestorUtilizadores();
@@ -99,6 +119,7 @@ public class VeiculoApp
         this.menuCliente = new MenuCliente(opcoesCliente);
         this.menuProprietario = new MenuProprietario(opcoesProprietario);
         this.menuTop10 = new Menu(opcoesTop10);
+        this.menu
     }
 
     /**
