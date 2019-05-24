@@ -89,12 +89,16 @@ public class GestorUtilizadores implements Serializable{
     }
     
     public Utilizador loginUtilizador(String email, String password) throws UtilizadorNaoExisteException{
+        Utilizador aux = null;
         for(Utilizador u : this.utilizadores.values()){
             if(email.equals(u.getEmail()) && password.equals(u.getPassword())){
-                return u.clone();
+                aux = u.clone();
             }
         }
-        throw new UtilizadorNaoExisteException("Utilizador não registado!");
+        if(aux == null){
+            throw new UtilizadorNaoExisteException("Utilizador não registado!");
+        }
+        return aux;
     }
     
     public Utilizador getUtilizador(int nif) throws UtilizadorNaoExisteException{
