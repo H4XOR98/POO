@@ -123,6 +123,7 @@ public class VeiculoApp
         this.menuClienteAluguer = new MenuCliente(opcoesClienteAluguer);
         
         this.menuProprietario = new MenuProprietario(opcoesProprietario);
+        
     }
 
     /**
@@ -144,7 +145,7 @@ public class VeiculoApp
                         String email = input.lerString();
                         System.out.println("Introduza password:");
                         String password = input.lerString();
-                        System.out.println("/f");
+                        //System.out.println("/f");
                         Utilizador u = null;
                         try{
                             u = this.gestorUtilizadores.loginUtilizador(email,password);
@@ -153,11 +154,11 @@ public class VeiculoApp
                             System.out.println(e.getMessage());
                         }
                         if(u != null && u.getClass().getSimpleName().equals("Cliente")){
-                            Cliente c = (Cliente)u;
-                            runCliente();
+                           Cliente cliente = (Cliente)u;
+                           runCliente(cliente);
                         }
                         if(u != null && u.getClass().getSimpleName().equals("Proprietario")){
-                            Proprietario p = (Proprietario)u;
+                            Proprietario proprietario = (Proprietario)u;
                             runProprietario();
                         }
                         break;
@@ -267,13 +268,13 @@ public class VeiculoApp
     
     
     
-    private void runCliente() {
+    private void runCliente(Cliente cliente) {
         do {
             menuCliente.executa();
             switch (menuCliente.getOpcao()) {
                 case 1: 
                        break; 
-                case 2: runClienteAluguer();
+                case 2: runClienteAluguer(cliente);
                        break;
                 case 3: runClienteHistoricos();
                        break;
@@ -282,20 +283,44 @@ public class VeiculoApp
         System.out.println("\f");
     }
     
-    private void runClienteAluguer() {
+    private void runClienteAluguer(Cliente cliente) {
         Input input = new Input();
         do {
             menuClienteAluguer.executa();
             switch (menuClienteAluguer.getOpcao()) {
-                case 1: System.out.println("\fIntroduza a sua localizaçao i.e. (x,y):\n");
+                case 1: System.out.println("\fIntroduza a localizaçao do seu destino i.e. (x,y):\n");
                         System.out.println("\t-Digite a coordenada 'x'.");
                         double xC = input.lerDouble();
                         System.out.println("\t-Digite a coordenada 'y'.");
                         double yC = input.lerDouble();
-                        Ponto pontoC = new Ponto(xC,yC);
+                        Ponto destino = new Ponto(xC,yC);
+                        System.out.println("\f");
+                        try{
+                            System.out.println("Tipo de veiculo pretendido:");
+                            //this.listagem = new Listagem(Arrays.asList(TipoVeiculo.values()));
+                            String str = input.lerString();
+                            TipoVeiculo tipoVeiculo = TipoVeiculo.valueOf(str);
+                            System.out.println("Tipo de combustivel pretendido:");
+                            //this.listagem = new Listagem(Arrays.asList(TipoCombustivel.values()));
+                            str = input.lerString();
+                            TipoCombustivel tipoCombustivel = TipoCombustivel.valueOf(str);
+                            System.out.println("Preferencia de Aluguer pretendido:");
+                            //this.listagem = new Listagem(Arrays.asList(TipoCombustivel.values()));
+                            str = input.lerString();
+                            PreferenciaAluguer preferencia = PreferenciaAluguer.valueOf(str);
+                            Aluguer a = new Aluguer(tipoVeiculo,cliente.getNif(),destino,tipoCombustivel,preferencia);
+                            this.gestorAlugueres.insereAluguer(a);
+                        }
+                        catch(IllegalArgumentException e){
+                            System.out.println("Tipo invalido");
+                        }
+                        catch(AluguerJaExisteException e){
+                            System.out.println(e.getMessage());
+                        }
                        break;
-                case 2:
-                       break;
+                case 2: int id = input.lerInt();
+                        this.gestorAlugueres()
+                        break;
                 case 3:
                        break;      
             }

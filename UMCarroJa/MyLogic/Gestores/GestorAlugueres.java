@@ -71,8 +71,8 @@ public class GestorAlugueres implements Serializable{
     
     public String toString(){
         StringBuilder sb = new StringBuilder();
+        sb.append("----------- Gestor Alugueres -----------\n");
         for(Aluguer a : this.alugueres){
-            sb.append("----------- Gestor Alugueres -----------\n");
             sb.append(a.toString());
         }
         return sb.toString();
@@ -94,23 +94,14 @@ public class GestorAlugueres implements Serializable{
     }
     
     
-    /*
-    public Aluguer confirmaAluguer(int id,int nif, EstadoAluguer estadoAluguer){
-        Iterator<Aluguer> it = this.alugueres.iterator();
-        Aluguer a = null;
-        boolean enc = false;
-        while(it.hasNext() && !enc){
-            a = it.next();
+    public Aluguer getAluguer(int id) throws AluguerNaoExisteException{
+        for(Aluguer a : this.alugueres){
             if(a.getId() == id){
-                enc = true;
+                return a.clone();
             }
         }
-        if(a.getVeiculo().getNif != nif){
-            throw new
-        }
-        
+        throw new AluguerNaoExisteException("Aluguer nao existe!");
     }
-    */
     
     
     //-----------------------------------------

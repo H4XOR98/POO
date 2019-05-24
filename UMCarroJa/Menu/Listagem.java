@@ -9,7 +9,7 @@ import java.util.*;
  */
 public class Listagem
 {
-    private List<String> lista;
+    private List<?> lista;
     private int elementosPorPagina;
     private int paginaAtual;
     private int numPaginas;
@@ -19,7 +19,7 @@ public class Listagem
     /**
      * Constructor for objects of class Menu
      */
-    public Listagem(List<String> opcoes) {
+    public Listagem(List<?> opcoes) {
         this.lista = opcoes;
         this.elementosPorPagina = 3;
         this.paginaAtual = 0;
