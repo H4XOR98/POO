@@ -2,8 +2,8 @@ package MyLogic.ClassesBase;
 
 import MyLogic.Exceptions.*;
 import java.util.*;
-
-public class Veiculo{
+import java.io.Serializable;
+public class Veiculo implements Serializable{
     
     // Variáveis de Instância
     
@@ -19,7 +19,7 @@ public class Veiculo{
     private Ponto localizacao;
     private double autonomiaAtual;
     private double classificacao;
-    private Collection<Double> classificacoes;
+    private List<Double> classificacoes;
     
     // Construtores
     public Veiculo(){
@@ -123,8 +123,8 @@ public class Veiculo{
         return this.classificacao;
     }
     
-    public Collection<Double> getClassificacoes(){
-        Collection<Double> aux = new ArrayList<>();
+    public List<Double> getClassificacoes(){
+        List<Double> aux = new ArrayList<>();
         for(double i : this.classificacoes){
             aux.add(i);
         }

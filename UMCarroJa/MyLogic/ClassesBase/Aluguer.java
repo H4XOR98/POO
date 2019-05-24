@@ -3,7 +3,8 @@ package MyLogic.ClassesBase;
 import MyLogic.Exceptions.*;
 import java.text.DecimalFormat;
 import java.time.LocalDateTime;
-public class Aluguer{
+import java.io.Serializable;
+public class Aluguer implements Serializable{
     
     // Variáveis de Instância
     

@@ -3,13 +3,14 @@ package MyLogic.ClassesBase;
 import MyLogic.Exceptions.*;
 import java.util.*;
 import java.time.LocalDate;
+import java.io.Serializable;
 /**
  * Escreva a descrição da classe Proprietario aqui.
  * 
  * @author (seu nome) 
  * @version (número de versão ou data)
  */
-public class Proprietario extends Utilizador
+public class Proprietario extends Utilizador implements Serializable
 {
     //variaveis de instancia
     private double classificacao;

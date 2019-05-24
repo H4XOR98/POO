@@ -31,8 +31,7 @@ public class Menu {
     }
     
     /** Apresentar o menu */
-    private void showMenu() {
-        System.out.println("\n *** Menu *** ");
+    public void showMenu() {
         for (int i=0; i<this.opcoes.size(); i++) {
             System.out.print(i+1);
             System.out.print(" - ");
@@ -42,7 +41,7 @@ public class Menu {
     }
     
     /** Ler uma opÁ„o v·lida */
-    private int lerOpcao() {
+    public int lerOpcao() {
         int op; 
         Scanner is = new Scanner(System.in);
         
@@ -65,5 +64,9 @@ public class Menu {
      */
     public int getOpcao() {
         return this.op;
+    }
+    
+    public void setOpcao(int opcao){
+        this.op = opcao;
     }
 }

@@ -2,11 +2,12 @@ package MyLogic.ClassesBase;
 
 import java.lang.StringBuilder;
 import java.util.Comparator;
+import java.io.Serializable;
 /**
  * Classe que implementa um Ponto num plano2D.
  * As coordenadas do Ponto sao inteiras.
  */
-public class Ponto {
+public class Ponto implements Serializable{
   //variaveis de instancia
   private double  x;
   private double  y;

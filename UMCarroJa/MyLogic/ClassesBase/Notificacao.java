@@ -2,13 +2,14 @@ package MyLogic.ClassesBase;
 
 
 import java.time.LocalDateTime;
+import java.io.Serializable;
 /**
  * Escreva a descrição da classe Notificacao aqui.
  * 
  * @author (seu nome) 
  * @version (número de versão ou data)
  */
-public class Notificacao {
+public class Notificacao implements Serializable{
     private int destinatario;
     private LocalDateTime data;
     private String assunto;

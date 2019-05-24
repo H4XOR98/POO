@@ -1,13 +1,14 @@
 package MyLogic.ClassesBase;
 
 import java.time.LocalDate;
+import java.io.Serializable;
 /**
  * Escreva a descrição da classe Utilizador aqui.
  * 
  * @author (seu nome) 
  * @version (número de versão ou data)
  */
-public abstract class Utilizador
+public abstract class Utilizador implements Serializable
 {
     //variaveis de instancia
     private String email;
