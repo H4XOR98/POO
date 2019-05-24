@@ -130,13 +130,13 @@ public class GestorUtilizadores implements Serializable{
         return proprietarios;
     }
     
-    public List<Utilizador> procuraUtilizadores(List<Integer> nifs) throws UtilizadorNaoExisteException{
+    public List<String> procuraUtilizadores(List<Integer> nifs) throws UtilizadorNaoExisteException{
         if(nifs.isEmpty()){
             throw new UtilizadorNaoExisteException("Não existem nif's a listar!\n");
         }
-        List<Utilizador> utilitarios = new ArrayList<>();
+        List<String> utilitarios = new ArrayList<>();
         for(int n : nifs){
-            utilitarios.add(getUtilizador(n).clone());
+            utilitarios.add(getUtilizador(n).toString());
         }   
         return utilitarios;
     }

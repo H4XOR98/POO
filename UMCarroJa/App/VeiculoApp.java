@@ -20,8 +20,8 @@ public class VeiculoApp
     private GestorUtilizadores gestorUtilizadores;
     private GestorVeiculos gestorVeiculos;
     private GestorAlugueres gestorAlugueres;
-    private Menu menuPrincipal ,menuRegisto, menuCliente, menuProprietario;
-    
+    private Menu menuPrincipal ,menuRegisto, menuCliente, menuProprietario, menuTop10;
+    private Listagem listagem;
     /*public static void main (String[] args){
         Leitura l = new Leitura("./logsPOO_carregamentoInicial.txt");
         try{
@@ -65,24 +65,29 @@ public class VeiculoApp
     
     private VeiculoApp() {
         String[] opcoes ={"Registar",
-                          "Login"};
+                          "Login",
+                          "TOP 10 Clientes"};
         
         String[] opcoesRegisto = {"Registar como Cliente",
                                   "Registar como Proprietario"};
                                   
-        String[] opcoesCliente = {"Consoltar Caixa Notificacoes",
+        String[] opcoesTop10 = {"em numero de vezes",
+                               "em quilometros"};
+                                  
+        String[] opcoesCliente = {"Consultar Caixa Notificacoes",
                                   "Alugar Veiculo",
                                   "Realizar Viagem",
-                                  "Avalizar Proprietario",
-                                  "Avaliar Veiculo"};
-                                 
-        String[] opcoesProprietario = {"Consoltar Caixa Notificacoes",
+                                  "Avaliar Proprietario e Veiculo",
+                                  "Historico Aluguer(entre datas)"};
+                                  
+        String[] opcoesProprietario = {"Consultar Caixa Notificacoes",
                                        "Confirmar Aluguer",
                                        "Registar Veiculo",
                                        "Alterar o preco por km de um Veiculo",
                                        "Abastecer Veiculo",
                                        "Registar custo viagem",
-                                       "Avaliar Proprietario"};
+                                       "Avaliar Proprietario",
+                                       "Historico Aluguer(entre datas)"};
                                        
         this.gestorVeiculos = new GestorVeiculos();
         this.gestorUtilizadores = new GestorUtilizadores();
@@ -93,6 +98,7 @@ public class VeiculoApp
         this.menuRegisto = new MenuRegisto(opcoesRegisto);
         this.menuCliente = new MenuCliente(opcoesCliente);
         this.menuProprietario = new MenuProprietario(opcoesProprietario);
+        this.menuTop10 = new Menu(opcoesTop10);
     }
 
     /**
@@ -131,8 +137,7 @@ public class VeiculoApp
                             runProprietario();
                         }
                         break;
-                case 3: System.out.println("Vai ser direcionado para o menu das queries");
-                        //runQueries();
+                case 3: runTop();
                         break;
             }
         } while (menuPrincipal.getOpcao()!=0); // A opÁ„o 0 È usada para sair do menu. 
@@ -205,6 +210,38 @@ public class VeiculoApp
         System.out.println("\f");
     }
     
+    private void runTop(){
+        do {
+            menuTop10.executa();
+            switch (menuRegisto.getOpcao()) {
+                case 1: System.out.println("TOP 10 Clientes Numero de Utilizacoes");
+                        try{
+                            this.listagem = new Listagem(this.gestorUtilizadores.procuraUtilizadores(this.gestorAlugueres.topDezClientesVezes()));
+                        }
+                        catch(UtilizadorNaoExisteException e){
+                            System.out.println(e.getMessage());
+                        }
+                        catch(AluguerNaoExisteException e){
+                            System.out.println(e.getMessage());
+                        }
+                        break;
+                case 2: System.out.println("TOP 10 Clientes Quilometros");
+                        try{
+                            this.listagem = new Listagem(this.gestorUtilizadores.procuraUtilizadores(this.gestorAlugueres.topDezClientesKms()));
+                        }
+                        catch(UtilizadorNaoExisteException e){
+                            System.out.println(e.getMessage());
+                        }
+                        catch(AluguerNaoExisteException e){
+                            System.out.println(e.getMessage());
+                        }
+                        break;
+            }
+        } while (menuRegisto.getOpcao()!=0); // A op¡Ño 0 » usada para sair do menu.
+        System.out.println("\f");
+    }
+    
+    
     
     private void runCliente() {
         Input input = new Input();
@@ -212,8 +249,7 @@ public class VeiculoApp
             menuRegisto.executa();
             switch (menuRegisto.getOpcao()) {
                 case 1: 
-                        System.out.println("Utilizador registado!");
-                        break;
+                        
                 case 2:
                         System.out.println("Utilizador registado!");
             }
