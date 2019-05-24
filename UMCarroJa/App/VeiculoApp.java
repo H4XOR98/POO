@@ -20,7 +20,7 @@ public class VeiculoApp
     private GestorUtilizadores gestorUtilizadores;
     private GestorVeiculos gestorVeiculos;
     private GestorAlugueres gestorAlugueres;
-    private Menu menuPrincipal ,menuRegisto, menuCliente, menuProprietario, menuTop10;
+    private Menu menuPrincipal ,menuRegisto, menuCliente, menuProprietario, menuTop10, menuClienteAluguer, menuClienteHistorico;
     private Listagem listagem;
     /*public static void main (String[] args){
         Leitura l = new Leitura("./logsPOO_carregamentoInicial.txt");
@@ -116,10 +116,12 @@ public class VeiculoApp
         
         this.menuPrincipal = new MenuPrincipal(opcoes);
         this.menuRegisto = new MenuRegisto(opcoesRegisto);
-        this.menuCliente = new MenuCliente(opcoesCliente);
-        this.menuProprietario = new MenuProprietario(opcoesProprietario);
         this.menuTop10 = new Menu(opcoesTop10);
-        this.menu
+        
+        this.menuCliente = new MenuCliente(opcoesCliente);
+        this.menuClienteAluguer = new MenuCliente(opcoesClienteAluguer);
+        
+        this.menuProprietario = new MenuProprietario(opcoesProprietario);
     }
 
     /**
