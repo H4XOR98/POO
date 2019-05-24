@@ -20,7 +20,8 @@ public class VeiculoApp
     private GestorUtilizadores gestorUtilizadores;
     private GestorVeiculos gestorVeiculos;
     private GestorAlugueres gestorAlugueres;
-    private Menu menuPrincipal ,menuRegisto, menuCliente, menuProprietario, menuTop10, menuClienteAluguer, menuClienteHistorico;
+    private Menu menuPrincipal ,menuRegisto, menuCliente, menuProprietario, menuTop10, menuClienteAluguer, menuClienteHistoricos, menuProprietarioAluguer, 
+                menuProprietarioHistoricos, menuProprietarioVeiculos;
     private Listagem listagem;
     /*public static void main (String[] args){
         Leitura l = new Leitura("./logsPOO_carregamentoInicial.txt");
@@ -236,7 +237,7 @@ public class VeiculoApp
     private void runTop(){
         do {
             menuTop10.executa();
-            switch (menuRegisto.getOpcao()) {
+            switch (menuTop10.getOpcao()) {
                 case 1: System.out.println("TOP 10 Clientes Numero de Utilizacoes");
                         try{
                             this.listagem = new Listagem(this.gestorUtilizadores.procuraUtilizadores(this.gestorAlugueres.topDezClientesVezes()));
@@ -267,18 +268,57 @@ public class VeiculoApp
     
     
     private void runCliente() {
-        Input input = new Input();
         do {
-            menuRegisto.executa();
-            switch (menuRegisto.getOpcao()) {
+            menuCliente.executa();
+            switch (menuCliente.getOpcao()) {
                 case 1: 
-                        
-                case 2:
-                        System.out.println("Utilizador registado!");
+                       break; 
+                case 2: runClienteAluguer();
+                       break;
+                case 3: runClienteHistoricos();
+                       break;
             }
         } while (menuRegisto.getOpcao()!=0); // A op¡Ño 0 » usada para sair do menu.
         System.out.println("\f");
     }
+    
+    private void runClienteAluguer() {
+        Input input = new Input();
+        do {
+            menuClienteAluguer.executa();
+            switch (menuClienteAluguer.getOpcao()) {
+                case 1: System.out.println("\fIntroduza a sua localizaçao i.e. (x,y):\n");
+                        System.out.println("\t-Digite a coordenada 'x'.");
+                        double xC = input.lerDouble();
+                        System.out.println("\t-Digite a coordenada 'y'.");
+                        double yC = input.lerDouble();
+                        Ponto pontoC = new Ponto(xC,yC);
+                       break;
+                case 2:
+                       break;
+                case 3:
+                       break;      
+            }
+        } while (menuRegisto.getOpcao()!=0); // A op¡Ño 0 » usada para sair do menu.
+        System.out.println("\f");
+    }
+    
+    private void runClienteHistoricos() {
+        Input input = new Input();
+        do {
+            menuClienteHistoricos.executa();
+            switch (menuClienteHistoricos.getOpcao()) {
+                case 1: 
+                       break;
+                case 2:
+                       break;
+                case 3:
+                       break;      
+            }
+        } while (menuRegisto.getOpcao()!=0); // A op¡Ño 0 » usada para sair do menu.
+        System.out.println("\f");
+    }
+    
     
     private void runProprietario() {
         Input input = new Input();
