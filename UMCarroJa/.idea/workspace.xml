@@ -3,8 +3,14 @@
   <component name="ChangeListManager">
     <list default="true" id="41a98601-eb9f-4b59-a759-49b43cfe5646" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MyLogic/ClassesBase/Aluguer.java" beforeDir="false" afterPath="$PROJECT_DIR$/MyLogic/ClassesBase/Aluguer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/App/package.bluej" beforeDir="false" afterPath="$PROJECT_DIR$/App/package.bluej" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Leitura.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Menu/package.bluej" beforeDir="false" afterPath="$PROJECT_DIR$/Menu/package.bluej" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MyLogic/ClassesBase/package.bluej" beforeDir="false" afterPath="$PROJECT_DIR$/MyLogic/ClassesBase/package.bluej" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MyLogic/Gestores/package.bluej" beforeDir="false" afterPath="$PROJECT_DIR$/MyLogic/Gestores/package.bluej" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/MyLogic/package.bluej" beforeDir="false" afterPath="$PROJECT_DIR$/MyLogic/package.bluej" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/logsPOO_carregamentoInicial.txt" beforeDir="false" afterPath="$PROJECT_DIR$/logsPOO_carregamentoInicial.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.bluej" beforeDir="false" afterPath="$PROJECT_DIR$/package.bluej" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -64,8 +70,8 @@
           <select />
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
       <pane id="Scope" />
+      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -111,16 +117,18 @@
       <workItem from="1558606811359" duration="4000" />
       <workItem from="1558637067310" duration="7000" />
       <workItem from="1558637134252" duration="4000" />
+      <workItem from="1558650094195" duration="17000" />
+      <workItem from="1558688440582" duration="5000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="6934000" />
+    <option name="totallyTimeSpent" value="6956000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1680" height="1050" extended-state="0" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.13492064" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.13736264" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
