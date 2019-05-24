@@ -74,7 +74,8 @@ public class VeiculoApp
                                   
         String[] opcoesCliente = {"Alugar Veiculo",
                                   "Realizar Viagem",
-                                  "Avalizar Proprietario"};
+                                  "Avalizar Proprietario",
+                                  "Avaliar Veiculo"};
                                  
         String[] opcoesProprietario = {"Consoltar Caixa Notificacoes",
                                        "Confirmar Aluguer",
@@ -100,7 +101,9 @@ public class VeiculoApp
     private void run() {
         Input input = new Input();
         do {
+            System.out.println("\f");
             menuPrincipal.executa();
+            System.out.println("\f");
             switch (menuPrincipal.getOpcao()) {
                 case 1: System.out.println("----------Registo----------");
                         runRegisto();
@@ -122,6 +125,7 @@ public class VeiculoApp
                         break;
             }
         } while (menuPrincipal.getOpcao()!=0); // A opÁ„o 0 È usada para sair do menu. 
+        System.out.println("\f");
         System.out.println("Até breve!...");  
     }
     
@@ -157,7 +161,7 @@ public class VeiculoApp
                         }
                         System.out.println("Utilizador registado!");
                         break;
-                case 2: System.out.println("Introduza o seu email.");
+                case 2:System.out.println("Introduza o seu email.");
                         String emailC = input.lerString();
                         System.out.println("Introduza a sua password.");
                         String passwordC = input.lerString();
@@ -178,9 +182,10 @@ public class VeiculoApp
                         catch(Exception e){
                             System.out.println(e.getMessage());
                         }
+                        System.out.println("/f");
                         System.out.println("Utilizador registado!");
-                        break;
             }
         } while (menuRegisto.getOpcao()!=0); // A op¡Ño 0 » usada para sair do menu.
+        System.out.println("\f");
     }
 }
