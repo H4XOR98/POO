@@ -107,47 +107,45 @@ public class GestorAlugueres implements Serializable{
     //-----------------------------------------
     
     
-    public List<Aluguer> historicoCliente(int nif){
-        List<Aluguer> aux = new ArrayList<>();
+    public List<String> historicoCliente(int nif){
+        List<String> aux = new ArrayList<>();
         for(Aluguer a : this.alugueres){
             if(a.getNif() == nif){
-                aux.add(a.clone());
+                aux.add(a.toString());
             }
         }
         return aux;
     }
     
-    public List<Aluguer> historicoClienteEntreDatas(int nif, LocalDateTime inicio, LocalDateTime fim){
-        List<Aluguer> aux = new ArrayList<>();
+    public List<String> historicoClienteEntreDatas(int nif, LocalDateTime inicio, LocalDateTime fim){
+        List<String> aux = new ArrayList<>();
         for(Aluguer a : this.alugueres){
             if(a.getNif() == nif && ((a.getDataInicio().isAfter(inicio) && a.getDataInicio().isBefore(fim)) || 
                                      (a.getDataInicio().isEqual(inicio) && a.getDataInicio().isEqual(fim)))){
-                aux.add(a.clone());
+                aux.add(a.toString());
             }
         }
         return aux;
     }
     
     
-    public List<Aluguer> historicoProprietario(int nif){
-        List<Aluguer> aux = new ArrayList<>();
+    public List<String> historicoProprietario(int nif){
+        List<String> aux = new ArrayList<>();
         for(Aluguer a : this.alugueres){
             if(a.getVeiculo().getNif() == nif){
-                aux.add(a.clone());
+                aux.add(a.toString());
             }
         }
         return aux;
     }
     
     
-    public List<Aluguer> historicoProprietarioEntreDatas (int nif, LocalDateTime inicio, LocalDateTime fim){
-        List<Aluguer> aux = new ArrayList<>();
+    public List<String> historicoProprietarioEntreDatas (int nif, LocalDateTime inicio, LocalDateTime fim){
+        List<String> aux = new ArrayList<>();
         for(Aluguer a : this.alugueres){
             if(a.getVeiculo().getNif() == nif && ((a.getDataInicio().isAfter(inicio) && a.getDataInicio().isBefore(fim)) || 
                                      (a.getDataInicio().isEqual(inicio) && a.getDataInicio().isEqual(fim)))){
-                aux.add(a.clone());
-            }{
-                aux.add(a.clone());
+                aux.add(a.toString());
             }
         }
         return aux;

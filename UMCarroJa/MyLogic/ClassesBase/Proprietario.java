@@ -136,21 +136,4 @@ public class Proprietario extends Utilizador implements Serializable
         }
         veiculo.setPreco(preco);
     }
-    
-    
-    public void confirmaAluguer (Aluguer a){
-        if(a.getEstadoAluguer().equals(EstadoAluguer.Espera)){
-            a.setEstadoAluguer(EstadoAluguer.Aceite);
-        }  
-    }
-    
-    public void rejeitaAluguer (Aluguer a){
-        if(a.getEstadoAluguer().equals(EstadoAluguer.Espera)){
-            a.setEstadoAluguer(EstadoAluguer.Rejeitado);
-        } 
-    }
-    
-    public void terminaAluguer(Aluguer a, int notaCliente){
-        
-    }
 }

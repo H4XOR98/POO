@@ -76,6 +76,10 @@ public class GestorUtilizadores implements Serializable{
         return n;
     }
     
+    public void atualizaUtilizador(Utilizador u){
+        this.utilizadores.replace(u.getNif(),u.clone());
+    }
+    
     
     public void removeUtilizador(int nif) throws UtilizadorNaoExisteException{
         if(!this.utilizadores.containsKey(nif)){

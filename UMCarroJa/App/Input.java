@@ -56,7 +56,9 @@ public class Input {
      while(!ok) {
          try {
              i = input.nextInt();
-             ok = true;
+             if(i>=0){
+                 ok = true;
+             }
          }
          catch(InputMismatchException e) 
              { out.println("Inteiro Invalido"); 
@@ -143,4 +145,6 @@ public class Input {
      //input.close();
      return s;
   }  
+  
+  
 }

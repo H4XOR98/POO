@@ -328,6 +328,18 @@ public class Aluguer implements Serializable{
         this.custoViagem();
     }
     
+    public void aceitaAluguer (){
+        if(this.estadoAluguer.equals(EstadoAluguer.Espera)){
+            this.setEstadoAluguer(EstadoAluguer.Aceite);
+        }  
+    }
+    
+    public void rejeitaAluguer (){
+        if(this.estadoAluguer.equals(EstadoAluguer.Espera)){
+            this.setEstadoAluguer(EstadoAluguer.Rejeitado);
+        } 
+    }
+    
     public Proprietario avaliacoesCliente(Proprietario proprietario, double notaVeiculo, double notaProprietario) 
     throws AluguerNaoExisteException, AvaliacaoInvalidaException{
         if(!estadoAluguer.equals(EstadoAluguer.Terminado)){
