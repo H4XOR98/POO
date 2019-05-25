@@ -116,20 +116,20 @@ public class GestorVeiculos implements Serializable{
     
     // Devolver o veículo mais barato
     
-    public List<String> veiculoMaisBarato (TipoVeiculo tipoVeiculo, TipoCombustivel tipoCombustivel, Ponto destino) 
+    public List<Veiculo> veiculoMaisBarato (TipoVeiculo tipoVeiculo, TipoCombustivel tipoCombustivel, Ponto destino) 
     throws VeiculoNaoExisteException{
         
         if (this.veiculos.isEmpty()){
             throw new VeiculoNaoExisteException ("Ups! Gestor de veículos vazio.\n");
         }
         
-        List<String> resultado = new ArrayList<>();
+        List<Veiculo> resultado = new ArrayList<>();
         List<Veiculo> maisBarato = new ArrayList<>();
         
         this.veiculos.forEach((k,v) -> {    
             if (v.getTipoVeiculo().equals(tipoVeiculo) && v.getTipoCombustivel().equals(tipoCombustivel) &&
                 v.autonomiaBaixa() == false && v.autonomiaSuficiente(destino)){
-                    maisBarato.add(v.clone());
+                    maisBarato.add(v);
             }
         });
         
@@ -141,21 +141,21 @@ public class GestorVeiculos implements Serializable{
         double precoMenor = maisBarato.get(0).getPreco();
         
         for (Veiculo veiculo : maisBarato){
-            if (veiculo.getPreco() <= precoMenor) resultado.add(veiculo.toString());
+            if (veiculo.getPreco() <= precoMenor) resultado.add(veiculo.clone());
         }
         return resultado;
     }
         
     // Devolver o veículo mais perto
   
-    public List<String> veiculoMaisPerto (TipoVeiculo tipoVeiculo, TipoCombustivel tipoCombustivel, Ponto localizacao, Ponto destino) 
+    public List<Veiculo> veiculoMaisPerto (TipoVeiculo tipoVeiculo, TipoCombustivel tipoCombustivel, Ponto localizacao, Ponto destino) 
     throws VeiculoNaoExisteException{
         
         if (this.veiculos.isEmpty()) {
             throw new VeiculoNaoExisteException ("Ups! Gestor de Veiculos Vazio.\n");
         }
         
-        List<String> resultado = new ArrayList<>();
+        List<Veiculo> resultado = new ArrayList<>();
         List<Veiculo> maisPerto = new ArrayList<>();
         
         this.veiculos.forEach((k,v) -> {
@@ -177,7 +177,7 @@ public class GestorVeiculos implements Serializable{
         
         for (Veiculo veiculo : maisPerto){
             if (veiculo.getLocalizacao().distancia(destino) == maisPerto.get(0).getLocalizacao().distancia(destino)){
-                resultado.add(veiculo.toString());
+                resultado.add(veiculo.clone());
             }
         }
         return resultado;
@@ -185,14 +185,14 @@ public class GestorVeiculos implements Serializable{
     
     // Devolver o veículo mais barato dentro de uma distância
     
-    public List<String> veiculoMaisPertoBarato (TipoVeiculo tipoVeiculo, TipoCombustivel tipoCombustivel, Ponto localizacao, Ponto destino, 
+    public List<Veiculo> veiculoMaisPertoBarato (TipoVeiculo tipoVeiculo, TipoCombustivel tipoCombustivel, Ponto localizacao, Ponto destino, 
     double distanciaMax) throws VeiculoNaoExisteException{
         
         if (this.veiculos.isEmpty()){
             throw new VeiculoNaoExisteException ("Ups! Gestor de Veiculos Vazio.\n");
         }
         
-        List<String> resultado = new ArrayList<>();
+        List<Veiculo> resultado = new ArrayList<>();
         List<Veiculo> maisBarato = new ArrayList<>();
         
         this.veiculos.forEach((k,v) -> {
@@ -210,7 +210,7 @@ public class GestorVeiculos implements Serializable{
         double precoMenor = maisBarato.get(0).getPreco(); 
         
         for (Veiculo veiculo : maisBarato){
-            if (veiculo.getPreco() <= precoMenor) resultado.add(veiculo.toString());
+            if (veiculo.getPreco() <= precoMenor) resultado.add(veiculo.clone());
         }
         return resultado;
     }
@@ -238,19 +238,19 @@ public class GestorVeiculos implements Serializable{
     
     // Devolver um veículo com uma autonomia expecífica
     
-    public List<String> veiculoAutonomia (TipoVeiculo tipoVeiculo, TipoCombustivel tipoCombustivel, double autonomiaAtual) 
+    public List<Veiculo> veiculoAutonomia (TipoVeiculo tipoVeiculo, TipoCombustivel tipoCombustivel, double autonomiaAtual) 
     throws VeiculoNaoExisteException{
         
         if (this.veiculos.isEmpty()) {
             throw new VeiculoNaoExisteException ("Ups! Gestor de Veiculos Vazio.\n");
         }
 
-        List<String> resultado = new ArrayList<>();
+        List<Veiculo> resultado = new ArrayList<>();
 
         for(Veiculo veiculo : this.veiculos.values()){
             if (veiculo.getTipoVeiculo().equals(tipoVeiculo) && veiculo.getTipoCombustivel().equals(tipoCombustivel) && 
                 veiculo.getAutonomiaAtual() == autonomiaAtual && veiculo.autonomiaBaixa() == false){ 
-                    resultado.add(veiculo.toString());
+                    resultado.add(veiculo.clone());
             }
         }
 

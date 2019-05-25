@@ -8,7 +8,7 @@ import java.io.Serializable;
 public class Aluguer implements Serializable{
     
     // Variáveis de Instância
-    
+    private int id;
     private TipoVeiculo tipoVeiculo;
     private int nif;
     private Ponto destino;
@@ -24,11 +24,12 @@ public class Aluguer implements Serializable{
     private Metereologia meteo;
     private Trafego trafego;
 
-    private static int id = 0;
+    private static int identidade = 0;
     
     // Construtores
     
     public Aluguer() {
+        this.id = getIdentidade();
         this.tipoVeiculo = TipoVeiculo.Carro;
         this.nif = 0;
         this.destino = new Ponto();
@@ -43,10 +44,11 @@ public class Aluguer implements Serializable{
         this.dataFim = LocalDateTime.now();
         this.meteo = Metereologia.getRandom();
         this.trafego = Trafego.getRandom();
-        id++;
+        identidade++;
     }
 
     public Aluguer(TipoVeiculo tipoVeiculo, int nif, Ponto destino, TipoCombustivel tipoCombustivel, PreferenciaAluguer preferencia) {
+        this.id = getIdentidade();
         this.tipoVeiculo = tipoVeiculo;
         this.nif = nif;
         this.destino = destino;
@@ -61,7 +63,7 @@ public class Aluguer implements Serializable{
         this.dataFim = LocalDateTime.now();
         this.meteo = Metereologia.getRandom();
         this.trafego = Trafego.getRandom();
-        id++;
+        identidade++;
     }
 
     public Aluguer(Aluguer a){
@@ -82,6 +84,9 @@ public class Aluguer implements Serializable{
     }
 
     // Gets
+    public int getId(){
+        return this.id;
+    }
     
     public TipoVeiculo getTipoVeiculo() {
         return this.tipoVeiculo;
@@ -184,8 +189,8 @@ public class Aluguer implements Serializable{
     
     // Get de classe
     
-    public static int getId() {
-        return id;
+    public static int getIdentidade() {
+        return identidade;
     }
     
     // toString

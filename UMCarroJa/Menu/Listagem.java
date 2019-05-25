@@ -1,5 +1,6 @@
 package Menu;
 
+import App.Input;
 import java.util.*;
 /**
  * Escreva a descrição da classe Listagem aqui.
@@ -40,7 +41,10 @@ public class Listagem
      * 
      */
     public void executa() {
+        Input input = new Input(); 
         do {
+            System.out.println("\n\nPara prosseguir pressione enter!");
+            input.lerString();
             System.out.println("\f");
             showListagem();
             this.op = lerOpcao();
@@ -75,7 +79,7 @@ public class Listagem
             System.out.println("*     2 - Próximo     *");
             System.out.println("*     0 - Sair        *");
             System.out.println("***********************");
-        }else if(this.paginaAtual == this.numPaginas){
+        }else if(this.paginaAtual+1 == this.numPaginas){
             System.out.println("********Navegar********");
             System.out.println("*     1 - Anterior    *");
             System.out.println("*     0 - Sair        *");
@@ -109,13 +113,10 @@ public class Listagem
             System.out.println("Já se encontra no inicio.");
             op = -1;
         } else
-        if(op == 2 && this.paginaAtual == this.numPaginas){
+        if(op == 2 && this.paginaAtual+1 == this.numPaginas){
             System.out.println("Já se encontra no final.");
             op = -1;
         }
-        System.out.println("\n\n\n\nPara sair pressione enter!");
-        is.nextLine();
-        //System.out.println("\f");
         return op;
     }
     

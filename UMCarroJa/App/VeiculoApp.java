@@ -1,4 +1,5 @@
 package App;
+
 import java.util.Scanner;
 import java.util.*;
 import MyLogic.ClassesBase.*;
@@ -22,7 +23,7 @@ public class VeiculoApp
     private GestorVeiculos gestorVeiculos;
     private GestorAlugueres gestorAlugueres;
     private Menu menuPrincipal ,menuRegisto, menuCliente, menuProprietario, menuTop10, menuClienteAluguer, menuClienteHistoricos, menuProprietarioAluguer, 
-                menuProprietarioHistoricos, menuProprietarioVeiculos, menuConfirmacaoAluguer;
+                menuProprietarioHistoricos, menuProprietarioVeiculos, menuConfirmacaoAluguer, menuNotificacoes;
     private Listagem listagem;
    
     
@@ -73,7 +74,7 @@ public class VeiculoApp
                                        
                                        
         String[] opcoesProprietarioAluguer = {"Confirmar Aluguer",
-                                              "Registar custo viagem"};
+                                              "Terminar Aluguer"};
        
         String[] opcoesConfirmacaoAluguer = {"Aceitar","Rejeitar"};                                      
                                               
@@ -86,6 +87,11 @@ public class VeiculoApp
                                                "Abastecer Veiculo",
                                                "Os meus veiculos"};                                         
                                               
+        // ------------------------------------------------------- 
+                                               
+        String[] opcoesNotificacoes = {"Consultar Notificacoes",
+                                       "Apagar todas as Notificacoes"};
+        
         
                                        
         this.gestorVeiculos = new GestorVeiculos();
@@ -106,6 +112,8 @@ public class VeiculoApp
         this.menuConfirmacaoAluguer = new Menu(opcoesConfirmacaoAluguer);
         this.menuProprietarioHistoricos = new MenuProprietario(opcoesProprietarioHistoricos);
         this.menuProprietarioVeiculos = new MenuProprietario(opcoesProprietarioVeiculos);
+        
+        this.menuNotificacoes = new MenuNotificacoes(opcoesNotificacoes);
         
         Leitura l = new Leitura("./logsPOO_carregamentoInicial.txt");
         try{
@@ -163,21 +171,21 @@ public class VeiculoApp
                         }
                         if(u != null && u.getClass().getSimpleName().equals("Cliente")){
                            Cliente cliente = (Cliente)u;
-                           System.out.println("Bem vindo Sr. " + cliente.getNome());
-                           System.out.println("\n\n\n\nPara prosseguir presione Enter!");
+                           System.out.println("Bem vindo Sr.(a) " + cliente.getNome());
+                           System.out.println("\n\nPara prosseguir pressione 'Enter'!");
                            input.lerString();
                            System.out.println("\f");
                            runCliente(cliente);
                         }
                         if(u != null && u.getClass().getSimpleName().equals("Proprietario")){
                             Proprietario proprietario = (Proprietario)u;
-                            System.out.println("Bem vindo Sr. " + proprietario.getNome());
-                            System.out.println("\n\n\n\nPara prosseguir presione Enter!");
+                            System.out.println("Bem vindo Sr.(a) " + proprietario.getNome());
+                            System.out.println("\n\nPara prosseguir pressione 'Enter'!");
                             input.lerString();
                             System.out.println("\f");
                             runProprietario(proprietario);
                         }
-                        System.out.println("\n\n\n\nPara sair presione Enter!");
+                        System.out.println("\n\nPara retroceder pressione 'Enter'!");
                         input.lerString();
                         break;
                 case 3: runTop();
@@ -195,25 +203,46 @@ public class VeiculoApp
             System.out.println("\f");
             menuRegisto.executa();
             switch (menuRegisto.getOpcao()) {
-                case 1: System.out.println("\fIntroduza o seu email.");
+                case 1: System.out.println("Passo 1 de 6 do registo de Cliente.");
+                        System.out.println("Introduza o seu email.");
                         String emailC = input.lerString();
-                        System.out.println("\fIntroduza a sua password.");
+                        
+                        System.out.println("\n\nPara prosseguir pressione 'Enter'!\n\tPasso 2 de 6.");
+                        input.lerString();
+                        System.out.println("\fPasso 2 de 6 do registo de Cliente.");
+                        System.out.println("Introduza a sua password.");
                         String passwordC = input.lerString();
-                        System.out.println("\fIntroduza o seu nome.");
+                        
+                        System.out.println("\n\nPara prosseguir pressione 'Enter'!\n\tPasso 3 de 6.");
+                        input.lerString();
+                        System.out.println("\fPasso 3 de 6 do registo de Cliente.");
+                        System.out.println("Introduza o seu nome.");
                         String nomeC = input.lerString();
-                        System.out.println("\fIntroduza o seu nif.");
+                        
+                        System.out.println("\n\nPara prosseguir pressione 'Enter'!\n\tPasso 4 de 6.");
+                        input.lerString(); 
+                        System.out.println("\fPasso 4 de 6 do registo de Cliente.");
+                        System.out.println("Introduza o seu nif.");
                         int nifC = input.lerInt();
-                        System.out.println("\fIntroduza a sua morada.");
+                        
+                        System.out.println("\n\nPara prosseguir pressione 'Enter'!\n\tPasso 5 de 6.");
+                        input.lerString();
+                        System.out.println("\fPasso 5 de 6 do registo de Cliente.");
+                        System.out.println("Introduza a sua morada.");
                         String moradaC = input.lerString();
-                
-                        System.out.println("\fIntroduza a sua localizaçao i.e. (x,y):\n");
-                        System.out.println("\t-Digite a coordenada 'x'.");
+                        
+                        System.out.println("\n\nPara prosseguir pressione 'Enter'!\n\tPasso 6 de 6.");
+                        input.lerString();
+                        System.out.println("\fPasso 5 de 6 do registo de Cliente.");
+                        System.out.println("Introduza a sua localizaçao i.e. (x,y):\n");
+                        System.out.println("*Digite a coordenada 'x'.");
                         double xC = input.lerDouble();
-                        System.out.println("\t-Digite a coordenada 'y'.");
+                        System.out.println("*Digite a coordenada 'y'.");
                         double yC = input.lerDouble();
                         System.out.println("\f");
                         Ponto pontoC = new Ponto(xC,yC);
                         Utilizador c = new Cliente(emailC,passwordC,nomeC,nifC,moradaC,pontoC);
+                        System.out.println("\f");
                         try {
                             this.gestorUtilizadores.insereUtilizador(c);
                             this.gestorNotificacoes.adicionaUtilizador(c);
@@ -225,21 +254,38 @@ public class VeiculoApp
                         catch(Exception e){
                             System.out.println(e.getMessage());
                         }
-                        System.out.println("\n\n\n\nPara sair pressione enter!");
+                        System.out.println("\n\nPara voltar ao menu principal pressione 'Enter'!");
                         input.lerString();
                         break;
-                case 2: System.out.println("\fIntroduza o seu email.");
+                case 2: System.out.println("Passo 1 de 5 do registo de Proprietario.");
+                        System.out.println("Introduza o seu email.");
                         String emailP = input.lerString();
-                        System.out.println("\fIntroduza a sua password.");
+                        
+                        System.out.println("\n\nPara prosseguir pressione 'Enter'!\n\tPasso 2 de 5.");
+                        input.lerString();
+                        System.out.println("\fPasso 2 de 5 do registo de Proprietario.");
+                        System.out.println("Introduza a sua password.");
                         String passwordP = input.lerString();
-                        System.out.println("\fIntroduza o seu nome.");
+                        
+                        System.out.println("\n\nPara prosseguir pressione 'Enter'!\n\tPasso 3 de 5.");
+                        input.lerString();
+                        System.out.println("\fPasso 3 de 5 do registo de Proprietario.");
+                        System.out.println("Introduza o seu nome.");
                         String nomeP = input.lerString();
-                        System.out.println("\fIntroduza o seu nif.");
+                        
+                        System.out.println("\n\nPara prosseguir pressione 'Enter'!\n\tPasso 4 de 5.");
+                        input.lerString();
+                        System.out.println("\fPasso 4 de 5 do registo de Proprietario."); 
+                        System.out.println("Introduza o seu nif.");
                         int nifP = input.lerInt();
-                        System.out.println("\fIntroduza a sua morada.");
+                        
+                        System.out.println("\n\nPara prosseguir pressione 'Enter'!\n\tPasso 5 de 5.");
+                        input.lerString();
+                        System.out.println("\fPasso 5 de 5 do registo de Proprietario.");
+                        System.out.println("Introduza a sua morada.");
                         String moradaP = input.lerString();
+                        
                         System.out.println("\f");
-                
                         Utilizador p = new Proprietario(emailP,passwordP,nomeP,nifP,moradaP);
                         try {
                             this.gestorUtilizadores.insereUtilizador(p);
@@ -252,10 +298,11 @@ public class VeiculoApp
                         catch(Exception e){
                             System.out.println(e.getMessage());
                         }       
-                        System.out.println("\n\n\n\nPara sair pressione enter!");
+                        System.out.println("\n\nPara voltar ao menu principal pressione 'Enter'!");
                         input.lerString();
-                        break;
-            }
+                        break;     
+             }
+             menuRegisto.setOpcao(0);
         } while (menuRegisto.getOpcao()!=0); // A op¡Ño 0 » usada para sair do menu.
         System.out.println("\f");
     }
@@ -267,7 +314,13 @@ public class VeiculoApp
             switch (menuTop10.getOpcao()) {
                 case 1: System.out.println("TOP 10 Clientes Numero de Utilizacoes");
                         try{
-                            this.listagem = new Listagem(this.gestorUtilizadores.procuraUtilizadores(this.gestorAlugueres.topDezClientesVezes()));
+                            this.listagem = new Listagem());
+                            List<String> clientes = this.gestorUtilizadores.procuraUtilizadores(this.gestorAlugueres.topDezClientesVezes();
+                            if(clientes.isEmpty()){
+                                System.out.println("------VAZIO------");
+                            }else{
+                                this.listagem = new Listagem(clientes));
+                            }
                         }
                         catch(UtilizadorNaoExisteException e){
                             System.out.println(e.getMessage());
@@ -278,7 +331,12 @@ public class VeiculoApp
                         break;
                 case 2: System.out.println("TOP 10 Clientes Quilometros");
                         try{
-                            this.listagem = new Listagem(this.gestorUtilizadores.procuraUtilizadores(this.gestorAlugueres.topDezClientesKms()));
+                            List<String> clientes = this.gestorUtilizadores.procuraUtilizadores(this.gestorAlugueres.topDezClientesKms()
+                            if(clientes.isEmpty()){
+                                System.out.println("------VAZIO------");
+                            }else{
+                                this.listagem = new Listagem(clientes));
+                            }
                         }
                         catch(UtilizadorNaoExisteException e){
                             System.out.println(e.getMessage());
@@ -289,12 +347,12 @@ public class VeiculoApp
                         break;
             }
         } while (menuRegisto.getOpcao()!=0); // A op¡Ño 0 » usada para sair do menu.
-        System.out.println("\f");
         if(this.listagem == null){//Vazia ATENCAO
             System.out.println("Nao existem utilizadores registados!");
         }
-        System.out.println("\n\n\n\nPara sair pressione enter!");
+        System.out.println("\n\nPara voltar ao menu principal pressione enter!");
         input.lerString();
+        System.out.println("\f");
     }
     
     
@@ -309,7 +367,7 @@ public class VeiculoApp
         do {
             menuCliente.executa();
             switch (menuCliente.getOpcao()) {
-                case 1: 
+                case 1: runMenuNotificacoes(cliente);
                        break; 
                 case 2: runClienteAluguer(cliente);
                        break;
@@ -359,7 +417,7 @@ public class VeiculoApp
                             
                             Aluguer a = new Aluguer(tipoVeiculo,cliente.getNif(),destino,tipoCombustivel,preferencia);
                             
-                            List<String> veiculos = null;
+                            List<Veiculo> veiculos = null;
                             Veiculo veiculo = null;
                             String matricula = "";
                             switch(a.getPreferencia()){
@@ -392,9 +450,10 @@ public class VeiculoApp
                                     break;
                             }
                             this.gestorAlugueres.insereAluguer(a);
-                            //ATENCAO
                             if(veiculos != null){
-                                this.listagem = new Listagem(veiculos);
+                                List<String> resultado = new ArrayList<>();
+                                veiculos.forEach(v -> resultado.add(v.toString()));
+                                this.listagem = new Listagem(resultado);
                                 this.listagem.executa();
                             }
                             if(veiculo == null){
@@ -402,6 +461,7 @@ public class VeiculoApp
                                 matricula = input.lerString();
                                 veiculo = this.gestorVeiculos.getVeiculo(matricula);
                             }
+                            System.out.println("\f");
                             System.out.println("O veiculo que quer alugar: \n" + veiculo.toString());
                         }
                         catch(IllegalArgumentException e){
@@ -414,7 +474,8 @@ public class VeiculoApp
                             System.out.println(e.getMessage());
                         }
                        break;
-                case 2: int id = input.lerInt();
+                case 2: System.out.println("Introduza o id do aluguer que pretende.");
+                        int id = input.lerInt();
                         try{
                             Aluguer a = this.gestorAlugueres.getAluguer(id);
                             Notificacao notificacao = a.efetuaViagem(cliente);
@@ -508,7 +569,7 @@ public class VeiculoApp
         do {
             menuProprietario.executa();
             switch (menuProprietario.getOpcao()) {
-                case 1: 
+                case 1: runMenuNotificacoes(proprietario);
                         break;
                 case 2: runProprietarioAluguer();
                         break;
@@ -524,11 +585,12 @@ public class VeiculoApp
     
     private void runProprietarioAluguer() {
         Input input = new Input();
+        System.out.println("\f");
         do {
             menuProprietarioAluguer.executa();
-            System.out.println("Introduza o Id do aluguer.");
-            int id = input.lerInt();
             try{
+                System.out.println("Introduza o Id do aluguer.");
+                int id = input.lerInt();
                 Aluguer a = this.gestorAlugueres.getAluguer(id);
                 switch (menuProprietarioAluguer.getOpcao()) {
                     case 1: runConfirmacaoAluguer(a);
@@ -553,22 +615,33 @@ public class VeiculoApp
             catch(UtilizadorNaoExisteException e){
                 System.out.println(e.getMessage());
             }
+            System.out.println("\f");
+            menuProprietarioAluguer.setOpcao(0);
         }while (menuProprietarioAluguer.getOpcao()!=0); // A op¡Ño 0 » usada para sair do menu.
-        System.out.println("\f");
     }                       
        
    
     private void runConfirmacaoAluguer(Aluguer a) {
+        System.out.println("\f");
+        Input input = new Input();
+        System.out.println("Pretende Aceitar/Rejeitar?\n\n");
+        System.out.println(a.toString());
+        System.out.println("\n\n");
         do {
-            System.out.println("Pretende confirmar o Aluguer?");
             menuConfirmacaoAluguer.executa();
             switch (menuConfirmacaoAluguer.getOpcao()) {
                 case 1: a.aceitaAluguer();
+                        System.out.println("\nO aluguer com id " + a.getId() + " foi aceite com sucesso.");
+                        menuConfirmacaoAluguer.setOpcao(0);
                     break;
                 case 2: a.rejeitaAluguer();
+                        System.out.println("\nO aluguer com id " + a.getId() + " foi rejeitado.");
+                        menuConfirmacaoAluguer.setOpcao(0);
                     break;
             }
         }while (menuConfirmacaoAluguer.getOpcao()!=0); // A op¡Ño 0 » usada para sair do menu.
+        System.out.println("\n\nPara retroceder pressione 'Enter'");
+        input.lerString();
         System.out.println("\f");
     }
     
@@ -582,6 +655,45 @@ public class VeiculoApp
                         break;
                 case 2: try{
                             System.out.println("Introduza a data de Inicio.");
+                            System.out.println("Introduza o ano;");
+                            int ano = input.lerInt();
+                            System.out.println("\fIntroduza a data de Inicio.");
+                            System.out.println("Introduza o mes;");
+                            int mes = input.lerInt();
+                            System.out.println("\fIntroduza a data de Inicio.");
+                            System.out.println("Introduza o dia;");
+                            int dia = input.lerInt();
+                            System.out.println("\fIntroduza a data de Inicio.");
+                            System.out.println("Introduza a hora;");
+                            int hora = input.lerInt();
+                            System.out.println("\fIntroduza a data de Inicio.");
+                            System.out.println("Introduza os minutos;");
+                            int minutos = input.lerInt();
+                            LocalDateTime inicio = LocalDateTime.of(ano, mes, dia, hora, minutos);
+                            System.out.println("Introduza a data de Fim.");
+                            System.out.println("Introduza o ano;");
+                            ano = input.lerInt();
+                            System.out.println("\fIntroduza o mes;");
+                            mes = input.lerInt();
+                            System.out.println("\fIntroduza o dia;");
+                            dia = input.lerInt();
+                            System.out.println("\fIntroduza a hora;");
+                            hora = input.lerInt();
+                            System.out.println("\fIntroduza os minutos;");
+                            minutos = input.lerInt();
+                            LocalDateTime fim = LocalDateTime.of(ano, mes, dia, hora, minutos);
+                            historico = this.gestorAlugueres.historicoProprietarioEntreDatas(proprietario.getNif(),inicio,fim);
+                        }
+                        catch(DateTimeException e){
+                            System.out.println("UPS! Data Invalida!");
+                        }
+                        break;
+                case 3: try{
+                            System.out.println("Os seus Veiculos:");
+                            this.listagem = new Listagem(this.gestorVeiculos.redacaoVeiculosProprietario(proprietario.getNif()));
+                            System.out.println("Introduza a matricula do veiculo que pretende saber o total faturado.");
+                            String matricula = input.lerString();
+                            System.out.println("\fIntroduza a data de Inicio.");
                             System.out.println("Introduza o ano;");
                             int ano = input.lerInt();
                             System.out.println("\fIntroduza o mes;");
@@ -605,51 +717,21 @@ public class VeiculoApp
                             System.out.println("\fIntroduza os minutos;");
                             minutos = input.lerInt();
                             LocalDateTime fim = LocalDateTime.of(ano, mes, dia, hora, minutos);
-                            historico = this.gestorAlugueres.historicoProprietarioEntreDatas(proprietario.getNif(),inicio,fim);
-                        }
-                        catch(DateTimeException e){
-                            System.out.println("UPS! Data Invalida!");
-                        }
-                        break;
-                case 3: System.out.println("Os seus Veiculos:");
-                        //this.listagem = new Listagem(this.gestorUtilizadores.)
-                        System.out.println("Introduza a matricula do veiculo que pretende saber o total faturado.");
-                        String matricula = input.lerString();
-                        System.out.println("\fIntroduza a data de Inicio.");
-                        System.out.println("Introduza o ano;");
-                        int ano = input.lerInt();
-                        System.out.println("\fIntroduza o mes;");
-                        int mes = input.lerInt();
-                        System.out.println("\fIntroduza o dia;");
-                        int dia = input.lerInt();
-                        System.out.println("\fIntroduza a hora;");
-                        int hora = input.lerInt();
-                        System.out.println("\fIntroduza os minutos;");
-                        int minutos = input.lerInt();
-                        LocalDateTime inicio = LocalDateTime.of(ano, mes, dia, hora, minutos);
-                        System.out.println("Introduza a data de Fim.");
-                        System.out.println("Introduza o ano;");
-                        ano = input.lerInt();
-                        System.out.println("\fIntroduza o mes;");
-                        mes = input.lerInt();
-                        System.out.println("\fIntroduza o dia;");
-                        dia = input.lerInt();
-                        System.out.println("\fIntroduza a hora;");
-                        hora = input.lerInt();
-                        System.out.println("\fIntroduza os minutos;");
-                        minutos = input.lerInt();
-                        LocalDateTime fim = LocalDateTime.of(ano, mes, dia, hora, minutos);
-                        System.out.println("O veiculo com matricula " + matricula + " faturou " + this.gestorAlugueres.totalFaturadoVeiculo(matricula, inicio, fim) + 
+                            System.out.println("O veiculo com matricula " + matricula + " faturou " + this.gestorAlugueres.totalFaturadoVeiculo(matricula, inicio, fim) + 
                                 "€ entre " + inicio.toString() + " e " + fim.toString() + ".");
+                        }
+                        catch(VeiculoNaoExisteException e){
+                            System.out.println(e.getMessage());
+                        }
                         break;
             }
         } while (menuClienteHistoricos.getOpcao()!=0); // A op¡Ño 0 » usada para sair do menu.
         if(historico != null){
-            //this.listagem = new Listagem(Arrays.asList(TipoCombustivel.values()));
+            this.listagem = new Listagem(historico);
         }
     }
                 
-     private void runProprietarioVeiculos(Proprietario proprietario) {
+    private void runProprietarioVeiculos(Proprietario proprietario) {
         Input input = new Input();
         do {
             menuProprietarioVeiculos.executa();
@@ -720,7 +802,7 @@ public class VeiculoApp
                             System.out.println(e.getMessage());
                         }
                         break;
-                case 3:try{
+                case 3: try{
                             System.out.println("Introduza a matricula do veiculo que pretende abastecer.");
                             String matricula = input.lerString();
                             Veiculo v = this.gestorVeiculos.getVeiculo(matricula);
@@ -738,6 +820,7 @@ public class VeiculoApp
                         try{
                             List<String> resultado = this.gestorVeiculos.redacaoVeiculosProprietario(proprietario.getNif());
                             this.listagem = new Listagem(resultado);
+                            this.listagem.executa();
                         }
                         catch(VeiculoNaoExisteException e){
                             System.out.println(e.getMessage());
@@ -745,6 +828,62 @@ public class VeiculoApp
                         break;
             }
         }while (menuProprietarioVeiculos.getOpcao()!=0); // A op¡Ño 0 » usada para sair do menu.
+        System.out.println("\f");
+    }
+    
+    private void runMenuNotificacoes(Utilizador u){
+        Input input = new Input();
+        do {
+            System.out.println("\f");
+            menuNotificacoes.executa();
+            switch (menuConfirmacaoAluguer.getOpcao()) {
+                case 1: try{   
+                            if(this.gestorNotificacoes.temNotificacoes(u.getNif())){
+                                System.out.println("Consultar caixa de mensagens.");
+                                List<String> resultado = new ArrayList<>();
+                                this.gestorNotificacoes.getNotificacoes(u.getNif()).forEach(v -> resultado.add(v.toString()));
+                                this.listagem = new Listagem(resultado);
+                                this.listagem.executa();
+                                this.listagem = new Listagem(this.gestorNotificacoes.getNotificacoes(u.getNif()));
+                                this.listagem.executa();
+                            }else{
+                                System.out.println("Caixa de Notificacoes Vazia");
+                            }
+                        }
+                        catch(NotificacaoNaoExisteException e){
+                                System.out.println(e.getMessage());
+                        }
+                        catch(UtilizadorNaoExisteException e){
+                            System.out.println(e.getMessage());
+                        }
+                    break;
+                case 2: try{
+                            if(this.gestorNotificacoes.temNotificacoes(u.getNif())){
+                                System.out.println("Pretende apagar todas as notificacoes?");
+                                System.out.println("1- Sim");
+                                System.out.println("2- Nao");
+                                int opcao = input.lerInt();
+                                if(opcao == 1){
+                                    System.out.println("Aguardando confirma...\n\tIntroduza a password:");
+                                    String str = input.lerString();
+                                    if(u.getPassword().equals(str)){
+                                        this.gestorNotificacoes.apagaCaixaNotificacoes();
+                                        System.out.println("Caixa de notificacoes limpa com sucesso!");
+                                    }else{
+                                        System.out.println("Ups! Password incorreta!");
+                                    }
+                                }
+                            }else{
+                                System.out.println("Caixa de Notificacoes Vazia");
+                            }
+                        }
+                        catch(UtilizadorNaoExisteException e){
+                            System.out.println(e.getMessage());
+                        }
+                    break;
+            }
+            System.out.println("\f");
+        }while (menuNotificacoes.getOpcao()!=0); // A op¡Ño 0 » usada para sair do menu.    
         System.out.println("\f");
     }
 }
