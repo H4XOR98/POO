@@ -31,9 +31,14 @@ public class VeiculoApp
      * O mÈtodo main cria a aplicaÁ„o e invoca o mÈtodo run()
      */
     public static void main(String[] args) {
-        //new VeiculoApp().run();
         VeiculoApp vApp = new VeiculoApp();
-        vApp.run();
+        //vApp.run();
+        try{
+            System.out.println(vApp.gestorUtilizadores.getUtilizador(702543543).toString());
+        }
+        catch(UtilizadorNaoExisteException e){
+            System.out.println(e.getMessage());
+        }
     }
     
     /**
@@ -136,6 +141,12 @@ public class VeiculoApp
         }
         catch(AvaliacaoInvalidaException e){
             System.out.println("Avaliação errada!");
+        }
+        catch(GestorVazioException e){
+            System.out.println(e.getMessage());
+        }
+        catch(AluguerNaoExisteException e){
+            System.out.println(e.getMessage());
         }
         catch(IOException e){
             System.out.println(e.getMessage());
@@ -446,7 +457,6 @@ public class VeiculoApp
                                     veiculos = gestorVeiculos.veiculoAutonomia(a.getTipoVeiculo(), a.getTipoCombustivel(), autonomia);
                                     break;
                             }
-                            this.gestorAlugueres.insereAluguer(a);
                             if(veiculos != null){
                                 List<String> resultado = new ArrayList<>();
                                 veiculos.forEach(v -> resultado.add(v.toString()));
@@ -460,6 +470,8 @@ public class VeiculoApp
                                 System.out.println("\n\nPara prosseguir pressione 'Enter'!");
                                 input.lerString();
                             }
+                            a.setVeiculo(veiculo);
+                            this.gestorAlugueres.insereAluguer(a);
                             System.out.println("\fO veiculo que pretende alugar: \n" + veiculo.toString());
                         }
                         catch(IllegalArgumentException e){
@@ -478,6 +490,7 @@ public class VeiculoApp
                         input.lerString();
                         try{
                             Aluguer a = this.gestorAlugueres.getAluguer(id);
+                            this.gestorAlugueres.removeAluguer(a);
                             Notificacao notificacao = a.efetuaViagem(cliente);
                             if(notificacao != null){
                                 this.gestorNotificacoes.adicionaNotificacao(notificacao);
@@ -492,8 +505,10 @@ public class VeiculoApp
                             input.lerString();
                             Proprietario p = (Proprietario)this.gestorUtilizadores.getUtilizador(a.getVeiculo().getNif());
                             a.avaliacoesCliente(p, notaVeiculo, notaProprietario);
+                            this.gestorUtilizadores.atualizaUtilizador(cliente);
                             this.gestorAlugueres.insereAluguer(a);
                             this.gestorUtilizadores.atualizaUtilizador(p);
+                            this.gestorVeiculos.atualizaVeiculo(a.getVeiculo());
                         }
                         catch(AluguerNaoExisteException e){
                             System.out.println(e.getMessage());
@@ -620,10 +635,10 @@ public class VeiculoApp
                 System.out.println("Introduza o Id do aluguer.");
                 int id = input.lerInt();
                 Aluguer a = this.gestorAlugueres.getAluguer(id);
+                this.gestorAlugueres.removeAluguer(a);
                 switch (menuProprietarioAluguer.getOpcao()) {
                     case 1: runConfirmacaoAluguer(a);
-                            //ATENCAO
-                            //this.gestorAlugueres.atualizaAluguer(a);
+                            this.gestorAlugueres.insereAluguer(a);
                         break;
                     case 2: a.registaCusto();
                             System.out.println("Introduza nota do Cliente.");
@@ -631,6 +646,7 @@ public class VeiculoApp
                             Cliente cliente = (Cliente)this.gestorUtilizadores.getUtilizador(a.getNif());
                             a.avaliacaoProprietario(cliente,notaCliente);
                             this.gestorUtilizadores.atualizaUtilizador(cliente);
+                            this.gestorAlugueres.insereAluguer(a);
                         break; 
                 }
             }
@@ -641,6 +657,9 @@ public class VeiculoApp
                 System.out.println(e.getMessage());
             }
             catch(UtilizadorNaoExisteException e){
+                System.out.println(e.getMessage());
+            }
+            catch(AluguerJaExisteException e){
                 System.out.println(e.getMessage());
             }
             menuProprietarioAluguer.setOpcao(0);
@@ -679,6 +698,7 @@ public class VeiculoApp
         Input input = new Input();
         List<String> historico = null;
         do {
+            System.out.println("\f");
             menuProprietarioHistoricos.executa();
             switch (menuProprietarioHistoricos.getOpcao()) {
                 case 1: historico = this.gestorAlugueres.historicoProprietario(proprietario.getNif());
@@ -796,10 +816,11 @@ public class VeiculoApp
     private void runProprietarioVeiculos(Proprietario proprietario) {
         Input input = new Input();
         do {
+            System.out.println("\f");
             menuProprietarioVeiculos.executa();
             switch (menuProprietarioVeiculos.getOpcao()) {
                 case 1: try{
-                            System.out.println("Tipos de veiculos do sistema.");
+                            System.out.println("\fTipos de veiculos do sistema.");
                             this.listagem = new Listagem(Arrays.asList(TipoVeiculo.values()));
                             this.listagem.executa();
                             System.out.println("\nIntroduza o tipo de veiculo pretendido:");
@@ -840,7 +861,7 @@ public class VeiculoApp
                             System.out.println("\fVeiculo registado com suceso.");
                         }
                         catch(VeiculoJaExisteException e){
-                            System.out.println(e.getMessage());
+                            System.out.println("\f" + e.getMessage());
                         }
                         catch(IllegalArgumentException e){
                             System.out.println("Tipo invalido");
@@ -850,16 +871,17 @@ public class VeiculoApp
                         System.out.println("\f");
                         break;
                 case 2: try{
-                            System.out.println("Introduza a matricula do veiculo que pretende alterar o preco por km.");
+                            System.out.println("\fIntroduza a matricula do veiculo que pretende alterar o preco por km.");
                             String matricula = input.lerString();
                             Veiculo v = this.gestorVeiculos.getVeiculo(matricula);
-                            System.out.println("\n\nPara prosseguir pressione 'Enter'");
+                            System.out.println("\n\nPara prosseguir pressione 'Enter'.");
                             input.lerString();
                             System.out.println("\f");
                             System.out.println("Introduza o novo preco por km que pretende.");
                             double preco = input.lerDouble();
                             proprietario.alteraPrecoVeiculo(v,preco);
                             this.gestorVeiculos.atualizaVeiculo(v);
+                            System.out.println("Novo preço introduzido com sucesso.");
                         }
                         catch(VeiculoNaoExisteException e){
                             System.out.println(e.getMessage());
@@ -878,6 +900,7 @@ public class VeiculoApp
                             Veiculo v = this.gestorVeiculos.getVeiculo(matricula);
                             proprietario.abasteceVeiculo(v);
                             this.gestorVeiculos.atualizaVeiculo(v);
+                            System.out.println("Veiculo abastecido com suceso.");
                         }
                         catch(VeiculoNaoExisteException e){
                             System.out.println(e.getMessage());

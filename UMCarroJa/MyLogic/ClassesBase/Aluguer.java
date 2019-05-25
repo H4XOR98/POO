@@ -277,30 +277,13 @@ public class Aluguer implements Serializable{
     }
     
     
-    /*
-     * Criar Instancia de Aluguer(Construtor parametrizado);
-     * Buscar o cliente ao GestorUtilizadores;(getUtilizador(a.getNif())
-     * Buscar o veiculo ao GestorVeiculos
-     *      -retorna o custo Estimado do aluguer para ser possivel exibir ao cliente / IO;
-     * Iniciar aluguer;
-     * Enviar o pedido de aluguer ao Proprietaro(Tempo ClienteVeiculo)
-     * Esperar Confirmacao do Proprietario
-     * 
-     * CONFIRMA:
-     *      *Cliente:
-     *          A viagem e realizada;
-     *          Atualizar a autonomiaAtual do Veiculo;
-     *          Calculo do tempo real da viagem;
-     *          AvaliacaoDo Veiculo e do Proprietario
-     *      *Proprietario:
-     *          Registar o custo da Viagem
-     *          Avaliacao do Cliente   
-     *          
-     * RECUSAR:
-     *      Cliente: Envia notificacao;
-     *  
-     * Colocar no GestorAlugueres .|. NAO PODE SER ALTERADO
-     */
+    public void efetuaViagemFile (Cliente cliente) throws AluguerNaoExisteException{
+        if(!estadoAluguer.equals(EstadoAluguer.Aceite)){
+            throw new AluguerNaoExisteException("Este aluguer ainda não foi aceite!\n");
+        }
+        this.tempoViagemReal(cliente);
+        this.estadoAluguer = EstadoAluguer.Terminado;
+    }
     
     //Cliente
     public Notificacao pedidoAluguer(Cliente cliente){
@@ -321,6 +304,8 @@ public class Aluguer implements Serializable{
         this.tempoViagemReal(cliente);
         this.veiculo.diminuirAutonomiaAtual(this.distancia);
         this.estadoAluguer = EstadoAluguer.Terminado;
+        cliente.setLocalizacao(this.destino);
+        this.veiculo.setLocalizacao(this.destino);
         if(this.veiculo.autonomiaBaixa()){
             n = new Notificacao(this.veiculo.getNif(),"Abastecer veiuculo","\nO veiculo com a matricula " + this.veiculo.getMatricula() + 
                                             " deve ser abastecido!\n");

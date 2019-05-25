@@ -96,6 +96,10 @@ public class GestorAlugueres implements Serializable{
         this.alugueres.add(a.clone());
     }
     
+    public void removeAluguer(Aluguer a){
+        this.alugueres.remove(a);
+    }
+    
     // Liberta os Veículos
     
     public void libertaGestorAlugueres(){

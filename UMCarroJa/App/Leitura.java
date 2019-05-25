@@ -63,8 +63,9 @@ public class Leitura{
     // Ler do ficheiro para os gestores
     
     public void readFile (GestorUtilizadores gestorUtilizadores, GestorVeiculos gestorVeiculos, GestorAlugueres gestorAlugueres, 
-    GestorNotificacoes gestorNotificacoes) throws UtilizadorJaExisteException, VeiculoJaExisteException, AluguerJaExisteException, 
-    UtilizadorNaoExisteException, VeiculoNaoExisteException, AvaliacaoInvalidaException, IOException, FileNotFoundException {
+    GestorNotificacoes gestorNotificacoes) throws GestorVazioException, UtilizadorJaExisteException, VeiculoJaExisteException, AluguerJaExisteException, 
+    UtilizadorNaoExisteException, VeiculoNaoExisteException, AvaliacaoInvalidaException, IOException, FileNotFoundException, 
+    AluguerNaoExisteException {
                
         BufferedReader br = new BufferedReader(new FileReader(this.file));
         
@@ -111,30 +112,48 @@ public class Leitura{
                     TipoVeiculo tv2 = TipoVeiculo.valueOf("Carro");
                     TipoCombustivel tc2 = TipoCombustivel.valueOf(comp[3]);
                     PreferenciaAluguer pf = PreferenciaAluguer.valueOf(comp[4]);
-                    Ponto pa = new Ponto (Double.parseDouble(comp[1]), Double.parseDouble(comp[2]));
-                    Aluguer a = new Aluguer (tv2, Integer.parseInt(comp[0]),pa, tc2, pf);
-                    a.setEstadoAluguer(EstadoAluguer.Terminado);
+                    Ponto destino = new Ponto (Double.parseDouble(comp[1]), Double.parseDouble(comp[2]));
+                    Aluguer a = new Aluguer (tv2, Integer.parseInt(comp[0]), destino, tc2, pf);
+                    
+                    String matricula = "";
+                    Utilizador ua = gestorUtilizadores.getUtilizador(Integer.parseInt(comp[0]));
+                    Cliente ca = (Cliente)ua;
+                    Ponto pca = ca.getLocalizacao();
+                    
+                    if (pf.equals(PreferenciaAluguer.MaisPerto)){
+                        matricula = gestorVeiculos.veiculoMaisPertoFile(tv2, tc2, pca, destino).get(0).getMatricula();
+                    }
+                    if (pf.equals(PreferenciaAluguer.MaisBarato)){
+                        matricula = gestorVeiculos.veiculoMaisBaratoFile(tv2, tc2, destino).get(0).getMatricula();
+                    }
+                    
+                    a.setVeiculo(gestorVeiculos.getVeiculo(matricula));
+                    a.setEstadoAluguer(EstadoAluguer.Aceite);
+                    a.efetuaViagemFile(ca);
+                    a.setCusto(a.getVeiculo().getPreco() * a.getDistancia());
                     gestorAlugueres.insereAluguer(a);
                     break;
                         
                 case "Classificar":
                     componentes = parts[1];
                     comp = componentes.split(",");
-                    if (comp[0].indexOf("-") != -1) gestorVeiculos.getVeiculo(comp[0]).novaAvaliacao(Double.parseDouble(comp[1]));
+                    if (comp[0].indexOf("-") != -1){
+                        Veiculo veiculo = gestorVeiculos.getVeiculo(comp[0]);
+                        veiculo.novaAvaliacao(Double.parseDouble(comp[1]));
+                        gestorVeiculos.atualizaVeiculo(veiculo);
+                    }
                     else {
                         if (gestorUtilizadores.getUtilizador(Integer.parseInt(comp[0])).getClass().getSimpleName().equals("Proprietario")){
                             Utilizador u1 = gestorUtilizadores.getUtilizador(Integer.parseInt(comp[0]));
                             Proprietario pr = (Proprietario) u1; 
                             pr.novaAvaliacao(Double.parseDouble(comp[1]));
-                            gestorUtilizadores.removeUtilizador(Integer.parseInt(comp[0]));
-                            gestorUtilizadores.insereUtilizador(pr);
+                            gestorUtilizadores.atualizaUtilizador(pr);
                         }
                         else {
                             Utilizador u2 = gestorUtilizadores.getUtilizador(Integer.parseInt(comp[0]));
                             Cliente cl = (Cliente) u2;
                             cl.novaAvaliacao(Double.parseDouble(comp[1]));
-                            gestorUtilizadores.removeUtilizador(Integer.parseInt(comp[0]));
-                            gestorUtilizadores.insereUtilizador(cl);
+                            gestorUtilizadores.atualizaUtilizador(cl);
                         }
                     }
                     break;

@@ -5,6 +5,7 @@ import MyLogic.ClassesBase.*;
 import java.util.*;
 import java.lang.*;
 import java.io.Serializable;
+import java.io.PrintWriter;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
@@ -261,6 +262,73 @@ public class GestorVeiculos implements Serializable{
         return resultado;
     }
     
+    // Devolver o veículo mais barato (ler do ficheiro)
+
+    public List<Veiculo> veiculoMaisBaratoFile (TipoVeiculo tipoVeiculo, TipoCombustivel tipoCombustivel, Ponto destino) 
+    throws GestorVazioException, VeiculoNaoExisteException{
+
+        if (this.veiculos.isEmpty()){
+            throw new GestorVazioException("Ups! Gestor de veículos vazio.");
+        }
+
+        List<Veiculo> resultado = new ArrayList<>();
+        List<Veiculo> maisBarato = new ArrayList<>();
+
+        this.veiculos.forEach((k,v) -> {
+            if (v.getTipoVeiculo().equals(tipoVeiculo) && v.getTipoCombustivel().equals(tipoCombustivel)){
+                    maisBarato.add(v.clone());
+            }
+        });
+
+        if (maisBarato.isEmpty()){
+            throw new VeiculoNaoExisteException("Ups! Nenhum veículo disponível para a realização da viagem.");
+        }
+
+        maisBarato.sort(comparaPrecos);
+        double precoMenor = maisBarato.get(0).getPreco();
+
+        for (Veiculo veiculo : maisBarato){
+            if (veiculo.getPreco() <= precoMenor) resultado.add(veiculo.clone());
+        }
+        return resultado;
+    }
+    
+    // Devolver o veículo mais perto (ler do ficheiro)
+
+    public List<Veiculo> veiculoMaisPertoFile (TipoVeiculo tipoVeiculo, TipoCombustivel tipoCombustivel, Ponto localizacao, Ponto destino) 
+    throws GestorVazioException, VeiculoNaoExisteException{
+
+        if (this.veiculos.isEmpty()) {
+            throw new GestorVazioException("Ups! Gestor de veículos vazio.");
+        }
+
+        List<Veiculo> resultado = new ArrayList<>();
+        List<Veiculo> maisPerto = new ArrayList<>();
+
+        this.veiculos.forEach((k,v) -> {
+            if (v.getTipoVeiculo().equals(tipoVeiculo) && v.getTipoCombustivel().equals(tipoCombustivel)){
+                    maisPerto.add(v.clone());
+            }
+        });
+
+        if (maisPerto.isEmpty()){ 
+            throw new VeiculoNaoExisteException("Ups! Nenhum veículo disponível para a realização da viagem.");
+        }
+
+        maisPerto.sort((Veiculo v1,Veiculo v2) -> {
+            if (v1.getLocalizacao().distancia(localizacao) >  v2.getLocalizacao().distancia(localizacao)) return 1;
+            if (v1.getLocalizacao().distancia(localizacao) == v2.getLocalizacao().distancia(localizacao)) return 0;
+            else return -1;
+        });
+
+        for (Veiculo veiculo : maisPerto){
+            if (veiculo.getLocalizacao().distancia(destino) == maisPerto.get(0).getLocalizacao().distancia(destino)){
+                resultado.add(veiculo.clone());
+            }
+        }
+        return resultado;
+    }
+    
     // Retornar os veículos de um proprietário 
     
     public List<String> redacaoVeiculosProprietario (int nif) throws VeiculoNaoExisteException{
@@ -274,6 +342,37 @@ public class GestorVeiculos implements Serializable{
             }
         }
         return resultado;
+    }
+    
+    // Escrever para um ficheiro
+    
+    public void writeFile() throws IOException{
+        PrintWriter file = new PrintWriter("GestorVeiculos.txt");
+        file.println(" -- GestorVeiculos -- ");
+        //file.println(this.toString());
+        for (Veiculo v : this.veiculos.values()){
+            
+            String tv = "";
+            String tc = "";
+            
+            if (v.getTipoVeiculo().equals(TipoVeiculo.Carro)) tv = "Carro";
+            if (v.getTipoCombustivel().equals(TipoCombustivel.Gasolina)) tc = "Gasolina";
+            if (v.getTipoCombustivel().equals(TipoCombustivel.Electrico)) tc = "Electrico";
+            if (v.getTipoCombustivel().equals(TipoCombustivel.Hibrido)) tc = "Hibrido";
+            
+            file.println("Veiculo:" + tv + "," + tc + "," + v.getMarca() + "," + v.getMatricula() + "," + v.getNif() + "," + 
+                         v.getVelocidadeMedia() + "," + v.getPreco() + "," + v.getConsumo() + "," + v.getAutonomiaMax() + "," +
+                         v.getLocalizacao().getX() + "," + v.getLocalizacao().getY() + "," + v.getAutonomiaAtual() + "," + v.getClassificacao());
+            
+            String classificar = "Classificar:";
+            for (Double classificacao : v.getClassificacoes()){
+                classificar = classificar + classificacao + ",";
+            }
+            file.println(classificar);
+            
+        }
+        file.flush();
+        file.close();
     }
     
     // Guardar Estado para um ficheiro
