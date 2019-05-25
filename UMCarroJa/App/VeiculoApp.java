@@ -312,15 +312,11 @@ public class VeiculoApp
         do {
             menuTop10.executa();
             switch (menuTop10.getOpcao()) {
+                
                 case 1: System.out.println("TOP 10 Clientes Numero de Utilizacoes");
                         try{
-                            this.listagem = new Listagem());
-                            List<String> clientes = this.gestorUtilizadores.procuraUtilizadores(this.gestorAlugueres.topDezClientesVezes();
-                            if(clientes.isEmpty()){
-                                System.out.println("------VAZIO------");
-                            }else{
-                                this.listagem = new Listagem(clientes));
-                            }
+                            this.listagem = new Listagem(this.gestorUtilizadores.procuraUtilizadores(this.gestorAlugueres.topDezClientesVezes()));
+                            this.listagem.executa();
                         }
                         catch(UtilizadorNaoExisteException e){
                             System.out.println(e.getMessage());
@@ -331,12 +327,8 @@ public class VeiculoApp
                         break;
                 case 2: System.out.println("TOP 10 Clientes Quilometros");
                         try{
-                            List<String> clientes = this.gestorUtilizadores.procuraUtilizadores(this.gestorAlugueres.topDezClientesKms()
-                            if(clientes.isEmpty()){
-                                System.out.println("------VAZIO------");
-                            }else{
-                                this.listagem = new Listagem(clientes));
-                            }
+                            this.listagem = new Listagem(this.gestorUtilizadores.procuraUtilizadores(this.gestorAlugueres.topDezClientesKms()));
+                            this.listagem.executa();
                         }
                         catch(UtilizadorNaoExisteException e){
                             System.out.println(e.getMessage());
@@ -347,10 +339,7 @@ public class VeiculoApp
                         break;
             }
         } while (menuRegisto.getOpcao()!=0); // A op¡Ño 0 » usada para sair do menu.
-        if(this.listagem == null){//Vazia ATENCAO
-            System.out.println("Nao existem utilizadores registados!");
-        }
-        System.out.println("\n\nPara voltar ao menu principal pressione enter!");
+        System.out.println("\n\nPara voltar ao menu principal pressione 'Enter'!");
         input.lerString();
         System.out.println("\f");
     }
@@ -358,6 +347,7 @@ public class VeiculoApp
     
     
     private void runCliente(Cliente cliente) {
+        Input input = new Input();
         try{
             System.out.println("Tem " + this.gestorNotificacoes.quantasNotificacoes(cliente.getNif()) + " notificacoes.");
         }
@@ -375,6 +365,8 @@ public class VeiculoApp
                        break;
             }
         } while (menuRegisto.getOpcao()!=0); // A op¡Ño 0 » usada para sair do menu.
+        System.out.println("\n\nPara voltar ao menu principal pressione 'Enter'!");
+        input.lerString();
         System.out.println("\f");
     }
     
@@ -384,31 +376,36 @@ public class VeiculoApp
         do {
             menuClienteAluguer.executa();
             switch (menuClienteAluguer.getOpcao()) {
-                case 1: System.out.println("\fIntroduza a localizaçao do seu destino i.e. (x,y):\n");
-                        System.out.println("\t-Digite a coordenada 'x'.");
+                case 1: System.out.println("Passo 1 de 4 do registo de Veiculo.");
+                        System.out.println("Introduza a localizaçao do seu destino i.e. (x,y):\n");
+                        System.out.println("Digite a coordenada 'x'.");
                         double xC = input.lerDouble();
-                        System.out.println("\t-Digite a coordenada 'y'.");
+                        System.out.println("Digite a coordenada 'y'.");
                         double yC = input.lerDouble();
                         Ponto destino = new Ponto(xC,yC);
-                        System.out.println("\f");
+                        System.out.println("\n\nPara prosseguir pressione 'Enter'!\n\tPasso 2 de 4.");
+                        input.lerString();
                         try{
+                            System.out.println("\fPasso 2 de 4 do registo de Veiculo.");
                             System.out.println("Tipos de veiculos do sistema.");
                             this.listagem = new Listagem(Arrays.asList(TipoVeiculo.values()));
                             this.listagem.executa();
-                            System.out.println("\nIntroduza o tipo de veiculo pretendido:");
+                            System.out.println("\n\nIntroduza o tipo de veiculo pretendido:");
                             String str = input.lerString();
                             TipoVeiculo tipoVeiculo = TipoVeiculo.valueOf(str);
-                            System.out.println("\n\n\n\nPara sair pressione enter!");
+                            System.out.println("\n\nPara prosseguir pressione 'Enter'!\n\tPasso 3 de 4.");
                             input.lerString();
-                            System.out.println("\fTipos de combustivel do sistema.");
+                            System.out.println("\fPasso 3 de 4 do registo de Veiculo.");
+                            System.out.println("Tipos de combustivel do sistema.");
                             this.listagem = new Listagem(Arrays.asList(TipoCombustivel.values()));
                             this.listagem.executa();
                             System.out.println("Tipo de combustivel pretendido:");
                             str = input.lerString();
                             TipoCombustivel tipoCombustivel = TipoCombustivel.valueOf(str);
-                            System.out.println("\n\n\n\nPara sair pressione enter!");
+                            System.out.println("\n\nPara prosseguir pressione 'Enter'!\n\tPasso 4 de 4.");
                             input.lerString();
-                            System.out.println("\fPreferencia de Aluguer do sistema.");
+                            System.out.println("\fPasso 4 de 4 do registo de Veiculo.");
+                            System.out.println("Preferencia de Aluguer do sistema.");
                             this.listagem = new Listagem(Arrays.asList(PreferenciaAluguer.values()));
                             this.listagem.executa();
                             System.out.println("\nPreferencia de Aluguer pretendido:");
@@ -416,7 +413,7 @@ public class VeiculoApp
                             PreferenciaAluguer preferencia = PreferenciaAluguer.valueOf(str);
                             
                             Aluguer a = new Aluguer(tipoVeiculo,cliente.getNif(),destino,tipoCombustivel,preferencia);
-                            
+                            System.out.println("\f");
                             List<Veiculo> veiculos = null;
                             Veiculo veiculo = null;
                             String matricula = "";
@@ -457,12 +454,13 @@ public class VeiculoApp
                                 this.listagem.executa();
                             }
                             if(veiculo == null){
-                                System.out.println("Introduza a matricula do veiculo que pretende alugar!");
+                                System.out.println("\fIntroduza a matricula do veiculo que pretende alugar!");
                                 matricula = input.lerString();
                                 veiculo = this.gestorVeiculos.getVeiculo(matricula);
+                                System.out.println("\n\nPara prosseguir pressione 'Enter'!");
+                                input.lerString();
                             }
-                            System.out.println("\f");
-                            System.out.println("O veiculo que quer alugar: \n" + veiculo.toString());
+                            System.out.println("\fO veiculo que pretende alugar: \n" + veiculo.toString());
                         }
                         catch(IllegalArgumentException e){
                             System.out.println("Tipo invalido");
@@ -476,16 +474,22 @@ public class VeiculoApp
                        break;
                 case 2: System.out.println("Introduza o id do aluguer que pretende.");
                         int id = input.lerInt();
+                        System.out.println("\n\nPara prosseguir pressione 'Enter'!");
+                        input.lerString();
                         try{
                             Aluguer a = this.gestorAlugueres.getAluguer(id);
                             Notificacao notificacao = a.efetuaViagem(cliente);
                             if(notificacao != null){
                                 this.gestorNotificacoes.adicionaNotificacao(notificacao);
                             }
-                            System.out.println("Insira uma nota para o Veiculo.");
+                            System.out.println("\fInsira uma nota para o Veiculo.");
                             double notaVeiculo = input.lerInt();
-                            System.out.println("Insira uma nota para o Proprietario.");
+                            System.out.println("\n\nPara prosseguir pressione 'Enter'!");
+                            input.lerString();
+                            System.out.println("\fInsira uma nota para o Proprietario.");
                             double notaProprietario = input.lerInt();
+                            System.out.println("\n\nPara prosseguir pressione 'Enter'!");
+                            input.lerString();
                             Proprietario p = (Proprietario)this.gestorUtilizadores.getUtilizador(a.getVeiculo().getNif());
                             a.avaliacoesCliente(p, notaVeiculo, notaProprietario);
                             this.gestorAlugueres.insereAluguer(a);
@@ -506,6 +510,8 @@ public class VeiculoApp
                         break;     
             }
         } while (menuClienteAluguer.getOpcao()!=0); // A op¡Ño 0 » usada para sair do menu.
+        System.out.println("\n\nPara voltar ao menu principal pressione 'Enter'!");
+        input.lerString();
         System.out.println("\f");
     }
     
@@ -520,26 +526,42 @@ public class VeiculoApp
                         break;
                 case 2: try{
                             System.out.println("Introduza a data de Inicio.");
-                            System.out.println("Introduza o ano;");
+                            System.out.println("Introduza o ano.");
                             int ano = input.lerInt();
-                            System.out.println("\fIntroduza o mes;");
+                            System.out.println("\n\nPara introduzir o mes pressione 'Enter'!");
+                            input.lerString();
+                            System.out.println("\fIntroduza o mes.");
                             int mes = input.lerInt();
-                            System.out.println("\fIntroduza o dia;");
+                            System.out.println("\n\nPara introduzir o dia pressione 'Enter'!");
+                            input.lerString();
+                            System.out.println("\fIntroduza o dia.");
                             int dia = input.lerInt();
-                            System.out.println("\fIntroduza a hora;");
+                            System.out.println("\n\nPara introduzir o hora pressione 'Enter'!");
+                            input.lerString();
+                            System.out.println("\fIntroduza a hora.");
                             int hora = input.lerInt();
-                            System.out.println("\fIntroduza os minutos;");
+                            System.out.println("\n\nPara introduzir os minutos pressione 'Enter'!");
+                            input.lerString();
+                            System.out.println("\fIntroduza os minutos.");
                             int minutos = input.lerInt();
                             LocalDateTime inicio = LocalDateTime.of(ano, mes, dia, hora, minutos);
                             System.out.println("Introduza a data de Fim.");
                             System.out.println("Introduza o ano;");
                             ano = input.lerInt();
+                            System.out.println("\n\nPara introduzir o mes pressione 'Enter'!");
+                            input.lerString();
                             System.out.println("\fIntroduza o mes;");
                             mes = input.lerInt();
+                            System.out.println("\n\nPara introduzir o dia pressione 'Enter'!");
+                            input.lerString();
                             System.out.println("\fIntroduza o dia;");
                             dia = input.lerInt();
+                            System.out.println("\n\nPara introduzir o hora pressione 'Enter'!");
+                            input.lerString();
                             System.out.println("\fIntroduza a hora;");
                             hora = input.lerInt();
+                            System.out.println("\n\nPara introduzir o minutos pressione 'Enter'!");
+                            input.lerString();
                             System.out.println("\fIntroduza os minutos;");
                             minutos = input.lerInt();
                             LocalDateTime fim = LocalDateTime.of(ano, mes, dia, hora, minutos);
@@ -552,14 +574,18 @@ public class VeiculoApp
             }
         } while (menuClienteHistoricos.getOpcao()!=0); // A op¡Ño 0 » usada para sair do menu.
         if(historico != null){
-            //this.listagem = new Listagem(Arrays.asList(TipoCombustivel.values()));
+            this.listagem = new Listagem(historico);
+            this.listagem.executa();
         }
+        System.out.println("\n\nPara voltar ao menu de cliente pressione 'Enter'!");
+        input.lerString();
         System.out.println("\f");
     }
     
     
     private void runProprietario(Proprietario proprietario) {
         Input input = new Input();
+        System.out.println("\f");
         try{
             System.out.println("Tem " + this.gestorNotificacoes.quantasNotificacoes(proprietario.getNif()) + " notificacoes.");
         }
@@ -579,6 +605,8 @@ public class VeiculoApp
                         break;
             }
         } while (menuProprietario.getOpcao()!=0); // A op¡Ño 0 » usada para sair do menu.
+        System.out.println("\n\nPara voltar ao menu principal pressione 'Enter'!");
+        input.lerString();
         System.out.println("\f");
     }
     
@@ -615,9 +643,11 @@ public class VeiculoApp
             catch(UtilizadorNaoExisteException e){
                 System.out.println(e.getMessage());
             }
-            System.out.println("\f");
             menuProprietarioAluguer.setOpcao(0);
         }while (menuProprietarioAluguer.getOpcao()!=0); // A op¡Ño 0 » usada para sair do menu.
+        System.out.println("\n\nPara voltar ao menu principal pressione 'Enter'!");
+        input.lerString();
+        System.out.println("\f");
     }                       
        
    
@@ -655,30 +685,42 @@ public class VeiculoApp
                         break;
                 case 2: try{
                             System.out.println("Introduza a data de Inicio.");
-                            System.out.println("Introduza o ano;");
+                            System.out.println("Introduza o ano.");
                             int ano = input.lerInt();
-                            System.out.println("\fIntroduza a data de Inicio.");
-                            System.out.println("Introduza o mes;");
+                            System.out.println("\n\nPara introduzir o mes pressione 'Enter'!");
+                            input.lerString();
+                            System.out.println("\fIntroduza o mes.");
                             int mes = input.lerInt();
-                            System.out.println("\fIntroduza a data de Inicio.");
-                            System.out.println("Introduza o dia;");
+                            System.out.println("\n\nPara introduzir o dia pressione 'Enter'!");
+                            input.lerString();
+                            System.out.println("\fIntroduza o dia.");
                             int dia = input.lerInt();
-                            System.out.println("\fIntroduza a data de Inicio.");
-                            System.out.println("Introduza a hora;");
+                            System.out.println("\n\nPara introduzir o hora pressione 'Enter'!");
+                            input.lerString();
+                            System.out.println("\fIntroduza a hora.");
                             int hora = input.lerInt();
-                            System.out.println("\fIntroduza a data de Inicio.");
-                            System.out.println("Introduza os minutos;");
+                            System.out.println("\n\nPara introduzir os minutos pressione 'Enter'!");
+                            input.lerString();
+                            System.out.println("\fIntroduza os minutos.");
                             int minutos = input.lerInt();
                             LocalDateTime inicio = LocalDateTime.of(ano, mes, dia, hora, minutos);
                             System.out.println("Introduza a data de Fim.");
                             System.out.println("Introduza o ano;");
                             ano = input.lerInt();
+                            System.out.println("\n\nPara introduzir o mes pressione 'Enter'!");
+                            input.lerString();
                             System.out.println("\fIntroduza o mes;");
                             mes = input.lerInt();
+                            System.out.println("\n\nPara introduzir o dia pressione 'Enter'!");
+                            input.lerString();
                             System.out.println("\fIntroduza o dia;");
                             dia = input.lerInt();
+                            System.out.println("\n\nPara introduzir o hora pressione 'Enter'!");
+                            input.lerString();
                             System.out.println("\fIntroduza a hora;");
                             hora = input.lerInt();
+                            System.out.println("\n\nPara introduzir o minutos pressione 'Enter'!");
+                            input.lerString();
                             System.out.println("\fIntroduza os minutos;");
                             minutos = input.lerInt();
                             LocalDateTime fim = LocalDateTime.of(ano, mes, dia, hora, minutos);
@@ -693,27 +735,43 @@ public class VeiculoApp
                             this.listagem = new Listagem(this.gestorVeiculos.redacaoVeiculosProprietario(proprietario.getNif()));
                             System.out.println("Introduza a matricula do veiculo que pretende saber o total faturado.");
                             String matricula = input.lerString();
-                            System.out.println("\fIntroduza a data de Inicio.");
-                            System.out.println("Introduza o ano;");
+                            System.out.println("Introduza a data de Inicio.");
+                            System.out.println("Introduza o ano.");
                             int ano = input.lerInt();
-                            System.out.println("\fIntroduza o mes;");
+                            System.out.println("\n\nPara introduzir o mes pressione 'Enter'!");
+                            input.lerString();
+                            System.out.println("\fIntroduza o mes.");
                             int mes = input.lerInt();
-                            System.out.println("\fIntroduza o dia;");
+                            System.out.println("\n\nPara introduzir o dia pressione 'Enter'!");
+                            input.lerString();
+                            System.out.println("\fIntroduza o dia.");
                             int dia = input.lerInt();
-                            System.out.println("\fIntroduza a hora;");
+                            System.out.println("\n\nPara introduzir o hora pressione 'Enter'!");
+                            input.lerString();
+                            System.out.println("\fIntroduza a hora.");
                             int hora = input.lerInt();
-                            System.out.println("\fIntroduza os minutos;");
+                            System.out.println("\n\nPara introduzir os minutos pressione 'Enter'!");
+                            input.lerString();
+                            System.out.println("\fIntroduza os minutos.");
                             int minutos = input.lerInt();
                             LocalDateTime inicio = LocalDateTime.of(ano, mes, dia, hora, minutos);
                             System.out.println("Introduza a data de Fim.");
                             System.out.println("Introduza o ano;");
                             ano = input.lerInt();
+                            System.out.println("\n\nPara introduzir o mes pressione 'Enter'!");
+                            input.lerString();
                             System.out.println("\fIntroduza o mes;");
                             mes = input.lerInt();
+                            System.out.println("\n\nPara introduzir o dia pressione 'Enter'!");
+                            input.lerString();
                             System.out.println("\fIntroduza o dia;");
                             dia = input.lerInt();
+                            System.out.println("\n\nPara introduzir o hora pressione 'Enter'!");
+                            input.lerString();
                             System.out.println("\fIntroduza a hora;");
                             hora = input.lerInt();
+                            System.out.println("\n\nPara introduzir o minutos pressione 'Enter'!");
+                            input.lerString();
                             System.out.println("\fIntroduza os minutos;");
                             minutos = input.lerInt();
                             LocalDateTime fim = LocalDateTime.of(ano, mes, dia, hora, minutos);
@@ -728,7 +786,11 @@ public class VeiculoApp
         } while (menuClienteHistoricos.getOpcao()!=0); // A op¡Ño 0 » usada para sair do menu.
         if(historico != null){
             this.listagem = new Listagem(historico);
+            this.listagem.executa();
         }
+        System.out.println("\n\nPara retroceder pressione 'Enter'");
+        input.lerString();
+        System.out.println("\f");
     }
                 
     private void runProprietarioVeiculos(Proprietario proprietario) {
@@ -783,13 +845,17 @@ public class VeiculoApp
                         catch(IllegalArgumentException e){
                             System.out.println("Tipo invalido");
                         }
-                        System.out.println("\n\n\n\nPara sair pressione enter!");
+                        System.out.println("\n\nPara retroceder pressione 'Enter'");
                         input.lerString();
+                        System.out.println("\f");
                         break;
                 case 2: try{
                             System.out.println("Introduza a matricula do veiculo que pretende alterar o preco por km.");
                             String matricula = input.lerString();
                             Veiculo v = this.gestorVeiculos.getVeiculo(matricula);
+                            System.out.println("\n\nPara prosseguir pressione 'Enter'");
+                            input.lerString();
+                            System.out.println("\f");
                             System.out.println("Introduza o novo preco por km que pretende.");
                             double preco = input.lerDouble();
                             proprietario.alteraPrecoVeiculo(v,preco);
@@ -801,8 +867,12 @@ public class VeiculoApp
                         catch(VeiculoNaoPertenceException e){
                             System.out.println(e.getMessage());
                         }
+                        System.out.println("\n\nPara retroceder pressione 'Enter'");
+                        input.lerString();
+                        System.out.println("\f");
                         break;
                 case 3: try{
+                            System.out.println("\f");
                             System.out.println("Introduza a matricula do veiculo que pretende abastecer.");
                             String matricula = input.lerString();
                             Veiculo v = this.gestorVeiculos.getVeiculo(matricula);
@@ -815,8 +885,13 @@ public class VeiculoApp
                         catch(VeiculoNaoPertenceException e){
                             System.out.println(e.getMessage());
                         }
+                        System.out.println("\n\nPara retroceder pressione 'Enter'");
+                        input.lerString();
+                        System.out.println("\f");
                         break;
-                case 4: System.out.println("Os seus veiculos.");
+                case 4: System.out.println("********************************");
+                        System.out.println("******* Os seus veiculos *******");
+                        System.out.println("********************************");
                         try{
                             List<String> resultado = this.gestorVeiculos.redacaoVeiculosProprietario(proprietario.getNif());
                             this.listagem = new Listagem(resultado);
@@ -828,6 +903,8 @@ public class VeiculoApp
                         break;
             }
         }while (menuProprietarioVeiculos.getOpcao()!=0); // A op¡Ño 0 » usada para sair do menu.
+        System.out.println("\n\nPara retroceder pressione 'Enter'");
+        input.lerString();
         System.out.println("\f");
     }
     
