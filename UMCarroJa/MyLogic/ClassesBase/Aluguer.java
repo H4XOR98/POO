@@ -4,6 +4,7 @@ import MyLogic.Exceptions.*;
 import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.io.Serializable;
+
 public class Aluguer implements Serializable{
     
     // Variáveis de Instância
@@ -140,7 +141,6 @@ public class Aluguer implements Serializable{
     
     // Sets
 
-    
     public void setTipoVeiculo(TipoVeiculo tipoveiculo){
         this.tipoVeiculo = tipoVeiculo;
     }
@@ -182,12 +182,13 @@ public class Aluguer implements Serializable{
     }
     
     
-    //Get de classe
+    // Get de classe
     
     public static int getId() {
         return id;
     }
     
+    // toString
     
     public String toString(){
         DecimalFormat df = new DecimalFormat("#.##");
@@ -213,6 +214,7 @@ public class Aluguer implements Serializable{
         return sb.toString();
     }
     
+    // Equals
     
     public boolean equals(Object o){
         if(o == this){
@@ -228,12 +230,14 @@ public class Aluguer implements Serializable{
                this.duracao == a.getDuracao() && this.meteo.equals(a.getMeteorologia()) && this.trafego.equals(a.getTrafego()); 
     }
    
+    // Equals
     
     public Aluguer clone(){
         return new Aluguer(this);
     }   
     
-    //------------------------------------
+    // ------------------------------------ Métodos ------------------------------------
+    
     public double converteEmHoras(double duracao){
         int horas = (int)Math.floor(duracao);
         double minutos = (duracao - horas) * 0.6;
@@ -244,7 +248,6 @@ public class Aluguer implements Serializable{
         double distancia = cliente.getLocalizacao().distancia(this.veiculo.getLocalizacao());
         return converteEmHoras(distancia / 4);
     }
-    
     
     private void distanciaVeiculoDestino(){
         this.distancia = this.veiculo.getLocalizacao().distancia(this.destino);

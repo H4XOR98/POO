@@ -4,16 +4,22 @@ import MyLogic.ClassesBase.*;
 import MyLogic.Exceptions.*;
 import java.util.*;
 import java.io.Serializable;
-/**
- * Escreva a descrição da classe GestorUtilizador aqui.
- *
- * @author (seu nome)
- * @version (número de versão ou data)
- */
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.IOException;
+import java.io.FileNotFoundException;
+import java.lang.ClassNotFoundException;
+
 public class GestorUtilizadores implements Serializable{
+    
+    // Variáveis de Instância
+    
     private Map<Integer,Utilizador> utilizadores;
 
-
+    // Construtores
+    
     public GestorUtilizadores() {
         this.utilizadores = new HashMap<>();
     }
@@ -30,6 +36,8 @@ public class GestorUtilizadores implements Serializable{
         return aux;
     }
 
+    // Sets
+    
     public void setUtilizadores(Map<Integer,Utilizador> utilizadores) {
         this.utilizadores = new HashMap<>();
         for (Utilizador u : utilizadores.values()) {
@@ -37,7 +45,8 @@ public class GestorUtilizadores implements Serializable{
         }
     }
 
-
+    // Equals
+    
     public boolean equals(Object o){
         if(o == this){
             return true;
@@ -50,6 +59,7 @@ public class GestorUtilizadores implements Serializable{
         return this.utilizadores.equals(gUtilizadores.getUtilizadores()); 
     }
     
+    // toString
     
     public String toString(){
         StringBuilder sb = new StringBuilder();
@@ -60,6 +70,7 @@ public class GestorUtilizadores implements Serializable{
         return sb.toString();
     }
     
+    // Clone
     
     public GestorUtilizadores clone(){
         return new GestorUtilizadores(this);
@@ -79,7 +90,6 @@ public class GestorUtilizadores implements Serializable{
     public void atualizaUtilizador(Utilizador u){
         this.utilizadores.replace(u.getNif(),u.clone());
     }
-    
     
     public void removeUtilizador(int nif) throws UtilizadorNaoExisteException{
         if(!this.utilizadores.containsKey(nif)){
@@ -144,4 +154,27 @@ public class GestorUtilizadores implements Serializable{
         }   
         return utilitarios;
     }
+    
+    // Guardar Estado para um ficheiro
+    
+    public void saveStatus() throws IOException{
+        FileOutputStream fos = new FileOutputStream("GestorUtilizadores_Status.ser");
+        ObjectOutputStream oos = new ObjectOutputStream(fos);
+        oos.writeObject(this.utilizadores);
+        fos.close();
+        oos.close();
+    }
+    
+    // Carregar Estado de um ficheiro
+    
+    public GestorUtilizadores loadStatus() throws FileNotFoundException, IOException, ClassNotFoundException{
+        FileInputStream fis = new FileInputStream("GestorUtilizadores_Status.ser");
+        ObjectInputStream ois = new ObjectInputStream(fis);
+        GestorUtilizadores gu = new GestorUtilizadores();
+        gu.utilizadores = (Map<Integer,Utilizador>) ois.readObject();
+        fis.close();
+        ois.close();
+        return gu;
+    }
+
 }

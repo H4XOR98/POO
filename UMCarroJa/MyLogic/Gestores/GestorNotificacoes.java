@@ -4,7 +4,13 @@ import MyLogic.ClassesBase.*;
 import java.util.*;
 import MyLogic.Exceptions.*;
 import java.io.Serializable;
-
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.IOException;
+import java.io.FileNotFoundException;
+import java.lang.ClassNotFoundException;
 
 public class GestorNotificacoes implements Serializable{
     
@@ -152,5 +158,28 @@ public class GestorNotificacoes implements Serializable{
     public void apagaCaixaNotificacoes(){
         this.caixaNotificacoes.clear();
     }
+    
+    // Guardar Estado para um ficheiro
+    
+    public void saveStatus() throws IOException{
+        FileOutputStream fos = new FileOutputStream("GestorNotificacoes_Status.ser");
+        ObjectOutputStream oos = new ObjectOutputStream(fos);
+        oos.writeObject(this.caixaNotificacoes);
+        fos.close();
+        oos.close();
+    }
+    
+    // Carregar Estado de um ficheiro
+    
+    public GestorNotificacoes loadStatus() throws FileNotFoundException, IOException, ClassNotFoundException{
+        FileInputStream fis = new FileInputStream("GestorNotificacoes_Status.ser");
+        ObjectInputStream ois = new ObjectInputStream(fis);
+        GestorNotificacoes gn = new GestorNotificacoes();
+        gn.caixaNotificacoes = (Map<Integer,List<Notificacao>>) ois.readObject();
+        fis.close();
+        ois.close();
+        return gn;
+    }
+    
 }
 

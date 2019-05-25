@@ -1,8 +1,11 @@
+
 package MyLogic.ClassesBase;
 
 import MyLogic.Exceptions.*;
-import java.util.*;
+import java.util.List;
+import java.util.ArrayList;
 import java.io.Serializable;
+
 public class Veiculo implements Serializable{
     
     // Variáveis de Instância
@@ -22,6 +25,7 @@ public class Veiculo implements Serializable{
     private List<Double> classificacoes;
     
     // Construtores
+    
     public Veiculo(){
         this.tipoVeiculo = TipoVeiculo.Carro;
         this.tipoCombustivel = TipoCombustivel.Gasolina;
@@ -37,8 +41,6 @@ public class Veiculo implements Serializable{
         this.classificacao = 100.0;
         this.classificacoes = new ArrayList<>();
     }
-    
-    
     
     public Veiculo (TipoVeiculo tipoVeiculo,TipoCombustivel tipoCombustivel,String marca, String matricula, int nif, int velocidadeMedia, 
                     double preco, double consumo, double autonomiaMax, Ponto localizacao){
@@ -181,7 +183,7 @@ public class Veiculo implements Serializable{
         this.classificacao = newClassificacao;
     }
     
-    public void setClassificacoes(Collection<Double> classificacoes){
+    public void setClassificacoes (List<Double> classificacoes){
         this.classificacoes = new ArrayList<>();
         for(double i : classificacoes){
             this.classificacoes.add(i);
@@ -225,8 +227,6 @@ public class Veiculo implements Serializable{
         sb.append("Classificação: " + this.classificacao + ".\n\n");
         return sb.toString();
     }
-    
-    // Métodos
     
     // Abastecer um veículo
     

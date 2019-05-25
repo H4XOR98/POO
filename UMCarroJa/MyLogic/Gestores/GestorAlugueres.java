@@ -5,14 +5,21 @@ import java.util.*;
 import MyLogic.Exceptions.*;
 import java.time.LocalDateTime;
 import java.io.Serializable;
-/**
- * Escreva a descrição da classe GestorAlugueres aqui.
- * 
- * @author (seu nome) 
- * @version (número de versão ou data)
- */
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.IOException;
+import java.io.FileNotFoundException;
+import java.lang.ClassNotFoundException;
+
 public class GestorAlugueres implements Serializable{
+    
+    // Variáveis de Instância
+    
     private Set<Aluguer> alugueres;
+    
+    // Comparators
     
     Comparator<Aluguer> compKms = (a,b) -> { if (a.getDistancia() == b.getDistancia()) return 0;
                                              if (a.getDistancia() >  b.getDistancia()) return 1;
@@ -20,6 +27,8 @@ public class GestorAlugueres implements Serializable{
                                            };
     
     Comparator<Integer> compNumVezes = (a,b) -> a - b;
+    
+    // Construtores
     
     public GestorAlugueres(){
         this.alugueres = new HashSet<>();
@@ -211,4 +220,27 @@ public class GestorAlugueres implements Serializable{
         }
         return resultado;
     }
+    
+    // Guardar Estado para um ficheiro
+    
+    public void saveStatus() throws IOException{
+        FileOutputStream fos = new FileOutputStream("GestorAlugueres_Status.ser");
+        ObjectOutputStream oos = new ObjectOutputStream(fos);
+        oos.writeObject(this.alugueres);
+        fos.close();
+        oos.close();
+    }
+    
+    // Carregar Estado de um ficheiro
+    
+    public GestorAlugueres loadStatus() throws FileNotFoundException, IOException, ClassNotFoundException{
+        FileInputStream fis = new FileInputStream("GestorAlugueres_Status.ser");
+        ObjectInputStream ois = new ObjectInputStream(fis);
+        GestorAlugueres ga = new GestorAlugueres();
+        ga.alugueres = (HashSet<Aluguer>) ois.readObject();
+        fis.close();
+        ois.close();
+        return ga;
+    }
+    
 }

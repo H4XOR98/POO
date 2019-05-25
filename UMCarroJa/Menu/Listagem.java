@@ -21,9 +21,10 @@ public class Listagem
      */
     public Listagem(List<?> opcoes) {
         this.lista = opcoes;
-        this.elementosPorPagina = 3;
+        this.elementosPorPagina = 2;
         this.paginaAtual = 0;
         this.numPaginas = this.lista.size() / this.elementosPorPagina;
+        this.op = 2;
     }
 
     /**
@@ -40,29 +41,34 @@ public class Listagem
             if(this.op == 2 && this.paginaAtual < this.numPaginas){
                 this.paginaAtual++;
             }
-            System.out.println("\f");
         } while (this.op == -1);
     }
     
     /** Apresentar o menu */
     public void showListagem() {
-        int num = this.elementosPorPagina*this.paginaAtual;
-        if(this.op == 1){
-            for (int i= num; i < num - 3 && i > 0 ; i++) {
-                System.out.print(i+1);
-                System.out.print(" - ");
-                System.out.println(this.lista.get(i));
-            }
+        int num = this.elementosPorPagina * this.paginaAtual;
+        System.out.println("-------OPCOES-------");
+        for(int i = num ; i < this.elementosPorPagina && i < this.lista.size() ; i++){
+            System.out.println(this.lista.get(i));
         }
-        if(this.op == 2){
-            for (int i= num; i < num + 3 && i < this.lista.size() ; i++) {
-                System.out.print(i+1);
-                System.out.print(" - ");
-                System.out.println(this.lista.get(i));
-            }
-        }
-        
-        System.out.println("0 - Sair");
+        System.out.println("\nPagina : " + (this.paginaAtual + 1) + " de " + (this.numPaginas+1));
+        /*if(this.paginaAtual == 0){
+            System.out.println("********Navegar********");
+            System.out.println("*     2 - Próximo     *");
+            System.out.println("*     0 - Sair        *");
+            System.out.println("***********************");
+        }else if(this.paginaAtual == this.numPaginas){
+            System.out.println("********Navegar********");
+            System.out.println("*     1 - Anterior    *");
+            System.out.println("*     0 - Sair        *");
+            System.out.println("***********************");
+        }else{*/
+            System.out.println("********Navegar********");
+            System.out.println("*     1 - Anterior    *");
+            System.out.println("*     2 - Próximo     *");
+            System.out.println("*     0 - Sair        *");
+            System.out.println("***********************");
+        //}
     }
     
     
@@ -71,10 +77,6 @@ public class Listagem
         int op; 
         Scanner is = new Scanner(System.in);
         
-        System.out.println("Pagina : " + (this.paginaAtual + 1) + " de " + this.numPaginas);
-        System.out.println("*Navegar:*");
-        System.out.println("1 - Esquerda");
-        System.out.println("2 - Direita");
         System.out.print("Opçao: ");
         try {
             op = is.nextInt();
@@ -82,10 +84,20 @@ public class Listagem
         catch (InputMismatchException e) { // Nao foi inscrito um int
             op = -1;
         }
-        if (op!=1 || op != 2) {
+        if (op < 0 || op > 2) {
             System.out.println("Opção Inválida!!!");
             op = -1;
+        }else if(op == 1 && this.paginaAtual == 0){
+            System.out.println("Já se encontra no inicio.");
+            op = -1;
+        } else
+        if(op == 2 && this.paginaAtual == this.numPaginas){
+            System.out.println("Já se encontra no final.");
+            op = -1;
         }
+        System.out.println("\n\n\n\nPara sair pressione enter!");
+        is.nextLine();
+        System.out.println("\f");
         return op;
     }
     

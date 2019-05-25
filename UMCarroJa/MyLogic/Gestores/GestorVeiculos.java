@@ -5,6 +5,13 @@ import MyLogic.ClassesBase.*;
 import java.util.*;
 import java.lang.*;
 import java.io.Serializable;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.IOException;
+import java.io.FileNotFoundException;
+import java.lang.ClassNotFoundException;
 
 public class GestorVeiculos implements Serializable{
     
@@ -254,4 +261,41 @@ public class GestorVeiculos implements Serializable{
         return resultado;
     }
     
+    // Retornar os veículos de um proprietário 
+    
+    public List<String> redacaoVeiculosProprietario (int nif) throws VeiculoNaoExisteException{
+        if (this.veiculos.isEmpty()){
+            throw new VeiculoNaoExisteException ("Ups! Gestor de Veiculos Vazio.\n");
+        }
+        List<String> resultado = new ArrayList<>();
+        for(Veiculo v : this.veiculos.values()){
+            if(v.getNif() == nif){
+                resultado.add(v.toString());
+            }
+        }
+        return resultado;
+    }
+    
+    // Guardar Estado para um ficheiro
+    
+    public void saveStatus() throws IOException{
+        FileOutputStream fos = new FileOutputStream("GestorVeiculos_Status.ser");
+        ObjectOutputStream oos = new ObjectOutputStream(fos);
+        oos.writeObject(this.veiculos);
+        fos.close();
+        oos.close();
+    }
+    
+    // Carregar Estado de um ficheiro
+    
+    public GestorVeiculos loadStatus() throws FileNotFoundException, IOException, ClassNotFoundException{
+        FileInputStream fis = new FileInputStream("GestorVeiculos_Status.ser");
+        ObjectInputStream ois = new ObjectInputStream(fis);
+        GestorVeiculos gv = new GestorVeiculos();
+        gv.veiculos = (Map<String,Veiculo>) ois.readObject();
+        fis.close();
+        ois.close();
+        return gv;
+    }
+
 }

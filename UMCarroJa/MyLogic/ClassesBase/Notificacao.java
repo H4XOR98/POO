@@ -1,6 +1,5 @@
 package MyLogic.ClassesBase;
 
-
 import java.time.LocalDateTime;
 import java.io.Serializable;
 /**
@@ -10,10 +9,15 @@ import java.io.Serializable;
  * @version (número de versão ou data)
  */
 public class Notificacao implements Serializable{
+    
+    // Variáveis de Instância
+    
     private int destinatario;
     private LocalDateTime data;
     private String assunto;
     private String conteudo;
+    
+    // Construtores
 
     public Notificacao() {
         this.destinatario = 0;
@@ -22,14 +26,12 @@ public class Notificacao implements Serializable{
         this.conteudo = "n/a";
     }
 
-    
     public Notificacao(int destinatario, String assunto, String conteudo) {
         this.destinatario = destinatario;
         this.data = LocalDateTime.now();
         this.assunto = assunto;
         this.conteudo = conteudo;
     }
-
 
     public Notificacao(Notificacao notificacao) {
         this.destinatario = notificacao.getDestinatario();
@@ -38,7 +40,7 @@ public class Notificacao implements Serializable{
         this.conteudo = notificacao.getConteudo();
     }
 
-    
+    // Gets
 
     public int getDestinatario() {
         return this.destinatario;
@@ -56,7 +58,8 @@ public class Notificacao implements Serializable{
         return this.conteudo;
     }
 
-
+    // Sets
+    
     public void setDestinatario(int destinatario) {
         this.destinatario = destinatario;
     }
@@ -73,6 +76,7 @@ public class Notificacao implements Serializable{
         this.conteudo = conteudo;
     }
 
+    // Equals
     
     public boolean equals (Object o){
         if (this == o) {
@@ -96,6 +100,7 @@ public class Notificacao implements Serializable{
         return sb.toString();
     }
     
+    // Clone
     
     public Notificacao clone(){
         return new Notificacao(this);
