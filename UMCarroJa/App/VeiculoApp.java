@@ -24,39 +24,15 @@ public class VeiculoApp
     private Menu menuPrincipal ,menuRegisto, menuCliente, menuProprietario, menuTop10, menuClienteAluguer, menuClienteHistoricos, menuProprietarioAluguer, 
                 menuProprietarioHistoricos, menuProprietarioVeiculos, menuConfirmacaoAluguer;
     private Listagem listagem;
-    /*public static void main (String[] args){
-        Leitura l = new Leitura("./logsPOO_carregamentoInicial.txt");
-        try{
-            l.readFile(this.gestorUtilizadores, this.gestorVeiculos, this.gestorAlugueres, this.gestorNotificacoes);
-        }
-        catch(UtilizadorJaExisteException e){
-            System.out.println(e.getMessage());
-        }
-        catch(VeiculoJaExisteException e){
-            System.out.println(e.getMessage());
-        }
-        catch(AluguerJaExisteException e){
-            System.out.println(e.getMessage());
-        }
-        catch(UtilizadorNaoExisteException e){
-            System.out.println(e.getMessage());
-        }
-        catch(VeiculoNaoExisteException e){
-            System.out.println(e.getMessage());
-        }
-        catch(AvaliacaoInvalidaException e){
-            System.out.println(e.getMessage());
-        }
-        catch(IOException e){
-            System.out.println(e.getMessage());
-        }
-    }*/
+   
     
     /**
      * O mÈtodo main cria a aplicaÁ„o e invoca o mÈtodo run()
      */
     public static void main(String[] args) {
-        new VeiculoApp().run();
+        //new VeiculoApp().run();
+        VeiculoApp vApp = new VeiculoApp();
+        vApp.run();
     }
     
     /**
@@ -107,7 +83,8 @@ public class VeiculoApp
                                        
         String[] opcoesProprietarioVeiculos = {"Registar Veiculo",
                                                "Alterar o preco por km de um Veiculo",
-                                               "Abastecer Veiculo"};                                         
+                                               "Abastecer Veiculo",
+                                               "Os meus veiculos"};                                         
                                               
         
                                        
@@ -129,6 +106,32 @@ public class VeiculoApp
         this.menuConfirmacaoAluguer = new Menu(opcoesConfirmacaoAluguer);
         this.menuProprietarioHistoricos = new MenuProprietario(opcoesProprietarioHistoricos);
         this.menuProprietarioVeiculos = new MenuProprietario(opcoesProprietarioVeiculos);
+        
+        Leitura l = new Leitura("./logsPOO_carregamentoInicial.txt");
+        try{
+            l.readFile(this.gestorUtilizadores,this.gestorVeiculos,this.gestorAlugueres, this.gestorNotificacoes);
+        }
+        catch(UtilizadorJaExisteException e){
+            System.out.println("O utilizador com nif " + e.getMessage() + " já existe no sistema!");
+        }
+        catch(VeiculoJaExisteException e){
+            System.out.println("O veículo com matrícula " + e.getMessage() + " já existe no sistema!");
+        }
+        catch(AluguerJaExisteException e){
+            System.out.println(e.getMessage());
+        }
+        catch(UtilizadorNaoExisteException e){
+            System.out.println("O utilizador com nif " + e.getMessage() + " não existe no sistema!");
+        }
+        catch(VeiculoNaoExisteException e){
+            System.out.println("O veículo com matrícula " + e.getMessage() + " não existe no sistema!");
+        }
+        catch(AvaliacaoInvalidaException e){
+            System.out.println("Avaliação errada!");
+        }
+        catch(IOException e){
+            System.out.println(e.getMessage());
+        }
     }
 
     /**
@@ -287,7 +290,7 @@ public class VeiculoApp
             }
         } while (menuRegisto.getOpcao()!=0); // A op¡Ño 0 » usada para sair do menu.
         System.out.println("\f");
-        if(this.listagem != null){//Vazia ATENCAO
+        if(this.listagem == null){//Vazia ATENCAO
             System.out.println("Nao existem utilizadores registados!");
         }
         System.out.println("\n\n\n\nPara sair pressione enter!");
@@ -318,6 +321,7 @@ public class VeiculoApp
     }
     
     private void runClienteAluguer(Cliente cliente) {
+        System.out.println("\f");
         Input input = new Input();
         do {
             menuClienteAluguer.executa();
@@ -330,18 +334,29 @@ public class VeiculoApp
                         Ponto destino = new Ponto(xC,yC);
                         System.out.println("\f");
                         try{
-                            System.out.println("Tipo de veiculo pretendido:");
-                            //this.listagem = new Listagem(Arrays.asList(TipoVeiculo.values()));
+                            System.out.println("Tipos de veiculos do sistema.");
+                            this.listagem = new Listagem(Arrays.asList(TipoVeiculo.values()));
+                            this.listagem.executa();
+                            System.out.println("\nIntroduza o tipo de veiculo pretendido:");
                             String str = input.lerString();
                             TipoVeiculo tipoVeiculo = TipoVeiculo.valueOf(str);
+                            System.out.println("\n\n\n\nPara sair pressione enter!");
+                            input.lerString();
+                            System.out.println("\fTipos de combustivel do sistema.");
+                            this.listagem = new Listagem(Arrays.asList(TipoCombustivel.values()));
+                            this.listagem.executa();
                             System.out.println("Tipo de combustivel pretendido:");
-                            //this.listagem = new Listagem(Arrays.asList(TipoCombustivel.values()));
                             str = input.lerString();
                             TipoCombustivel tipoCombustivel = TipoCombustivel.valueOf(str);
-                            System.out.println("Preferencia de Aluguer pretendido:");
-                            //this.listagem = new Listagem(Arrays.asList(TipoCombustivel.values()));
+                            System.out.println("\n\n\n\nPara sair pressione enter!");
+                            input.lerString();
+                            System.out.println("\fPreferencia de Aluguer do sistema.");
+                            this.listagem = new Listagem(Arrays.asList(PreferenciaAluguer.values()));
+                            this.listagem.executa();
+                            System.out.println("\nPreferencia de Aluguer pretendido:");
                             str = input.lerString();
                             PreferenciaAluguer preferencia = PreferenciaAluguer.valueOf(str);
+                            
                             Aluguer a = new Aluguer(tipoVeiculo,cliente.getNif(),destino,tipoCombustivel,preferencia);
                             
                             List<String> veiculos = null;
@@ -377,10 +392,11 @@ public class VeiculoApp
                                     break;
                             }
                             this.gestorAlugueres.insereAluguer(a);
-                            /*ATENCAO
+                            //ATENCAO
                             if(veiculos != null){
                                 this.listagem = new Listagem(veiculos);
-                            }*/
+                                this.listagem.executa();
+                            }
                             if(veiculo == null){
                                 System.out.println("Introduza a matricula do veiculo que pretende alugar!");
                                 matricula = input.lerString();
@@ -433,6 +449,7 @@ public class VeiculoApp
     }
     
     private void runClienteHistoricos(Cliente cliente) {
+        System.out.println("\f");
         Input input = new Input();
         List<String> historico = null;
         do {
@@ -497,7 +514,7 @@ public class VeiculoApp
                         break;
                 case 3: runProprietarioHistoricos(proprietario);
                         break;
-                case 4:
+                case 4: runProprietarioVeiculos(proprietario);
                         break;
             }
         } while (menuProprietario.getOpcao()!=0); // A op¡Ño 0 » usada para sair do menu.
@@ -632,60 +649,102 @@ public class VeiculoApp
         }
     }
                 
-     private void runConfirmacaoAluguer(Proprietario proprietario) {
+     private void runProprietarioVeiculos(Proprietario proprietario) {
         Input input = new Input();
         do {
             menuProprietarioVeiculos.executa();
             switch (menuProprietarioVeiculos.getOpcao()) {
-                case 1: System.out.println("Tipos de veiculo disponiveis:");
-                        //this.listagem = new Listagem(Arrays.asList(TipoVeiculo.values()));
-                        String str = input.lerString();
-                        TipoVeiculo tipoVeiculo = TipoVeiculo.valueOf(str);
-                        System.out.println("\fTipos de combustivel disponiveis:");
-                        //this.listagem = new Listagem(Arrays.asList(TipoCombustivel.values()));
-                        str = input.lerString();
-                        TipoCombustivel tipoCombustivel = TipoCombustivel.valueOf(str);
-                        System.out.println("\fIntroduza a marca.");
-                        String marca = input.lerString();
-                        System.out.println("\fIntroduza a matricula.");
-                        String matricula = input.lerString();
-                        System.out.println("\fIntroduza a velocidade media.");
-                        int velocidadeMedia = input.lerInt();
-                        System.out.println("\fIntroduza o preco por quilometro.");
-                        double preco = input.lerDouble();
-                        System.out.println("\fIntroduza o consumo medio por quilometro.");
-                        double consumo = input.lerDouble();
-                        System.out.println("\fIntroduza a autonomia maxima.");
-                        double autonomiaMax = input.lerDouble();
-                        System.out.println("\fIntroduza a localizaçao do seu veiculo i.e. (x,y):\n");
-                        System.out.println("\t-Digite a coordenada 'x'.");
-                        double x = input.lerDouble();
-                        System.out.println("\t-Digite a coordenada 'y'.");
-                        double y = input.lerDouble();
-                        Ponto localizacao = new Ponto(x,y);
-                        Veiculo veiculo = new Veiculo (tipoVeiculo,tipoCombustivel,marca,matricula,proprietario.getNif(),velocidadeMedia, preco, consumo,
+                case 1: try{
+                            System.out.println("Tipos de veiculos do sistema.");
+                            this.listagem = new Listagem(Arrays.asList(TipoVeiculo.values()));
+                            this.listagem.executa();
+                            System.out.println("\nIntroduza o tipo de veiculo pretendido:");
+                            String str = input.lerString();
+                            TipoVeiculo tipoVeiculo = TipoVeiculo.valueOf(str);
+                            System.out.println("\n\n\n\nPara sair pressione enter!");
+                            input.lerString();
+                            System.out.println("\fTipos de combustivel do sistema.");
+                            this.listagem = new Listagem(Arrays.asList(TipoCombustivel.values()));
+                            this.listagem.executa();
+                            System.out.println("Tipo de combustivel pretendido:");
+                            str = input.lerString();
+                            TipoCombustivel tipoCombustivel = TipoCombustivel.valueOf(str);
+                            System.out.println("\n\n\n\nPara sair pressione enter!");
+                            input.lerString();
+                            System.out.println("\fIntroduza a marca.");
+                            String marca = input.lerString();
+                            System.out.println("\fIntroduza a matricula.");
+                            String matricula = input.lerString();
+                            System.out.println("\fIntroduza a velocidade media.");
+                            int velocidadeMedia = input.lerInt();
+                            System.out.println("\fIntroduza o preco por quilometro.");
+                            double preco = input.lerDouble();
+                            System.out.println("\fIntroduza o consumo medio por quilometro.");
+                            double consumo = input.lerDouble();
+                            System.out.println("\fIntroduza a autonomia maxima.");
+                            double autonomiaMax = input.lerDouble();
+                            System.out.println("\fIntroduza a localizaçao do seu veiculo i.e. (x,y):\n");
+                            System.out.println("\t-Digite a coordenada 'x'.");
+                            double x = input.lerDouble();
+                            System.out.println("\t-Digite a coordenada 'y'.");
+                            double y = input.lerDouble();
+                            Ponto localizacao = new Ponto(x,y);
+                            Veiculo veiculo = new Veiculo (tipoVeiculo,tipoCombustivel,marca,matricula,proprietario.getNif(),velocidadeMedia, preco, consumo,
                             autonomiaMax, localizacao);
-                        try{
+                        
                             this.gestorVeiculos.insereVeiculo(veiculo);
                             System.out.println("\fVeiculo registado com suceso.");
                         }
                         catch(VeiculoJaExisteException e){
                             System.out.println(e.getMessage());
                         }
+                        catch(IllegalArgumentException e){
+                            System.out.println("Tipo invalido");
+                        }
                         System.out.println("\n\n\n\nPara sair pressione enter!");
                         input.lerString();
                         break;
-                case 2: 
+                case 2: try{
+                            System.out.println("Introduza a matricula do veiculo que pretende alterar o preco por km.");
+                            String matricula = input.lerString();
+                            Veiculo v = this.gestorVeiculos.getVeiculo(matricula);
+                            System.out.println("Introduza o novo preco por km que pretende.");
+                            double preco = input.lerDouble();
+                            proprietario.alteraPrecoVeiculo(v,preco);
+                            this.gestorVeiculos.atualizaVeiculo(v);
+                        }
+                        catch(VeiculoNaoExisteException e){
+                            System.out.println(e.getMessage());
+                        }
+                        catch(VeiculoNaoPertenceException e){
+                            System.out.println(e.getMessage());
+                        }
                         break;
-                case 3:
-                    
+                case 3:try{
+                            System.out.println("Introduza a matricula do veiculo que pretende abastecer.");
+                            String matricula = input.lerString();
+                            Veiculo v = this.gestorVeiculos.getVeiculo(matricula);
+                            proprietario.abasteceVeiculo(v);
+                            this.gestorVeiculos.atualizaVeiculo(v);
+                        }
+                        catch(VeiculoNaoExisteException e){
+                            System.out.println(e.getMessage());
+                        }
+                        catch(VeiculoNaoPertenceException e){
+                            System.out.println(e.getMessage());
+                        }
+                        break;
+                case 4: System.out.println("Os seus veiculos.");
+                        try{
+                            List<String> resultado = this.gestorVeiculos.redacaoVeiculosProprietario(proprietario.getNif());
+                            this.listagem = new Listagem(resultado);
+                        }
+                        catch(VeiculoNaoExisteException e){
+                            System.out.println(e.getMessage());
+                        }
                         break;
             }
         }while (menuProprietarioVeiculos.getOpcao()!=0); // A op¡Ño 0 » usada para sair do menu.
         System.out.println("\f");
     }
-                                       
-        String[] opcoesProprietarioVeiculos = {"Registar Veiculo",
-                                               "Alterar o preco por km de um Veiculo",
-                                               "Abastecer Veiculo"};   
 }

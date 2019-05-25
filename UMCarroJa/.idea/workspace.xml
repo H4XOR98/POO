@@ -2,16 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="41a98601-eb9f-4b59-a759-49b43cfe5646" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/App/Input.java" beforeDir="false" afterPath="$PROJECT_DIR$/App/Input.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/App/VeiculoApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/App/VeiculoApp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/App/package.bluej" beforeDir="false" afterPath="$PROJECT_DIR$/App/package.bluej" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MyLogic/ClassesBase/Aluguer.java" beforeDir="false" afterPath="$PROJECT_DIR$/MyLogic/ClassesBase/Aluguer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MyLogic/ClassesBase/Proprietario.java" beforeDir="false" afterPath="$PROJECT_DIR$/MyLogic/ClassesBase/Proprietario.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MyLogic/ClassesBase/package.bluej" beforeDir="false" afterPath="$PROJECT_DIR$/MyLogic/ClassesBase/package.bluej" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MyLogic/Gestores/GestorAlugueres.java" beforeDir="false" afterPath="$PROJECT_DIR$/MyLogic/Gestores/GestorAlugueres.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MyLogic/Gestores/GestorUtilizadores.java" beforeDir="false" afterPath="$PROJECT_DIR$/MyLogic/Gestores/GestorUtilizadores.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MyLogic/Gestores/GestorVeiculos.java" beforeDir="false" afterPath="$PROJECT_DIR$/MyLogic/Gestores/GestorVeiculos.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MyLogic/Gestores/package.bluej" beforeDir="false" afterPath="$PROJECT_DIR$/MyLogic/Gestores/package.bluej" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -60,6 +51,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
@@ -72,7 +64,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -121,16 +112,17 @@
       <workItem from="1558650094195" duration="17000" />
       <workItem from="1558688440582" duration="5000" />
       <workItem from="1558739193721" duration="6000" />
+      <workItem from="1558794021025" duration="6000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="6962000" />
+    <option name="totallyTimeSpent" value="6968000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1680" height="1050" extended-state="0" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.13858365" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.13980465" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
