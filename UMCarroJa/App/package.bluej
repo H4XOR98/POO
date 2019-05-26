@@ -1,9 +1,9 @@
 #BlueJ package file
 dependency1.from=VeiculoApp
-dependency1.to=Leitura
+dependency1.to=Input
 dependency1.type=UsesDependency
 dependency2.from=VeiculoApp
-dependency2.to=Input
+dependency2.to=Leitura
 dependency2.type=UsesDependency
 objectbench.height=106
 objectbench.width=1336

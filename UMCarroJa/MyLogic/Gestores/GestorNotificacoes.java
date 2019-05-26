@@ -97,6 +97,7 @@ public class GestorNotificacoes implements Serializable{
         }
         List<Notificacao> aux = new ArrayList<>();
         this.caixaNotificacoes.put(u.getNif(),aux);
+        this.adicionaNotificacao(new Notificacao(u.getNif(),"Boas Vindas","Bem Vindo à UMCarroJá!\nCumprimentos,\nEquipa técnica."));
     }
     
     

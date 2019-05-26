@@ -10,6 +10,8 @@ import Menu.*;
 import java.io.*;
 import java.util.Scanner;
 import java.time.*;
+import java.io.IOException;
+import java.lang.ClassNotFoundException;
 /**
  * Escreva a descrição da classe App aqui.
  * 
@@ -23,7 +25,7 @@ public class VeiculoApp
     private GestorVeiculos gestorVeiculos;
     private GestorAlugueres gestorAlugueres;
     private Menu menuPrincipal ,menuRegisto, menuCliente, menuProprietario, menuTop10, menuClienteAluguer, menuClienteHistoricos, menuProprietarioAluguer, 
-                menuProprietarioHistoricos, menuProprietarioVeiculos, menuConfirmacaoAluguer, menuNotificacoes;
+                menuProprietarioHistoricos, menuProprietarioVeiculos, menuConfirmacaoAluguer, menuNotificacoes, menuLeitura;
     private Listagem listagem;
    
     
@@ -32,11 +34,26 @@ public class VeiculoApp
      */
     public static void main(String[] args) {
         VeiculoApp vApp = new VeiculoApp();
-        //vApp.run();
         try{
-            System.out.println(vApp.gestorUtilizadores.getUtilizador(702543543).toString());
+            vApp.gestorVeiculos = vApp.gestorVeiculos.loadStatus();
+            vApp.gestorAlugueres = vApp.gestorAlugueres.loadStatus();
+            vApp.gestorNotificacoes = vApp.gestorNotificacoes.loadStatus();
+            vApp.gestorUtilizadores = vApp.gestorUtilizadores.loadStatus();
         }
-        catch(UtilizadorNaoExisteException e){
+        catch(IOException e){
+            System.out.println(e.getMessage());
+        }
+        catch(ClassNotFoundException e){
+            System.out.println(e.getMessage());
+        }
+        vApp.run(); 
+        try{
+            vApp.gestorVeiculos.saveStatus();
+            vApp.gestorAlugueres.saveStatus();
+            vApp.gestorNotificacoes.saveStatus();
+            vApp.gestorUtilizadores.saveStatus();
+        }
+        catch(IOException e){
             System.out.println(e.getMessage());
         }
     }
@@ -48,7 +65,10 @@ public class VeiculoApp
      */
     
     private VeiculoApp() {
-        String[] opcoes ={"Registar",
+        String[] opcoesLeitura = {"Sim","Não"};
+        
+        String[] opcoes ={"Carregar Estado",
+                          "Registar",
                           "Login",
                           "TOP 10 Clientes"};
         
@@ -104,6 +124,8 @@ public class VeiculoApp
         this.gestorAlugueres = new GestorAlugueres();
         this.gestorNotificacoes = new GestorNotificacoes();  
         
+        this.menuLeitura = new MenuLeitura(opcoesLeitura);
+        
         this.menuPrincipal = new MenuPrincipal(opcoes);
         this.menuRegisto = new MenuRegisto(opcoesRegisto);
         this.menuTop10 = new Menu(opcoesTop10);
@@ -119,40 +141,8 @@ public class VeiculoApp
         this.menuProprietarioVeiculos = new MenuProprietario(opcoesProprietarioVeiculos);
         
         this.menuNotificacoes = new MenuNotificacoes(opcoesNotificacoes);
-        
-        Leitura l = new Leitura("./logsPOO_carregamentoInicial.txt");
-        try{
-            l.readFile(this.gestorUtilizadores,this.gestorVeiculos,this.gestorAlugueres, this.gestorNotificacoes);
-        }
-        catch(UtilizadorJaExisteException e){
-            System.out.println("O utilizador com nif " + e.getMessage() + " já existe no sistema!");
-        }
-        catch(VeiculoJaExisteException e){
-            System.out.println("O veículo com matrícula " + e.getMessage() + " já existe no sistema!");
-        }
-        catch(AluguerJaExisteException e){
-            System.out.println(e.getMessage());
-        }
-        catch(UtilizadorNaoExisteException e){
-            System.out.println("O utilizador com nif " + e.getMessage() + " não existe no sistema!");
-        }
-        catch(VeiculoNaoExisteException e){
-            System.out.println("O veículo com matrícula " + e.getMessage() + " não existe no sistema!");
-        }
-        catch(AvaliacaoInvalidaException e){
-            System.out.println("Avaliação errada!");
-        }
-        catch(GestorVazioException e){
-            System.out.println(e.getMessage());
-        }
-        catch(AluguerNaoExisteException e){
-            System.out.println(e.getMessage());
-        }
-        catch(IOException e){
-            System.out.println(e.getMessage());
-        }
     }
-
+    
     /**
      * Executa o menu principal e invoca o mÈtodo correspondente ‡ opÁ„o seleccionada.
      */
@@ -163,9 +153,11 @@ public class VeiculoApp
             menuPrincipal.executa();
             System.out.println("\f");
             switch (menuPrincipal.getOpcao()) {
-                case 1: runRegisto();
+                case 1: runLeitura();
                         break;
-                case 2: System.out.println("|****************************|");
+                case 2: runRegisto();
+                        break;
+                case 3: System.out.println("|****************************|");
                         System.out.println("|******* Area de Login ******|");
                         System.out.println("|****************************|\n");
                         System.out.println("Introduza o email:");
@@ -199,12 +191,61 @@ public class VeiculoApp
                         System.out.println("\n\nPara retroceder pressione 'Enter'!");
                         input.lerString();
                         break;
-                case 3: runTop();
+                case 4: runTop();
                         break;
             }
         } while (menuPrincipal.getOpcao()!=0); // A opÁ„o 0 È usada para sair do menu. 
         System.out.println("\f");
         System.out.println("Até breve!...");  
+    }
+    
+    private void runLeitura(){
+        Input input = new Input();
+        do{
+            System.out.println("\f");
+            menuLeitura.executa();
+            switch (menuLeitura.getOpcao()) {
+                case 1: Leitura l = new Leitura("./logsPOO_carregamentoInicial.txt");
+                        try{
+                            l.readFile(this.gestorUtilizadores,this.gestorVeiculos,this.gestorAlugueres, this.gestorNotificacoes);
+                        }
+                        catch(UtilizadorJaExisteException e){
+                            System.out.println("O utilizador com nif " + e.getMessage() + " já existe no sistema!");
+                        }
+                        catch(VeiculoJaExisteException e){
+                            System.out.println("O veículo com matrícula " + e.getMessage() + " já existe no sistema!");
+                        }   
+                        catch(AluguerJaExisteException e){
+                            System.out.println(e.getMessage());
+                        }
+                        catch(UtilizadorNaoExisteException e){
+                            System.out.println("O utilizador com nif " + e.getMessage() + " não existe no sistema!");
+                        }   
+                        catch(VeiculoNaoExisteException e){
+                            System.out.println("O veículo com matrícula " + e.getMessage() + " não existe no sistema!");
+                        }
+                        catch(AvaliacaoInvalidaException e){
+                            System.out.println("Avaliação errada!");
+                        }
+                        catch(GestorVazioException e){
+                            System.out.println(e.getMessage());
+                        }
+                        catch(AluguerNaoExisteException e){
+                            System.out.println(e.getMessage());
+                        }
+                        catch(IOException e){
+                            System.out.println(e.getMessage());
+                        }
+                        System.out.println("Carregamento do ficheiro efetuado com suceso.");
+                    break;
+                case 2: System.out.println("A iniciar sem carregamento de ficheiro.");
+                    break;
+            }
+            menuLeitura.setOpcao(0);
+        }while(menuLeitura.getOpcao() != 0);
+        System.out.println("\n\nPara voltar ao menu principal pressione 'Enter'!");
+        input.lerString();
+        System.out.println("\f");
     }
     
     
@@ -934,17 +975,15 @@ public class VeiculoApp
     private void runMenuNotificacoes(Utilizador u){
         Input input = new Input();
         do {
-            System.out.println("\f");
+            //System.out.println("\f");
             menuNotificacoes.executa();
-            switch (menuConfirmacaoAluguer.getOpcao()) {
+            switch (menuNotificacoes.getOpcao()) {
                 case 1: try{   
                             if(this.gestorNotificacoes.temNotificacoes(u.getNif())){
                                 System.out.println("Consultar caixa de mensagens.");
                                 List<String> resultado = new ArrayList<>();
                                 this.gestorNotificacoes.getNotificacoes(u.getNif()).forEach(v -> resultado.add(v.toString()));
                                 this.listagem = new Listagem(resultado);
-                                this.listagem.executa();
-                                this.listagem = new Listagem(this.gestorNotificacoes.getNotificacoes(u.getNif()));
                                 this.listagem.executa();
                             }else{
                                 System.out.println("Caixa de Notificacoes Vazia");
@@ -964,7 +1003,7 @@ public class VeiculoApp
                                 System.out.println("2- Nao");
                                 int opcao = input.lerInt();
                                 if(opcao == 1){
-                                    System.out.println("Aguardando confirma...\n\tIntroduza a password:");
+                                    System.out.println("Aguardando confirmacao...\n\tIntroduza a password:");
                                     String str = input.lerString();
                                     if(u.getPassword().equals(str)){
                                         this.gestorNotificacoes.apagaCaixaNotificacoes();
@@ -976,13 +1015,15 @@ public class VeiculoApp
                             }else{
                                 System.out.println("Caixa de Notificacoes Vazia");
                             }
+                            System.out.println("\n\nPara retroceder pressione 'Enter'");
+                            input.lerString();
+                            //System.out.println("\f");
                         }
                         catch(UtilizadorNaoExisteException e){
                             System.out.println(e.getMessage());
                         }
                     break;
             }
-            System.out.println("\f");
         }while (menuNotificacoes.getOpcao()!=0); // A op¡Ño 0 » usada para sair do menu.    
         System.out.println("\f");
     }
