@@ -2,10 +2,10 @@ package Menu;
 
 
 /**
- * Escreva a descrição da classe MenuCliente aqui.
- * 
- * @author (seu nome) 
- * @version (número de versão ou data)
+ * Write a description of class MenuCliente here.
+ *
+ * @author (your name)
+ * @version (a version number or a date)
  */
 public class MenuCliente extends Menu
 {
@@ -25,10 +25,9 @@ public class MenuCliente extends Menu
     
     /** Apresentar o menu */
     private void showMenuCliente() {
-        System.out.println("|**********************************|");
-        System.out.println("|********* Areá do Cliente ********|");
-        System.out.println("|**********************************|\n");
+        System.out.println("|***********************************|");
+        System.out.println("|********* Area de Cliente *********|");
+        System.out.println("|***********************************|\n");
         super.showMenu();
-        
     }
 }

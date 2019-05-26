@@ -38,7 +38,7 @@ public class VeiculoApp
         
         VeiculoApp vApp = new VeiculoApp();
 
-        /*try{
+        try{
             vApp.gestorVeiculos = vApp.gestorVeiculos.loadStatus();
             vApp.gestorAlugueres = vApp.gestorAlugueres.loadStatus();
             vApp.gestorNotificacoes = vApp.gestorNotificacoes.loadStatus();
@@ -49,10 +49,10 @@ public class VeiculoApp
         }
         catch(ClassNotFoundException e){
             System.out.println(e.getMessage());
-        }*/
+        }
         
         vApp.run(); 
-        /*try{
+        try{
             vApp.gestorVeiculos.saveStatus();
             vApp.gestorAlugueres.saveStatus();
             vApp.gestorNotificacoes.saveStatus();
@@ -60,7 +60,7 @@ public class VeiculoApp
         }
         catch(IOException e){
             System.out.println(e.getMessage());
-        }*/
+        }
     }
     
     /**
@@ -244,7 +244,7 @@ public class VeiculoApp
                 case 1: Leitura l = new Leitura("./logsPOO_carregamentoInicial.txt");
                         try{
                             l.readFile(this.gestorUtilizadores,this.gestorVeiculos,this.gestorAlugueres, this.gestorNotificacoes);
-                            System.out.println("Carregamento do ficheiro efetuado com suceso.");
+                            System.out.println("Carregamento do ficheiro efetuado com sucesso.");
                         }
                         catch(UtilizadorJaExisteException e){
                             System.out.println("Os dados do ficheiro já se encontram carregados.");
@@ -439,7 +439,7 @@ public class VeiculoApp
             System.out.println("\n\nPara retroceder pressione 'Enter'!");
             input.lerString();
             System.out.println("\f");
-        } while (menuRegisto.getOpcao()!=0); // A op¡Ño 0 » usada para sair do menu.
+        } while (menuTop10.getOpcao()!=0); // A op¡Ño 0 » usada para sair do menu.
         System.out.println("\n\nPara voltar ao menu principal pressione 'Enter'!");
         input.lerString();
         System.out.println("\f");
@@ -472,7 +472,7 @@ public class VeiculoApp
             System.out.println("\n\nPara voltar ao menu de cliente pressione 'Enter'!");
             input.lerString();
             System.out.println("\f");
-        } while (menuRegisto.getOpcao()!=0); // A op¡Ño 0 » usada para sair do menu.
+        } while (menuCliente.getOpcao()!=0); // A op¡Ño 0 » usada para sair do menu.
         System.out.println("\n\nPara voltar ao menu principal pressione 'Enter'!");
         input.lerString();
         System.out.println("\f");
@@ -637,14 +637,16 @@ public class VeiculoApp
     }
     
     private void runClienteHistoricos(Cliente cliente) {
-        System.out.println("\f");
         Input input = new Input();
         List<String> historico = null;
         do {
+            System.out.println("\f");
             menuClienteHistoricos.executa();
             switch (menuClienteHistoricos.getOpcao()) {
                 case 1: historico = this.gestorAlugueres.historicoCliente(cliente.getNif());
+                        menuClienteHistoricos.setOpcao(0);
                         break;
+                        
                 case 2: try{
                             System.out.println("Introduza a data de Inicio.");
                             System.out.println("Introduza o ano.");
@@ -939,7 +941,7 @@ public class VeiculoApp
             this.listagem = new Listagem(historico,titulo);
             this.listagem.executa();
         }
-        System.out.println("\n\nPara retroceder pressione 'Enter'");
+        System.out.println("\n\nPara voltar ao menu de proprietário pressione 'Enter'!");
         input.lerString();
         System.out.println("\f");
     }
