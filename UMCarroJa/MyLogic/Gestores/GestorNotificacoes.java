@@ -147,7 +147,7 @@ public class GestorNotificacoes implements Serializable{
         
     // Apaga notificacoes
 
-    /*public void apagaNotificacoes (int nif) throws UtilizadorNaoExisteException{
+    public void apagaNotificacoes (int nif) throws UtilizadorNaoExisteException{
         if(!this.caixaNotificacoes.containsKey(nif)){
             throw new UtilizadorNaoExisteException("" + nif);
         }
@@ -155,8 +155,7 @@ public class GestorNotificacoes implements Serializable{
             List<Notificacao> notificacoes = new ArrayList<>();
             this.caixaNotificacoes.replace(nif, notificacoes);
         }
-        //notificacoes.forEach(n -> notificacoes.remove(n));
-    }*/
+    }
     
     // Apaga o gestor de notificações
     

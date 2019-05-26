@@ -334,16 +334,28 @@ public class Aluguer implements Serializable{
         this.custoViagem();
     }
     
-    public void aceitaAluguer (){
+    // Aceita Aluguer
+    
+    public Notificacao aceitaAluguer(){
+        Notificacao n = null;
         if(this.estadoAluguer.equals(EstadoAluguer.Espera)){
             this.setEstadoAluguer(EstadoAluguer.Aceite);
-        }  
+            n = new Notificacao (this.nif,"Aluguer Aceite","O seu pedido de aluguer com o id " + this.id + 
+                               " foi aceite.\nO veiculo com a matricula "+ this.veiculo.getMatricula() + " está à sua espera.\n\nBoa Viagem.");
+        }
+        return n;
     }
     
-    public void rejeitaAluguer (){
+    // Rejeita Aluguer
+    
+    public Notificacao rejeitaAluguer (){
+        Notificacao n = null;
         if(this.estadoAluguer.equals(EstadoAluguer.Espera)){
             this.setEstadoAluguer(EstadoAluguer.Rejeitado);
+            n = new Notificacao (this.nif,"Aluguer Rejeitado","O seu pedido de aluguer com o id " + this.id + 
+                    " foi rejeitado.\n\nPedimos desculpa pelo incómodo.");
         } 
+        return n;
     }
     
     // Avaliar

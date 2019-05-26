@@ -1034,13 +1034,13 @@ public class VeiculoApp
                                     System.out.println("Introduza a sua password.");
                                     String password = input.lerString();
                                     if(password.equals(u.getPassword())){
-                                        /*try{
-                                            //this.gestorNotificacoes.apagaNotificacoes(u.getNif());
+                                        try{
+                                            this.gestorNotificacoes.apagaNotificacoes(u.getNif());
                                             System.out.println("\fCaixa de notificacoes limpa com sucesso.");
                                         }
                                         catch(UtilizadorNaoExisteException e){
                                             System.out.println("O utilizador com nif " + e.getMessage() + " não existe no sistema.");
-                                        }*/
+                                        }
                                     }else{
                                         System.out.println("\fPassword incorreta.\nTente novamente mais tarde.");
                                     }

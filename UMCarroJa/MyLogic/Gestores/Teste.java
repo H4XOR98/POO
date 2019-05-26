@@ -31,6 +31,8 @@ public class Teste{
             System.out.println("erro");
         }
         
+        System.out.println(gn.toString());
+        
     }
         
         
