@@ -396,7 +396,7 @@ public class VeiculoApp
                             System.out.println("Os Utilizadores não existem no sistema.");
                         }
                         catch(AlugueresNaoExistemException e){
-                            System.out.println("Os Alugures não existem no sistema.");
+                            System.out.println("Os Alugueres não existem no sistema.");
                         }
                         break;
             }
@@ -695,9 +695,7 @@ public class VeiculoApp
                     case 1: System.out.println("Introduza o Id do aluguer.");
                             int id = input.lerInt();
                             Aluguer a = this.gestorAlugueres.getAluguer(id);
-                            this.gestorAlugueres.removeAluguer(a);
                             runConfirmacaoAluguer(a);
-                            this.gestorAlugueres.insereAluguer(a);
                         break;
                     case 2: System.out.println("Introduza o Id do aluguer.");
                             id = input.lerInt();
@@ -742,13 +740,29 @@ public class VeiculoApp
         do {
             menuConfirmacaoAluguer.executa();
             switch (menuConfirmacaoAluguer.getOpcao()) {
-                case 1: a.aceitaAluguer();
-                        System.out.println("\nO aluguer com id " + a.getId() + " foi aceite com sucesso.");
-                        menuConfirmacaoAluguer.setOpcao(0);
+                case 1: try{
+                            this.gestorAlugueres.removeAluguer(a);
+                            Notificacao n = a.aceitaAluguer();
+                            System.out.println("\nO aluguer com id " + a.getId() + " foi aceite com sucesso.");
+                            this.gestorNotificacoes.adicionaNotificacao(n);
+                            this.gestorAlugueres.insereAluguer(a);
+                            menuConfirmacaoAluguer.setOpcao(0);
+                        }
+                        catch(AluguerNaoEmEsperaException e){
+                                System.out.println("Este aluguer não se encontra em espera.");
+                        }catch(AluguerJaExisteException e){
+                                System.out.println("Este aluguer não se encontra em espera.");
+                        }
                     break;
-                case 2: a.rejeitaAluguer();
-                        System.out.println("\nO aluguer com id " + a.getId() + " foi rejeitado.");
-                        menuConfirmacaoAluguer.setOpcao(0);
+                case 2: try{
+                            this.gestorAlugueres.removeAluguer(a);
+                            Notificacao n = a.rejeitaAluguer();
+                            System.out.println("\nO aluguer com id " + a.getId() + " foi rejeitado.");
+                            menuConfirmacaoAluguer.setOpcao(0);
+                        }
+                        catch(AluguerNaoEmEsperaException e){
+                                System.out.println("Este aluguer não se encontra em espera.");
+                        }
                     break;
             }
         }while (menuConfirmacaoAluguer.getOpcao()!=0); // A op¡Ño 0 » usada para sair do menu.
