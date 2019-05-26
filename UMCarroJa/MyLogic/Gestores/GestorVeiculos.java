@@ -84,11 +84,9 @@ public class GestorVeiculos implements Serializable{
    
     // Adiciona um veículo
     
-    public void insereVeiculo (Veiculo v) 
-    throws VeiculoJaExisteException{
-        
+    public void insereVeiculo (Veiculo v) throws VeiculoJaExisteException{
         if (this.veiculos.containsValue(v)){
-            throw new VeiculoJaExisteException ("O veiculo com a matricula " + v.getMatricula() + " já se encontra registado no sistema!\n");
+            throw new VeiculoJaExisteException("" + v.getMatricula());
         }
         this.veiculos.put(v.getMatricula(),v.clone());
     }
@@ -105,12 +103,12 @@ public class GestorVeiculos implements Serializable{
     
     // Devolver um veículo conforme a matrícula
     
-    public Veiculo getVeiculo(String matricula) throws VeiculoNaoExisteException{
+    public Veiculo getVeiculo(String matricula) throws VeiculoNaoExisteException, GestorVazioException{
         if (this.veiculos.isEmpty()){
-            throw new VeiculoNaoExisteException ("Ups! Gestor de Veiculos Vazio.\n");
+            throw new GestorVazioException("");
         }
         if (!this.veiculos.containsKey(matricula)){
-            throw new VeiculoNaoExisteException ("Ups! Esse veículo não existe no sistema.\n");
+            throw new VeiculoNaoExisteException(matricula);
         }
         return this.veiculos.get(matricula).clone();
     }
@@ -118,10 +116,10 @@ public class GestorVeiculos implements Serializable{
     // Devolver o veículo mais barato
     
     public List<Veiculo> veiculoMaisBarato (TipoVeiculo tipoVeiculo, TipoCombustivel tipoCombustivel, Ponto destino) 
-    throws VeiculoNaoExisteException{
+    throws GestorVazioException, VeiculoNaoExisteException{
         
         if (this.veiculos.isEmpty()){
-            throw new VeiculoNaoExisteException ("Ups! Gestor de veículos vazio.\n");
+            throw new GestorVazioException("");
         }
         
         List<Veiculo> resultado = new ArrayList<>();

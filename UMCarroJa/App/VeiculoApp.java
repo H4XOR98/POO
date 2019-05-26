@@ -228,7 +228,7 @@ public class VeiculoApp
                             System.out.println("Avaliação errada!");
                         }
                         catch(GestorVazioException e){
-                            System.out.println(e.getMessage());
+                            System.out.println("Ups! O gestor está vazio");
                         }
                         catch(AluguerNaoExisteException e){
                             System.out.println(e.getMessage());
@@ -514,6 +514,9 @@ public class VeiculoApp
                             a.setVeiculo(veiculo);
                             this.gestorAlugueres.insereAluguer(a);
                             System.out.println("\fO veiculo que pretende alugar: \n" + veiculo.toString());
+                        }
+                        catch(GestorVazioException e){
+                            System.out.println("Ups! O gestor está vazio.");
                         }
                         catch(IllegalArgumentException e){
                             System.out.println("Tipo invalido");
@@ -924,6 +927,9 @@ public class VeiculoApp
                             this.gestorVeiculos.atualizaVeiculo(v);
                             System.out.println("Novo preço introduzido com sucesso.");
                         }
+                        catch(GestorVazioException e){
+                            System.out.println("O gestor está vazio.");
+                        }
                         catch(VeiculoNaoExisteException e){
                             System.out.println(e.getMessage());
                         }
@@ -942,6 +948,9 @@ public class VeiculoApp
                             proprietario.abasteceVeiculo(v);
                             this.gestorVeiculos.atualizaVeiculo(v);
                             System.out.println("Veiculo abastecido com suceso.");
+                        }
+                        catch(GestorVazioException e){
+                            System.out.println("O gestor está vazio.");
                         }
                         catch(VeiculoNaoExisteException e){
                             System.out.println(e.getMessage());
