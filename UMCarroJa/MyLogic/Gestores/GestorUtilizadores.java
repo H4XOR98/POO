@@ -102,6 +102,15 @@ public class GestorUtilizadores implements Serializable{
         this.utilizadores.clear();
     }
     
+    public boolean emailRegistado(String email){
+        for(Utilizador u : this.utilizadores.values()){
+            if(u.getEmail().equals(email)){
+                return true;
+            }
+        }
+        return false;
+    }
+    
     public Utilizador loginUtilizador(String email, String password) throws UtilizadorNaoRegistadoException{
         Utilizador aux = null;
         for(Utilizador u : this.utilizadores.values()){

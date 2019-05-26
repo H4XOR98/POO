@@ -26,7 +26,8 @@ public class VeiculoApp
     private GestorVeiculos gestorVeiculos;
     private GestorAlugueres gestorAlugueres;
     private Menu menuPrincipal ,menuRegisto, menuCliente, menuProprietario, menuTop10, menuClienteAluguer, menuClienteHistoricos, menuProprietarioAluguer, 
-                menuProprietarioHistoricos, menuProprietarioVeiculos, menuConfirmacaoAluguer, menuNotificacoes, menuLeitura, menuAceitacao;
+                menuProprietarioHistoricos, menuProprietarioVeiculos, menuConfirmacaoAluguer, menuNotificacoes, menuLeitura, menuAceitacao,
+                menuProprietarioAlteraDados, menuClienteAlteraDados;
     private Listagem listagem;
    
     
@@ -71,7 +72,8 @@ public class VeiculoApp
         String[] opcoes ={"Carregar Estado",
                           "Registar",
                           "Login",
-                          "TOP 10 Clientes"};
+                          "TOP 10 Clientes",
+                          "Esquecue-se da password?"};
         
         String[] opcoesRegisto = {"Registar como Cliente",
                                   "Registar como Proprietario"};
@@ -83,20 +85,30 @@ public class VeiculoApp
                                
         String[] opcoesCliente = {"Consultar Caixa Notificacoes",
                                   "Aluguer",
-                                  "Historicos"};
+                                  "Historicos",
+                                  "Alterar dados pessoais",
+                                  "Meu Perfil"};
                                   
         String[] opcoesClienteAluguer = {"Alugar Veiculo",
                                          "Realizar Viagem"};
                                          
         String[] opcoesClienteHistoricos = {"Historico Aluguer",
                                             "Historico Aluguer(entre datas)"};
+                                            
+        String[] opcoesClienteAlteraDados = {"Alterar email",
+                                             "Alterar password",
+                                             "Alterar nome",
+                                             "Alterar morada",
+                                             "Alterar localizacao"};
                                                             
         // ------------------------------------------------------- 
                                             
         String[] opcoesProprietario = {"Consultar Caixa Notificacoes",
                                        "Aluguer",
                                        "Historico",
-                                       "Definicoes Veiculo"};
+                                       "Definicoes Veiculo",
+                                       "Alterar dados pessoais",
+                                       "Meu Perfil"};
                                        
                                        
         String[] opcoesProprietarioAluguer = {"Confirmar Aluguer",
@@ -111,7 +123,12 @@ public class VeiculoApp
         String[] opcoesProprietarioVeiculos = {"Registar Veiculo",
                                                "Alterar o preco por km de um Veiculo",
                                                "Abastecer Veiculo",
-                                               "Os meus veiculos"};                                         
+                                               "Os meus veiculos"};
+                                               
+        String[] opcoesProprietarioAlteraDados = {"Alterar email",
+                                                  "Alterar password",
+                                                  "Alterar nome",
+                                                  "Alterar Morada"};
                                               
         // ------------------------------------------------------- 
                                                
@@ -134,12 +151,14 @@ public class VeiculoApp
         this.menuCliente = new MenuCliente(opcoesCliente);
         this.menuClienteAluguer = new MenuCliente(opcoesClienteAluguer);
         this.menuClienteHistoricos = new MenuCliente(opcoesClienteHistoricos);
+        this.menuClienteAlteraDados = new MenuCliente(opcoesClienteAlteraDados);
         
         this.menuProprietario = new MenuProprietario(opcoesProprietario);
         this.menuProprietarioAluguer = new MenuProprietario(opcoesProprietarioAluguer);
         this.menuConfirmacaoAluguer = new Menu(opcoesConfirmacaoAluguer);
         this.menuProprietarioHistoricos = new MenuProprietario(opcoesProprietarioHistoricos);
         this.menuProprietarioVeiculos = new MenuProprietario(opcoesProprietarioVeiculos);
+        this.menuProprietarioAlteraDados = new MenuProprietario(opcoesProprietarioAlteraDados);
         
         this.menuNotificacoes = new MenuNotificacoes(opcoesNotificacoes);
         
@@ -196,6 +215,17 @@ public class VeiculoApp
                         break;
                 case 4: runTop();
                         break;
+                case 5: System.out.println("Introduza o seu email.");
+                        String email = input.lerString();
+                        if(this.gestorUtilizadores.emailRegistado(email)){
+                            System.out.println("Enviamos-lhe um email para que recuperar a palavra passe.");
+                        }else{
+                            System.out.println("Este email não existe.");
+                        }   
+                        System.out.println("\n\nPara voltar ao menu principal pressione 'Enter'!");
+                        input.lerString();
+                        System.out.println("\f");
+                        break;
             }
         } while (menuPrincipal.getOpcao()!=0); // A opÁ„o 0 È usada para sair do menu. 
         System.out.println("\f");
@@ -211,6 +241,7 @@ public class VeiculoApp
                 case 1: Leitura l = new Leitura("./logsPOO_carregamentoInicial.txt");
                         try{
                             l.readFile(this.gestorUtilizadores,this.gestorVeiculos,this.gestorAlugueres, this.gestorNotificacoes);
+                            System.out.println("Carregamento do ficheiro efetuado com suceso.");
                         }
                         catch(UtilizadorJaExisteException e){
                             System.out.println("Os dados do ficheiro já se encontram carregados.");
@@ -239,7 +270,6 @@ public class VeiculoApp
                         catch(IOException e){
                             System.out.println(e.getMessage());
                         }
-                        System.out.println("Carregamento do ficheiro efetuado com suceso.");
                     break;
                 case 2: System.out.println("A iniciar sem carregamento de ficheiro.");
                     break;
@@ -400,6 +430,9 @@ public class VeiculoApp
                         }
                         break;
             }
+            System.out.println("\n\nPara retroceder pressione 'Enter'!");
+            input.lerString();
+            System.out.println("\f");
         } while (menuRegisto.getOpcao()!=0); // A op¡Ño 0 » usada para sair do menu.
         System.out.println("\n\nPara voltar ao menu principal pressione 'Enter'!");
         input.lerString();
@@ -425,7 +458,14 @@ public class VeiculoApp
                        break;
                 case 3: runClienteHistoricos(cliente);
                        break;
+                case 4: runClienteAlteraDados(cliente);
+                       break;
+                case 5: Sytem.out.println("O meu Perfil");
+                        System.out.println(cliente.toString());
             }
+            System.out.println("\n\nPara voltar ao menu de cliente pressione 'Enter'!");
+            input.lerString();
+            System.out.println("\f");
         } while (menuRegisto.getOpcao()!=0); // A op¡Ño 0 » usada para sair do menu.
         System.out.println("\n\nPara voltar ao menu principal pressione 'Enter'!");
         input.lerString();
@@ -582,6 +622,9 @@ public class VeiculoApp
                         }
                         break;     
             }
+            System.out.println("\n\nPara retroceder pressione 'Enter'!");
+            input.lerString();
+            System.out.println("\f");
         } while (menuClienteAluguer.getOpcao()!=0); // A op¡Ño 0 » usada para sair do menu.
         System.out.println("\n\nPara voltar ao menu principal pressione 'Enter'!");
         input.lerString();
@@ -677,7 +720,14 @@ public class VeiculoApp
                         break;
                 case 4: runProprietarioVeiculos(proprietario);
                         break;
+                case 5: runProprietarioAlteraDados(proprietario);
+                        break;
+                case 6: Sytem.out.println("O meu Perfil");
+                        System.out.println(cliente.toString());
             }
+            System.out.println("\n\nPara voltar ao menu de proprietario pressione 'Enter'!");
+            input.lerString();
+            System.out.println("\f");
         } while (menuProprietario.getOpcao()!=0); // A op¡Ño 0 » usada para sair do menu.
         System.out.println("\n\nPara voltar ao menu principal pressione 'Enter'!");
         input.lerString();
@@ -765,6 +815,9 @@ public class VeiculoApp
                         }
                     break;
             }
+            System.out.println("\n\nPara retroceder pressione 'Enter'!");
+            input.lerString();
+            System.out.println("\f");
         }while (menuConfirmacaoAluguer.getOpcao()!=0); // A op¡Ño 0 » usada para sair do menu.
         System.out.println("\n\nPara retroceder pressione 'Enter'");
         input.lerString();
@@ -1007,6 +1060,9 @@ public class VeiculoApp
                         }
                         break;
             }
+            System.out.println("\n\nPara retroceder pressione 'Enter'!");
+            input.lerString();
+            System.out.println("\f");
         }while (menuProprietarioVeiculos.getOpcao()!=0); // A op¡Ño 0 » usada para sair do menu.
         System.out.println("\n\nPara retroceder pressione 'Enter'");
         input.lerString();
@@ -1044,7 +1100,7 @@ public class VeiculoApp
                 case 2: System.out.println("\fPretende limpar caixa de notificacoes?\n\n");
                         menuAceitacao.executa();
                         switch(menuAceitacao.getOpcao()){
-                            case 1: System.out.println("Confirme a sua decisao.");
+                            case 1: System.out.println("Confirme a sua decisão.");
                                     System.out.println("Introduza a sua password.");
                                     String password = input.lerString();
                                     if(password.equals(u.getPassword())){
@@ -1065,6 +1121,161 @@ public class VeiculoApp
             input.lerString();
         }while (menuNotificacoes.getOpcao()!=0); // A op¡Ño 0 » usada para sair do menu.
         System.out.println("\n\nPara retroceder pressione 'Enter'");
+        input.lerString();
+        System.out.println("\f");
+    }
+    
+    
+    
+    private void runProprietarioAlteraDados(Proprietario proprietario) {
+        Input input = new Input();
+        System.out.println("\f");
+        do {
+            menuProprietarioAlteraDados.executa();
+            switch (menuProprietarioAlteraDados.getOpcao()) {
+                case 1: System.out.println("Introduza o novo email.");
+                        String email = input.lerString();
+                        System.out.println("Confirme a sua decisão.");
+                        System.out.println("Introduza a sua password.");
+                        String password = input.lerString();
+                        if(password.equals(proprietario.getPassword())){
+                            proprietario.setEmail(email);
+                            this.gestorUtilizadores.atualizaUtilizador(proprietario);
+                            System.out.println("\fEmail atualizado com sucesso.");
+                        }else{
+                            System.out.println("\fPassword incorreta.\nTente novamente mais tarde.");
+                        }
+                        break;
+                case 2: System.out.println("Introduza a nova password.");
+                        String passwordNova = input.lerString();
+                        System.out.println("Confirme a sua decisão.");
+                        System.out.println("Introduza a sua password antiga.");
+                        password = input.lerString();
+                        if(password.equals(proprietario.getPassword())){
+                            proprietario.setPassword(passwordNova);
+                            this.gestorUtilizadores.atualizaUtilizador(proprietario);
+                            System.out.println("\fPassword atualizada com sucesso.");
+                        }else{
+                            System.out.println("\fPassword incorreta.\nTente novamente mais tarde.");
+                        }
+                        break;
+                case 3: System.out.println("Introduza o novo nome.");
+                        String nome = input.lerString();
+                        System.out.println("Confirme a sua decisão.");
+                        System.out.println("Introduza a sua password.");
+                        password = input.lerString();
+                        if(password.equals(proprietario.getPassword())){
+                            proprietario.setNome(nome);
+                            this.gestorUtilizadores.atualizaUtilizador(proprietario);
+                            System.out.println("\fNome atualizado com sucesso.");
+                        }else{
+                            System.out.println("\fPassword incorreta.\nTente novamente mais tarde.");
+                        }
+                        break;
+                case 4: System.out.println("Introduza a nova morada.");
+                        String morada = input.lerString();
+                        System.out.println("Confirme a sua decisão.");
+                        System.out.println("Introduza a sua password.");
+                        password = input.lerString();
+                        if(password.equals(proprietario.getPassword())){
+                           proprietario.setMorada(morada);
+                           this.gestorUtilizadores.atualizaUtilizador(proprietario);
+                           System.out.println("\fMorada atualizada com sucesso.");
+                        }else{
+                            System.out.println("\fPassword incorreta.\nTente novamente mais tarde.");
+                        }
+                        break;
+            }
+            System.out.println("\n\nPara retroceder pressione 'Enter'!");
+            input.lerString();
+            System.out.println("\f");
+        } while (menuProprietarioAlteraDados.getOpcao()!=0); // A op¡Ño 0 » usada para sair do menu.
+        System.out.println("\n\nPara voltar ao menu de proprietario pressione 'Enter'!");
+        input.lerString();
+        System.out.println("\f");
+    }
+    
+    
+    private void runClienteAlteraDados(Cliente cliente) {
+        Input input = new Input();
+        System.out.println("\f");
+        do {
+            menuClienteAlteraDados.executa();
+            switch (menuClienteAlteraDados.getOpcao()) {
+                case 1: System.out.println("Introduza o novo email.");
+                        String email = input.lerString();
+                        System.out.println("Confirme a sua decisão.");
+                        System.out.println("Introduza a sua password.");
+                        String password = input.lerString();
+                        if(password.equals(cliente.getPassword())){
+                            cliente.setEmail(email);
+                            this.gestorUtilizadores.atualizaUtilizador(cliente);
+                            System.out.println("\fEmail atualizado com sucesso.");
+                        }else{
+                            System.out.println("\fPassword incorreta.\nTente novamente mais tarde.");
+                        }
+                        break;
+                case 2: System.out.println("Introduza a nova password.");
+                        String passwordNova = input.lerString();
+                        System.out.println("Confirme a sua decisão.");
+                        System.out.println("Introduza a sua password antiga.");
+                        password = input.lerString();
+                        if(password.equals(cliente.getPassword())){
+                            cliente.setPassword(passwordNova);
+                            this.gestorUtilizadores.atualizaUtilizador(cliente);
+                            System.out.println("\fPassword atualizada com sucesso.");
+                        }else{
+                            System.out.println("\fPassword incorreta.\nTente novamente mais tarde.");
+                        }
+                        break;
+                case 3: System.out.println("Introduza o novo nome.");
+                        String nome = input.lerString();
+                        System.out.println("Confirme a sua decisão.");
+                        System.out.println("Introduza a sua password.");
+                        password = input.lerString();
+                        if(password.equals(cliente.getPassword())){
+                            cliente.setNome(nome);
+                            this.gestorUtilizadores.atualizaUtilizador(cliente);
+                            System.out.println("\fNome atualizado com sucesso.");
+                        }else{
+                            System.out.println("\fPassword incorreta.\nTente novamente mais tarde.");
+                        }
+                        break;
+                case 4: System.out.println("Introduza a nova morada.");
+                        String morada = input.lerString();
+                        System.out.println("Confirme a sua decisão.");
+                        System.out.println("Introduza a sua password.");
+                        password = input.lerString();
+                        if(password.equals(cliente.getPassword())){
+                           cliente.setMorada(morada);
+                           this.gestorUtilizadores.atualizaUtilizador(cliente);
+                           System.out.println("\fMorada atualizada com sucesso.");
+                        }else{
+                            System.out.println("\fPassword incorreta.\nTente novamente mais tarde.");
+                        }
+                        break;
+                case 5: System.out.println("Introduza a nova localizaçao i.e. (x,y):\n");
+                        System.out.println("*Digite a coordenada 'x'.");
+                        double xC = input.lerDouble();
+                        System.out.println("*Digite a coordenada 'y'.");
+                        double yC = input.lerDouble();
+                        Ponto novoPonto = new Ponto(xC,yC);
+                        System.out.println("Confirme a sua decisão.");
+                        System.out.println("Introduza a sua password.");
+                        password = input.lerString();
+                        if(password.equals(cliente.getPassword())){
+                           cliente.setLocalizacao(novoPonto);
+                           this.gestorUtilizadores.atualizaUtilizador(cliente);
+                           System.out.println("\fLocalizacao atualizada com sucesso.");
+                        }else{
+                            System.out.println("\fPassword incorreta.\nTente novamente mais tarde.");
+                        }
+            }
+            System.out.println("\n\nPara retroceder pressione 'Enter'!");
+            input.lerString();
+            System.out.println("\f");
+        } while (menuClienteAlteraDados.getOpcao()!=0); // A op¡Ño 0 » usada para sair do menu.
+        System.out.println("\n\nPara voltar ao menu de cliente pressione 'Enter'!");
         input.lerString();
         System.out.println("\f");
     }
