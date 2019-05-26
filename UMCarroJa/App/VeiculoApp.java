@@ -35,8 +35,10 @@ public class VeiculoApp
      * O mÈtodo main cria a aplicaÁ„o e invoca o mÈtodo run()
      */
     public static void main(String[] args) {
+        
         VeiculoApp vApp = new VeiculoApp();
-        try{
+
+        /*try{
             vApp.gestorVeiculos = vApp.gestorVeiculos.loadStatus();
             vApp.gestorAlugueres = vApp.gestorAlugueres.loadStatus();
             vApp.gestorNotificacoes = vApp.gestorNotificacoes.loadStatus();
@@ -47,9 +49,10 @@ public class VeiculoApp
         }
         catch(ClassNotFoundException e){
             System.out.println(e.getMessage());
-        }
+        }*/
+        
         vApp.run(); 
-        try{
+        /*try{
             vApp.gestorVeiculos.saveStatus();
             vApp.gestorAlugueres.saveStatus();
             vApp.gestorNotificacoes.saveStatus();
@@ -57,7 +60,7 @@ public class VeiculoApp
         }
         catch(IOException e){
             System.out.println(e.getMessage());
-        }
+        }*/
     }
     
     /**
@@ -73,7 +76,7 @@ public class VeiculoApp
                           "Registar",
                           "Login",
                           "TOP 10 Clientes",
-                          "Esquecue-se da password?"};
+                          "Esqueceu-se da password?"};
         
         String[] opcoesRegisto = {"Registar como Cliente",
                                   "Registar como Proprietario"};
@@ -216,7 +219,7 @@ public class VeiculoApp
                 case 4: runTop();
                         break;
                 case 5: System.out.println("Introduza o seu email.");
-                        String email = input.lerString();
+                        email = input.lerString();
                         if(this.gestorUtilizadores.emailRegistado(email)){
                             System.out.println("Enviamos-lhe um email para que recuperar a palavra passe.");
                         }else{
@@ -266,6 +269,9 @@ public class VeiculoApp
                         }
                         catch(AluguerNaoExisteException e){
                             System.out.println("O aluguer não existe no sistema.");
+                        }
+                        catch(VeiculoNaoEncontradoException e){
+                            System.out.println("Nenhum veículo encontrado");
                         }
                         catch(IOException e){
                             System.out.println(e.getMessage());
@@ -460,7 +466,7 @@ public class VeiculoApp
                        break;
                 case 4: runClienteAlteraDados(cliente);
                        break;
-                case 5: Sytem.out.println("O meu Perfil");
+                case 5: System.out.println("\fO meu Perfil");
                         System.out.println(cliente.toString());
             }
             System.out.println("\n\nPara voltar ao menu de cliente pressione 'Enter'!");
@@ -562,8 +568,11 @@ public class VeiculoApp
                                 System.out.println("\n\nPara prosseguir pressione 'Enter'!");
                                 input.lerString();
                             }
+                            a.setEstadoAluguer(EstadoAluguer.Espera);
                             a.setVeiculo(veiculo);
+                            Notificacao n = a.pedidoAluguer(cliente);
                             this.gestorAlugueres.insereAluguer(a);
+                            this.gestorNotificacoes.adicionaNotificacao(n);
                             System.out.println("\fO veiculo que pretende alugar: \n\n" + veiculo.toString());
                         }
                         catch(GestorVazioException e){
@@ -588,7 +597,6 @@ public class VeiculoApp
                         input.lerString();
                         try{
                             Aluguer a = this.gestorAlugueres.getAluguer(id);
-                            this.gestorAlugueres.removeAluguer(a);
                             Notificacao notificacao = a.efetuaViagem(cliente);
                             if(notificacao != null){
                                 this.gestorNotificacoes.adicionaNotificacao(notificacao);
@@ -604,15 +612,12 @@ public class VeiculoApp
                             Proprietario p = (Proprietario)this.gestorUtilizadores.getUtilizador(a.getVeiculo().getNif());
                             a.avaliacoesCliente(p, notaVeiculo, notaProprietario);
                             this.gestorUtilizadores.atualizaUtilizador(cliente);
-                            this.gestorAlugueres.insereAluguer(a);
+                            this.gestorAlugueres.atualizaAluguer(a);
                             this.gestorUtilizadores.atualizaUtilizador(p);
                             this.gestorVeiculos.atualizaVeiculo(a.getVeiculo());
                         }
                         catch(AluguerNaoExisteException e){
                             System.out.println("O aluguer não existe no sistema.");
-                        }
-                        catch(AluguerJaExisteException e){
-                            System.out.println("O aluguer já existe no sistema.");
                         }
                         catch(UtilizadorNaoExisteException e){
                             System.out.println("O utilizador com nif " + e.getMessage() + " não existe no sistema.");
@@ -722,8 +727,8 @@ public class VeiculoApp
                         break;
                 case 5: runProprietarioAlteraDados(proprietario);
                         break;
-                case 6: Sytem.out.println("O meu Perfil");
-                        System.out.println(cliente.toString());
+                case 6: System.out.println("\fO meu Perfil");
+                        System.out.println(proprietario.toString());
             }
             System.out.println("\n\nPara voltar ao menu de proprietario pressione 'Enter'!");
             input.lerString();
@@ -746,18 +751,18 @@ public class VeiculoApp
                             int id = input.lerInt();
                             Aluguer a = this.gestorAlugueres.getAluguer(id);
                             runConfirmacaoAluguer(a);
+                            this.gestorAlugueres.atualizaAluguer(a);
                         break;
                     case 2: System.out.println("Introduza o Id do aluguer.");
                             id = input.lerInt();
                             a = this.gestorAlugueres.getAluguer(id);
-                            this.gestorAlugueres.removeAluguer(a);
                             a.registaCusto();
                             System.out.println("Introduza nota do Cliente.");
                             int notaCliente = input.lerInt();
                             Cliente cliente = (Cliente)this.gestorUtilizadores.getUtilizador(a.getNif());
                             a.avaliacaoProprietario(cliente,notaCliente);
                             this.gestorUtilizadores.atualizaUtilizador(cliente);
-                            this.gestorAlugueres.insereAluguer(a);
+                            this.gestorAlugueres.atualizaAluguer(a);
                         break; 
                 }
             }
@@ -769,9 +774,6 @@ public class VeiculoApp
             }
             catch(UtilizadorNaoExisteException e){
                 System.out.println("O utilizador com nif " + e.getMessage() + " não existe no sistema.");
-            }
-            catch(AluguerJaExisteException e){
-                System.out.println("O aluguer já existe no sistema.");
             }
             menuProprietarioAluguer.setOpcao(0);
         }while (menuProprietarioAluguer.getOpcao()!=0); // A op¡Ño 0 » usada para sair do menu.
@@ -791,16 +793,14 @@ public class VeiculoApp
             menuConfirmacaoAluguer.executa();
             switch (menuConfirmacaoAluguer.getOpcao()) {
                 case 1: try{
-                            this.gestorAlugueres.removeAluguer(a);
+                       
                             Notificacao n = a.aceitaAluguer();
                             System.out.println("\nO aluguer com id " + a.getId() + " foi aceite com sucesso.");
                             this.gestorNotificacoes.adicionaNotificacao(n);
-                            this.gestorAlugueres.insereAluguer(a);
+                            this.gestorAlugueres.atualizaAluguer(a);
                             menuConfirmacaoAluguer.setOpcao(0);
                         }
                         catch(AluguerNaoEmEsperaException e){
-                                System.out.println("Este aluguer não se encontra em espera.");
-                        }catch(AluguerJaExisteException e){
                                 System.out.println("Este aluguer não se encontra em espera.");
                         }
                     break;

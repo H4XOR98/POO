@@ -18,7 +18,7 @@ public class GestorAlugueres implements Serializable{
     
     // Variáveis de Instância
     
-    private Set<Aluguer> alugueres;
+    private Map<Integer, Aluguer> alugueres;
     
     // Comparators
     
@@ -32,7 +32,7 @@ public class GestorAlugueres implements Serializable{
     // Construtores
     
     public GestorAlugueres(){
-        this.alugueres = new HashSet<>();
+        this.alugueres = new HashMap<>();
     }
     
     public GestorAlugueres(GestorAlugueres gestorAlugueres){
@@ -41,21 +41,17 @@ public class GestorAlugueres implements Serializable{
     
     // Gets
     
-    public Set<Aluguer> getAlugueres(){
-        Set<Aluguer> aux = new HashSet<>();
-        for(Aluguer a : this.alugueres){
-            aux.add(a.clone());
-        }
+    public Map<Integer, Aluguer> getAlugueres(){
+        Map<Integer,Aluguer> aux = new HashMap<>();
+        this.alugueres.forEach((k,v) -> aux.put(k,v.clone()));
         return aux;
     }
     
     // Sets
     
-    public void setAlugueres (Set<Aluguer> alugueres){
-        this.alugueres = new HashSet<>();
-        for(Aluguer a : alugueres){
-            this.alugueres.add(a.clone());
-        }
+    public void setAlugueres (Map<Integer,Aluguer> alugueres){
+        this.alugueres = new HashMap<>();
+        alugueres.forEach((k,v) -> this.alugueres.put(k,v.clone()));
     }
     
     // Clone
@@ -82,7 +78,7 @@ public class GestorAlugueres implements Serializable{
     public String toString(){
         StringBuilder sb = new StringBuilder();
         sb.append("----------- Gestor Alugueres -----------\n");
-        for(Aluguer a : this.alugueres){
+        for(Aluguer a : this.alugueres.values()){
             sb.append(a.toString());
         }
         return sb.toString();
@@ -91,14 +87,18 @@ public class GestorAlugueres implements Serializable{
     // Adiciona um Aluguer
     
     public void insereAluguer(Aluguer a) throws AluguerJaExisteException{
-        if(this.alugueres.contains(a)){
+        if(this.alugueres.containsKey(a.getId())){
             throw new AluguerJaExisteException("");
         }
-        this.alugueres.add(a.clone());
+        this.alugueres.put(a.getId(), a.clone());
+    }
+    
+    public void atualizaAluguer(Aluguer a){
+        this.alugueres.replace(a.getId(), a.clone());
     }
     
     public void removeAluguer(Aluguer a){
-        this.alugueres.remove(a);
+        this.alugueres.remove(a.getId());
     }
     
     // Liberta os Veículos
@@ -109,65 +109,61 @@ public class GestorAlugueres implements Serializable{
     
     
     public Aluguer getAluguer(int id) throws AluguerNaoExisteException{
-        for(Aluguer a : this.alugueres){
-            if(a.getId() == id){
-                return a.clone();
-            }
+        if (!this.alugueres.containsKey(id)){
+            throw new AluguerNaoExisteException("");
         }
-        throw new AluguerNaoExisteException("");
+        return this.alugueres.get(id);
     }
     
     
     //-----------------------------------------
     
     
-    public List<String> historicoCliente(int nif){
+    public List<String> historicoCliente (int nif){
         List<String> aux = new ArrayList<>();
-        for(Aluguer a : this.alugueres){
-            if(a.getNif() == nif){
-                aux.add(a.toString());
-            }
-        }
+        this.alugueres.forEach((k,v) -> {
+            if (v.getNif() == nif) aux.add(v.toString());
+        });
         return aux;
     }
     
-    public List<String> historicoClienteEntreDatas(int nif, LocalDateTime inicio, LocalDateTime fim){
+    public List<String> historicoClienteEntreDatas (int nif, LocalDateTime inicio, LocalDateTime fim){
         List<String> aux = new ArrayList<>();
-        for(Aluguer a : this.alugueres){
-            if(a.getNif() == nif && ((a.getDataInicio().isAfter(inicio) && a.getDataInicio().isBefore(fim)) || 
-                                     (a.getDataInicio().isEqual(inicio) && a.getDataInicio().isEqual(fim)))){
-                aux.add(a.toString());
+        this.alugueres.forEach((k,v) -> {
+            if(v.getNif() == nif && ((v.getDataInicio().isAfter(inicio) && v.getDataInicio().isBefore(fim)) || 
+                                     (v.getDataInicio().isEqual(inicio) && v.getDataInicio().isEqual(fim)))){
+                aux.add(v.toString());
             }
-        }
+        });
         return aux;
     }
     
     
     public List<String> historicoProprietario(int nif){
         List<String> aux = new ArrayList<>();
-        for(Aluguer a : this.alugueres){
-            if(a.getVeiculo().getNif() == nif){
-                aux.add(a.toString());
+        this.alugueres.forEach((k,v) -> {
+            if(v.getVeiculo().getNif() == nif){
+                aux.add(v.toString());
             }
-        }
+        });
         return aux;
     }
     
     
     public List<String> historicoProprietarioEntreDatas (int nif, LocalDateTime inicio, LocalDateTime fim){
         List<String> aux = new ArrayList<>();
-        for(Aluguer a : this.alugueres){
-            if(a.getVeiculo().getNif() == nif && ((a.getDataInicio().isAfter(inicio) && a.getDataInicio().isBefore(fim)) || 
-                                     (a.getDataInicio().isEqual(inicio) && a.getDataInicio().isEqual(fim)))){
-                aux.add(a.toString());
+        this.alugueres.forEach((k,v) -> {
+            if(v.getVeiculo().getNif() == nif && ((v.getDataInicio().isAfter(inicio) && v.getDataInicio().isBefore(fim)) || 
+                                                  (v.getDataInicio().isEqual(inicio) && v.getDataInicio().isEqual(fim)))){
+                aux.add(v.toString());
             }
-        }
+        });
         return aux;
     }
     
     public double totalFaturadoVeiculo (String matricula, LocalDateTime inicio, LocalDateTime fim){
         double totalFaturado = 0;
-        for(Aluguer a : this.alugueres){
+        for(Aluguer a : this.alugueres.values()){
             if(a.getVeiculo().getMatricula().equals(matricula) && ((a.getDataInicio().isAfter(inicio) && a.getDataInicio().isBefore(fim)) || 
                                      (a.getDataInicio().isEqual(inicio) && a.getDataInicio().isEqual(fim)))){
                 totalFaturado += a.getCusto();
@@ -186,7 +182,7 @@ public class GestorAlugueres implements Serializable{
             throw new AlugueresNaoExistemException("");
         }
         Set<Aluguer> top = new TreeSet<>(compKms);
-        for(Aluguer a : this.alugueres){
+        for(Aluguer a : this.alugueres.values()){
             top.add(a);
         }
         List<Integer> resultado = new ArrayList<>();
@@ -209,7 +205,7 @@ public class GestorAlugueres implements Serializable{
             throw new AlugueresNaoExistemException("");
         }
         Map<Integer,Integer> top = new TreeMap(compNumVezes);
-        for(Aluguer a : this.alugueres){
+        for(Aluguer a : this.alugueres.values()){
             int nif = a.getNif();
             if(top.containsKey(nif)){
                 int n = top.get(nif);
@@ -245,7 +241,7 @@ public class GestorAlugueres implements Serializable{
         FileInputStream fis = new FileInputStream("GestorAlugueres_Status.ser");
         ObjectInputStream ois = new ObjectInputStream(fis);
         GestorAlugueres ga = new GestorAlugueres();
-        ga.alugueres = (HashSet<Aluguer>) ois.readObject();
+        ga.alugueres = (HashMap<Integer,Aluguer>) ois.readObject();
         fis.close();
         ois.close();
         return ga;

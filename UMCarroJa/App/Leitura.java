@@ -65,7 +65,7 @@ public class Leitura{
     public void readFile (GestorUtilizadores gestorUtilizadores, GestorVeiculos gestorVeiculos, GestorAlugueres gestorAlugueres, 
     GestorNotificacoes gestorNotificacoes) throws GestorVazioException, UtilizadorJaExisteException, VeiculoJaExisteException, AluguerJaExisteException, 
     UtilizadorNaoExisteException, VeiculoNaoExisteException, AvaliacaoInvalidaException, IOException, FileNotFoundException, 
-    AluguerNaoExisteException {
+    AluguerNaoExisteException, VeiculoNaoEncontradoException {
                
         BufferedReader br = new BufferedReader(new FileReader(this.file));
         
@@ -114,6 +114,7 @@ public class Leitura{
                     PreferenciaAluguer pf = PreferenciaAluguer.valueOf(comp[4]);
                     Ponto destino = new Ponto (Double.parseDouble(comp[1]), Double.parseDouble(comp[2]));
                     Aluguer a = new Aluguer (tv2, Integer.parseInt(comp[0]), destino, tc2, pf);
+                    System.out.println(a.getId());
                     
                     String matricula = "";
                     Utilizador ua = gestorUtilizadores.getUtilizador(Integer.parseInt(comp[0]));

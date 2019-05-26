@@ -30,7 +30,8 @@ public class Aluguer implements Serializable{
     // Construtores
     
     public Aluguer() {
-        this.id = getIdentidade();
+        identidade++;
+        this.id = identidade;
         this.tipoVeiculo = TipoVeiculo.Carro;
         this.nif = 0;
         this.destino = new Ponto();
@@ -45,11 +46,11 @@ public class Aluguer implements Serializable{
         this.dataFim = LocalDateTime.now();
         this.meteo = Metereologia.getRandom();
         this.trafego = Trafego.getRandom();
-        identidade++;
     }
 
     public Aluguer(TipoVeiculo tipoVeiculo, int nif, Ponto destino, TipoCombustivel tipoCombustivel, PreferenciaAluguer preferencia) {
-        this.id = getIdentidade();
+        identidade++;
+        this.id = identidade;
         this.tipoVeiculo = tipoVeiculo;
         this.nif = nif;
         this.destino = destino;
@@ -64,10 +65,10 @@ public class Aluguer implements Serializable{
         this.dataFim = LocalDateTime.now();
         this.meteo = Metereologia.getRandom();
         this.trafego = Trafego.getRandom();
-        identidade++;
     }
 
     public Aluguer(Aluguer a){
+        this.id = a.getId();
         this.tipoVeiculo = a.getTipoVeiculo();
         this.nif = a.getNif();
         this.destino = a.getDestino();
@@ -200,7 +201,7 @@ public class Aluguer implements Serializable{
         DecimalFormat df = new DecimalFormat("#.##");
         StringBuilder sb = new StringBuilder();
         sb.append("............ALUGUER............\n");
-        sb.append("ID: " + id + ";\n");
+        sb.append("ID: " + this.id + ";\n");
         sb.append("Destino: \n\t" + this.destino.toString() + ";\n");
         sb.append("Nif Cliente: " + this.nif + ";\n");
         sb.append("Tipo de Combustivel: " + this.tipoCombustivel + ";\n");
@@ -230,10 +231,11 @@ public class Aluguer implements Serializable{
             return false;
         }
         Aluguer a = (Aluguer)o;
-        return this.nif == a.getNif() && this.destino.equals(a.getDestino()) && this.tipoCombustivel.equals(a.getTipoCombustivel()) && 
+        /*return this.nif == a.getNif() && this.destino.equals(a.getDestino()) && this.tipoCombustivel.equals(a.getTipoCombustivel()) && 
                this.preferencia.equals(a.getPreferencia()) && this.tipoVeiculo.equals(a.getTipoVeiculo()) &&  this.veiculo.equals(a.getVeiculo()) &&
                this.estadoAluguer.equals(a.getEstadoAluguer()) && this.custo == a.getCusto() && this.distancia == a.getDistancia() && 
-               this.duracao == a.getDuracao() && this.meteo.equals(a.getMeteorologia()) && this.trafego.equals(a.getTrafego()); 
+               this.duracao == a.getDuracao() && this.meteo.equals(a.getMeteorologia()) && this.trafego.equals(a.getTrafego());*/
+        return this.id == a.getId();
     }
    
     // Equals
@@ -302,6 +304,7 @@ public class Aluguer implements Serializable{
     public Notificacao pedidoAluguer(Cliente cliente){
         DecimalFormat df = new DecimalFormat("#.##");
         double duracao = tempoClienteVeiculo(cliente);
+        this.estadoAluguer = EstadoAluguer.Espera;
         Notificacao n = new Notificacao(this.veiculo.getNif(), "Pedido de Aluguer", "\nAluguer numero : " +  id + ";\n" + "O cliente com o nif " + cliente.getNif() +
                                                                " pretende alugar o veiculo com a matricula " + this.veiculo.getMatricula() + 
                                                                ".\nO cliente demora cerca de " +  df.format(duracao) + " a chegar ao veiculo.\n");
