@@ -112,7 +112,7 @@ public class Cliente extends Utilizador implements Serializable
     //-------------
     public void novaAvaliacao(double avaliacao) throws AvaliacaoInvalidaException{
         if(avaliacao < 0 || avaliacao > 100){
-            throw new AvaliacaoInvalidaException("" + avaliacao);
+            throw new AvaliacaoInvalidaException("");
         }
         this.destreza = 0;
         this.classificacoes.add(avaliacao);

@@ -93,7 +93,7 @@ public class GestorNotificacoes implements Serializable{
     // Adiciona uma Utilizador
     public void adicionaUtilizador(Utilizador u) throws UtilizadorJaExisteException{
         if(this.caixaNotificacoes.containsKey(u.getNif())){
-            throw new UtilizadorJaExisteException("Utilizador com  o nif " + u.getNif() + "já existe no sistema!");
+            throw new UtilizadorJaExisteException("" + u.getNif());
         }
         List<Notificacao> aux = new ArrayList<>();
         this.caixaNotificacoes.put(u.getNif(),aux);
@@ -114,7 +114,7 @@ public class GestorNotificacoes implements Serializable{
     
     public boolean temNotificacoes (int nif) throws UtilizadorNaoExisteException{
         if(!this.caixaNotificacoes.containsKey(nif)){
-            throw new UtilizadorNaoExisteException("O nif " + nif + "não existe no sistema!");
+            throw new UtilizadorNaoExisteException("" + nif);
         }
         List<Notificacao> notificacoes = this.caixaNotificacoes.get(nif);
         return notificacoes.isEmpty();
@@ -124,35 +124,39 @@ public class GestorNotificacoes implements Serializable{
     
     public int quantasNotificacoes (int nif) throws UtilizadorNaoExisteException{
         if(!this.caixaNotificacoes.containsKey(nif)){
-            throw new UtilizadorNaoExisteException("O nif " + nif + "não existe no sistema!");
+            throw new UtilizadorNaoExisteException("" + nif);
         }
         List<Notificacao> notificacoes = this.caixaNotificacoes.get(nif);
         return notificacoes.size();
     }
     
-    public List<Notificacao> getNotificacoes(int nif) throws UtilizadorNaoExisteException, NotificacaoNaoExisteException{
+    public List<Notificacao> getNotificacoes(int nif) throws UtilizadorNaoExisteException, CaixaNotificacoesVaziaException{
         if(!this.caixaNotificacoes.containsKey(nif)){
-            throw new UtilizadorNaoExisteException("O nif " + nif + "não existe no sistema!");
+            throw new UtilizadorNaoExisteException("" + nif);
         }
         List<Notificacao> aux = this.caixaNotificacoes.get(nif);
         if(aux.isEmpty()){
-            throw new NotificacaoNaoExisteException("A sua caixa de notificações está vazia!");
+            throw new CaixaNotificacoesVaziaException("");
         }
         List<Notificacao> notificacoes = new ArrayList<>();
         for(Notificacao notificacao : aux){
-            notificacoes.add(notificacao);
+            notificacoes.add(notificacao.clone());
         }
         return notificacoes;
     }
-    
-    //Apaga notificacao
-    
-    public void apagaNotificacao(Notificacao n) throws NotificacaoNaoExisteException{
-        if(!this.caixaNotificacoes.containsValue(n)){
-            throw new NotificacaoNaoExisteException("Ups! Noficacao não existe!");
+        
+    // Apaga notificacoes
+
+    /*public void apagaNotificacoes (int nif) throws UtilizadorNaoExisteException{
+        if(!this.caixaNotificacoes.containsKey(nif)){
+            throw new UtilizadorNaoExisteException("" + nif);
         }
-        this.caixaNotificacoes.get(n.getDestinatario()).remove(n);
-    }
+        if (!(this.caixaNotificacoes.get(nif) == null)){
+            List<Notificacao> notificacoes = new ArrayList<>();
+            this.caixaNotificacoes.replace(nif, notificacoes);
+        }
+        //notificacoes.forEach(n -> notificacoes.remove(n));
+    }*/
     
     // Apaga o gestor de notificações
     

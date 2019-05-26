@@ -80,7 +80,7 @@ public class GestorUtilizadores implements Serializable{
     
     public Notificacao insereUtilizador(Utilizador u) throws UtilizadorJaExisteException{
         if(this.utilizadores.containsKey(u.getNif())){
-            throw new UtilizadorJaExisteException("O utilizador com nif " + u.getNif() + " já existe no sistema!\n");
+            throw new UtilizadorJaExisteException("" + u.getNif());
         }
         this.utilizadores.put(u.getNif(),u.clone());
         Notificacao n = new Notificacao(u.getNif(),"Boas Vindas","\nBem vindo à UMCarroJá!");
@@ -93,7 +93,7 @@ public class GestorUtilizadores implements Serializable{
     
     public void removeUtilizador(int nif) throws UtilizadorNaoExisteException{
         if(!this.utilizadores.containsKey(nif)){
-            throw new UtilizadorNaoExisteException("Não existe nenhum utilizador com o nif " + nif + " no sistema!");
+            throw new UtilizadorNaoExisteException("" + nif);
         }
         this.utilizadores.remove(nif);
     }
@@ -102,7 +102,7 @@ public class GestorUtilizadores implements Serializable{
         this.utilizadores.clear();
     }
     
-    public Utilizador loginUtilizador(String email, String password) throws UtilizadorNaoExisteException{
+    public Utilizador loginUtilizador(String email, String password) throws UtilizadorNaoRegistadoException{
         Utilizador aux = null;
         for(Utilizador u : this.utilizadores.values()){
             if(email.equals(u.getEmail()) && password.equals(u.getPassword())){
@@ -110,14 +110,14 @@ public class GestorUtilizadores implements Serializable{
             }
         }
         if(aux == null){
-            throw new UtilizadorNaoExisteException("Utilizador não registado!");
+            throw new UtilizadorNaoRegistadoException("");
         }
         return aux;
     }
     
     public Utilizador getUtilizador(int nif) throws UtilizadorNaoExisteException{
         if(!this.utilizadores.containsKey(nif)){
-            throw new UtilizadorNaoExisteException("O nif: " + nif + " não existe no sistema!\n");
+            throw new UtilizadorNaoExisteException("" + nif);
         }
         return this.utilizadores.get(nif).clone();
     }
@@ -144,9 +144,9 @@ public class GestorUtilizadores implements Serializable{
         return proprietarios;
     }
     
-    public List<String> procuraUtilizadores(List<Integer> nifs) throws UtilizadorNaoExisteException{
+    public List<String> procuraUtilizadores(List<Integer> nifs) throws UtilizadoresNaoExistemException, UtilizadorNaoExisteException{
         if(nifs.isEmpty()){
-            throw new UtilizadorNaoExisteException("Não existem nif's a listar!\n");
+            throw new UtilizadoresNaoExistemException("");
         }
         List<String> utilitarios = new ArrayList<>();
         for(int n : nifs){

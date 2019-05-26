@@ -8,6 +8,7 @@ import java.io.Serializable;
 public class Aluguer implements Serializable{
     
     // Variáveis de Instância
+    
     private int id;
     private TipoVeiculo tipoVeiculo;
     private int nif;
@@ -84,6 +85,7 @@ public class Aluguer implements Serializable{
     }
 
     // Gets
+    
     public int getId(){
         return this.id;
     }
@@ -186,7 +188,6 @@ public class Aluguer implements Serializable{
         this.duracao = duracao;
     }
     
-    
     // Get de classe
     
     public static int getIdentidade() {
@@ -243,20 +244,28 @@ public class Aluguer implements Serializable{
     
     // ------------------------------------ Métodos ------------------------------------
     
+    // Converte a duração para horas
+    
     public double converteEmHoras(double duracao){
         int horas = (int)Math.floor(duracao);
         double minutos = (duracao - horas) * 0.6;
         return (horas + minutos);
     }
     
+    // Tempo do cliente ao veículo
+    
     private double tempoClienteVeiculo(Cliente cliente){
         double distancia = cliente.getLocalizacao().distancia(this.veiculo.getLocalizacao());
         return converteEmHoras(distancia / 4);
     }
     
+    // Distância do veículo ao destino
+    
     private void distanciaVeiculoDestino(){
         this.distancia = this.veiculo.getLocalizacao().distancia(this.destino);
     }
+    
+    // Tempo real de viagem
     
     private void tempoViagemReal (Cliente cliente){
         distanciaVeiculoDestino();
@@ -272,10 +281,13 @@ public class Aluguer implements Serializable{
         this.dataFim = this.dataFim.plusMinutes((long)minutos);
     }
     
+    // Custo de viagem
+    
     private void custoViagem(){
         this.custo = this.distancia * this.veiculo.getPreco();
     }
     
+    // Efetua uma viagem lida do ficheiro
     
     public void efetuaViagemFile (Cliente cliente) throws AluguerNaoExisteException{
         if(!estadoAluguer.equals(EstadoAluguer.Aceite)){
@@ -285,7 +297,8 @@ public class Aluguer implements Serializable{
         this.estadoAluguer = EstadoAluguer.Terminado;
     }
     
-    //Cliente
+    // Cliente
+    
     public Notificacao pedidoAluguer(Cliente cliente){
         DecimalFormat df = new DecimalFormat("#.##");
         double duracao = tempoClienteVeiculo(cliente);
@@ -295,7 +308,6 @@ public class Aluguer implements Serializable{
         return n;
     }
     
-    //Cliente
     public Notificacao efetuaViagem(Cliente cliente) throws AluguerNaoExisteException{
         if(!estadoAluguer.equals(EstadoAluguer.Aceite)){
             throw new AluguerNaoExisteException("Este aluguer ainda não foi aceite!\n");
@@ -313,7 +325,8 @@ public class Aluguer implements Serializable{
         return n;
     }
     
-    //proprietario
+    // Proprietário
+    
     public void registaCusto() throws AluguerNaoExisteException{
         if(!estadoAluguer.equals(EstadoAluguer.Terminado)){
             throw new AluguerNaoExisteException("Este aluguer não foi terminado!\n");
@@ -332,6 +345,8 @@ public class Aluguer implements Serializable{
             this.setEstadoAluguer(EstadoAluguer.Rejeitado);
         } 
     }
+    
+    // Avaliar
     
     public Proprietario avaliacoesCliente(Proprietario proprietario, double notaVeiculo, double notaProprietario) 
     throws AluguerNaoExisteException, AvaliacaoInvalidaException{

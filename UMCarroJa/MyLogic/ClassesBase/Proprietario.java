@@ -114,7 +114,7 @@ public class Proprietario extends Utilizador implements Serializable
     
     public void novaAvaliacao(double avaliacao) throws AvaliacaoInvalidaException{
         if(avaliacao < 0 || avaliacao > 100){
-            throw new AvaliacaoInvalidaException("" + avaliacao);
+            throw new AvaliacaoInvalidaException("");
         }
         this.classificacao = 0;
         this.classificacoes.add(avaliacao);
@@ -126,15 +126,16 @@ public class Proprietario extends Utilizador implements Serializable
     
     public void abasteceVeiculo(Veiculo veiculo) throws VeiculoNaoPertenceException{
         if(veiculo.getNif() != this.getNif()){
-            throw new VeiculoNaoPertenceException("O veiculo com a matricula " + veiculo.getMatricula() + ", não lhe pertence!\n" );
+            throw new VeiculoNaoPertenceException(veiculo.getMatricula());
         }
         veiculo.abastecerVeiculo();
     }
     
     public void alteraPrecoVeiculo(Veiculo veiculo, double preco) throws VeiculoNaoPertenceException{
         if(veiculo.getNif() != this.getNif()){
-            throw new VeiculoNaoPertenceException("O veiculo com a matricula " + veiculo.getMatricula() + ", não lhe pertence!\n" );
+            throw new VeiculoNaoPertenceException(veiculo.getMatricula());
         }
         veiculo.setPreco(preco);
     }
+    
 }

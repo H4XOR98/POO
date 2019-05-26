@@ -2,6 +2,7 @@ package MyLogic.Gestores;
 
 import MyLogic.ClassesBase.*;
 import java.util.*;
+import java.text.DecimalFormat;
 import MyLogic.Exceptions.*;
 import java.time.LocalDateTime;
 import java.io.Serializable;
@@ -91,7 +92,7 @@ public class GestorAlugueres implements Serializable{
     
     public void insereAluguer(Aluguer a) throws AluguerJaExisteException{
         if(this.alugueres.contains(a)){
-            throw new AluguerJaExisteException("O aluguer já exite!\n");
+            throw new AluguerJaExisteException("");
         }
         this.alugueres.add(a.clone());
     }
@@ -113,7 +114,7 @@ public class GestorAlugueres implements Serializable{
                 return a.clone();
             }
         }
-        throw new AluguerNaoExisteException("Aluguer nao existe!");
+        throw new AluguerNaoExisteException("");
     }
     
     
@@ -164,7 +165,7 @@ public class GestorAlugueres implements Serializable{
         return aux;
     }
     
-    public double totalFaturadoVeiculo(String matricula, LocalDateTime inicio, LocalDateTime fim){
+    public double totalFaturadoVeiculo (String matricula, LocalDateTime inicio, LocalDateTime fim){
         double totalFaturado = 0;
         for(Aluguer a : this.alugueres){
             if(a.getVeiculo().getMatricula().equals(matricula) && ((a.getDataInicio().isAfter(inicio) && a.getDataInicio().isBefore(fim)) || 
@@ -172,14 +173,17 @@ public class GestorAlugueres implements Serializable{
                 totalFaturado += a.getCusto();
             }
         }
+        
+        DecimalFormat df = new DecimalFormat("#.##");      
+        totalFaturado = Double.valueOf(df.format(totalFaturado));
         return totalFaturado;
     }
     
     
     
-    public List<Integer> topDezClientesKms() throws AluguerNaoExisteException {
+    public List<Integer> topDezClientesKms() throws AlugueresNaoExistemException {
         if(this.alugueres.isEmpty()){
-            throw new AluguerNaoExisteException ("Ups! Não existem alugueres!");
+            throw new AlugueresNaoExistemException("");
         }
         Set<Aluguer> top = new TreeSet<>(compKms);
         for(Aluguer a : this.alugueres){
@@ -200,9 +204,9 @@ public class GestorAlugueres implements Serializable{
     }
     
     
-    public List<Integer> topDezClientesVezes() throws AluguerNaoExisteException {
+    public List<Integer> topDezClientesVezes() throws AlugueresNaoExistemException {
         if(this.alugueres.isEmpty()){
-            throw new AluguerNaoExisteException ("Ups! Não existem alugueres!");
+            throw new AlugueresNaoExistemException("");
         }
         Map<Integer,Integer> top = new TreeMap(compNumVezes);
         for(Aluguer a : this.alugueres){

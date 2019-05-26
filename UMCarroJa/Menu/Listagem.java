@@ -11,6 +11,7 @@ import java.util.*;
 public class Listagem
 {
     private List<?> lista;
+    private String titulo;
     private int elementosPorPagina;
     private int paginaAtual;
     private int numPaginas;
@@ -20,20 +21,13 @@ public class Listagem
     /**
      * Constructor for objects of class Menu
      */
-    public Listagem(List<?> opcoes) {
+    public Listagem(List<?> opcoes,String titulo) {
         this.lista = opcoes;
+        this.titulo = titulo;
         this.elementosPorPagina = 3;
         this.paginaAtual = 0;
-        arredonda();
+        this.numPaginas = (int) Math.ceil(((double)this.lista.size()) / ((double)this.elementosPorPagina));
         this.op = 2;
-    }
-
-    private void arredonda(){
-        if (this.lista.size() % (this.elementosPorPagina) == 0){
-            this.numPaginas = (int)(this.lista.size() / this.elementosPorPagina);
-        }else{
-            this.numPaginas = (int)(this.lista.size() / this.elementosPorPagina) +1;
-        }
     }
     
     /**
@@ -65,7 +59,7 @@ public class Listagem
         if(this.lista.isEmpty()){
             System.out.println("VAZIO");
         }
-        System.out.println("-------OPCOES-------");
+        System.out.println(titulo + "\n");
         for(int i = num ; i < this.elementosPorPagina + num && i < this.lista.size() ; i++){
             System.out.println(this.lista.get(i));
         }
