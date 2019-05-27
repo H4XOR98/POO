@@ -86,10 +86,7 @@ public class GestorAlugueres implements Serializable{
     
     // Adiciona um Aluguer
     
-    public void insereAluguer(Aluguer a) throws AluguerJaExisteException{
-        if(this.alugueres.containsKey(a.getId())){
-            throw new AluguerJaExisteException("");
-        }
+    public void insereAluguer(Aluguer a) {
         this.alugueres.put(a.getId(), a.clone());
     }
     

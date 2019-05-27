@@ -305,7 +305,7 @@ public class Aluguer implements Serializable{
         DecimalFormat df = new DecimalFormat("#.##");
         double duracao = tempoClienteVeiculo(cliente);
         this.estadoAluguer = EstadoAluguer.Espera;
-        Notificacao n = new Notificacao(this.veiculo.getNif(), "Pedido de Aluguer", "\nAluguer numero : " +  id + ";\n" + "O cliente com o nif " + cliente.getNif() +
+        Notificacao n = new Notificacao(this.veiculo.getNif(), "Pedido de Aluguer", "\nAluguer numero : " +  this.id + ";\n" + "O cliente com o nif " + cliente.getNif() +
                                                                " pretende alugar o veiculo com a matricula " + this.veiculo.getMatricula() + 
                                                                ".\nO cliente demora cerca de " +  df.format(duracao) + " a chegar ao veiculo.\n");
         return n;
@@ -328,6 +328,12 @@ public class Aluguer implements Serializable{
         return n;
     }
     
+    public Notificacao terminaViagemCliente (Cliente cliente){
+        Notificacao n = new Notificacao(this.veiculo.getNif(), "Fim de Aluguer", "\nAluguer numero : " +  this.id + ";\n" + "O cliente com o nif " + 
+                                                                cliente.getNif() + " terminou a viagem.");
+        return n;
+    }
+
     // Proprietário
     
     public void registaCusto() throws AluguerNaoExisteException{

@@ -584,9 +584,6 @@ public class VeiculoApp
                         catch(VeiculoNaoEncontradoException e){
                             System.out.println("Nenhum veículo disponível" + e.getMessage());
                         }
-                        catch(AluguerJaExisteException e){
-                            System.out.println("O aluguer não existe no sistema.");
-                        }
                         catch(VeiculoNaoExisteException e){
                             System.out.println("O veículo com matrícula " + e.getMessage() + " não existe no sistema.");
                         }
@@ -601,6 +598,8 @@ public class VeiculoApp
                             if(notificacao != null){
                                 this.gestorNotificacoes.adicionaNotificacao(notificacao);
                             }
+                            notificacao = a.terminaViagemCliente(cliente);
+                            this.gestorNotificacoes.adicionaNotificacao(notificacao);
                             System.out.println("\fInsira uma nota para o Veiculo.");
                             double notaVeiculo = input.lerInt();
                             System.out.println("\n\nPara prosseguir pressione 'Enter'!");
