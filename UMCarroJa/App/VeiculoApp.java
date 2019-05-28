@@ -587,6 +587,9 @@ public class VeiculoApp
                         catch(VeiculoNaoExisteException e){
                             System.out.println("O veículo com matrícula " + e.getMessage() + " não existe no sistema.");
                         }
+                        catch(AluguerJaExisteException e){
+                            System.out.println("O aluguer já existe.");
+                        }
                        break;
                 case 2: System.out.println("Introduza o id do aluguer que pretende.");
                         int id = input.lerInt();
