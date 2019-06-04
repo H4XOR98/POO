@@ -549,7 +549,7 @@ public class VeiculoApp
                 
                                 case Autonomia:
                                     default:
-                                    System.out.println("Introduza a distancia que esta disposto a percorrer!");
+                                    System.out.println("Introduza a autonomia pretendida!");
                                     double autonomia = input.lerDouble();
                                     veiculos = gestorVeiculos.veiculoAutonomia(a.getTipoVeiculo(), a.getTipoCombustivel(), autonomia);
                                     break;
