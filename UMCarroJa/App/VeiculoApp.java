@@ -572,7 +572,7 @@ public class VeiculoApp
                             a.setVeiculo(veiculo);
                             Notificacao n = a.pedidoAluguer(cliente);
                             this.gestorAlugueres.insereAluguer(a);
-                            this.gestorNotificacoes.adicionaNotificacao(n);
+                            this.gestorNotificacoes.adicionaNotificacao(n.clone());
                             System.out.println("\fO veiculo que pretende alugar: \n\n" + veiculo.toString());
                         }
                         catch(GestorVazioException e){
@@ -599,10 +599,10 @@ public class VeiculoApp
                             Aluguer a = this.gestorAlugueres.getAluguer(id);
                             Notificacao notificacao = a.efetuaViagem(cliente);
                             if(notificacao != null){
-                                this.gestorNotificacoes.adicionaNotificacao(notificacao);
+                                this.gestorNotificacoes.adicionaNotificacao(notificacao.clone());
                             }
                             notificacao = a.terminaViagemCliente(cliente);
-                            this.gestorNotificacoes.adicionaNotificacao(notificacao);
+                            this.gestorNotificacoes.adicionaNotificacao(notificacao.clone());
                             System.out.println("\fInsira uma nota para o Veiculo.");
                             double notaVeiculo = input.lerInt();
                             System.out.println("\n\nPara prosseguir pressione 'Enter'!");
@@ -800,7 +800,7 @@ public class VeiculoApp
                        
                             Notificacao n = a.aceitaAluguer();
                             System.out.println("\nO aluguer com id " + a.getId() + " foi aceite com sucesso.");
-                            this.gestorNotificacoes.adicionaNotificacao(n);
+                            this.gestorNotificacoes.adicionaNotificacao(n.clone());
                             this.gestorAlugueres.atualizaAluguer(a);
                             menuConfirmacaoAluguer.setOpcao(0);
                         }
@@ -811,6 +811,7 @@ public class VeiculoApp
                 case 2: try{
                             this.gestorAlugueres.removeAluguer(a);
                             Notificacao n = a.rejeitaAluguer();
+                            this.gestorNotificacoes.adicionaNotificacao(n.clone());
                             System.out.println("\nO aluguer com id " + a.getId() + " foi rejeitado.");
                             menuConfirmacaoAluguer.setOpcao(0);
                         }
